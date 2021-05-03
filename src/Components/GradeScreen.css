@@ -1,0 +1,18 @@
+.learningtarget {
+    background-color: white;
+    border: 1px white;
+    position: relative;
+    left: 50px;
+    text-align: center;
+}
+.learningtarget h3 {
+    color: skyblue;
+}
+
+.gradescreen-grid {
+    position: relative;
+    top: 90px;
+    left: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

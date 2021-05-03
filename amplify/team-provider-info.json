@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hydro-dev-145211-authRole",
+      "UnauthRoleArn": "arn:aws:iam::427627510787:role/amplify-hydro-dev-145211-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::427627510787:role/amplify-hydro-dev-145211-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hydro-dev-145211-deployment",
+      "UnauthRoleName": "amplify-hydro-dev-145211-unauthRole",
+      "StackName": "amplify-hydro-dev-145211",
+      "StackId": "arn:aws:cloudformation:us-east-1:427627510787:stack/amplify-hydro-dev-145211/af1f86e0-93fd-11eb-a9f3-0e8cca71e1bd",
+      "AmplifyAppId": "d2n9ox2x7so9u8"
+    },
+    "categories": {
+      "auth": {
+        "hydro669e0341": {
+          "userPoolId": "us-east-1_POfbbYTKF",
+          "userPoolName": "userpool-dev",
+          "webClientId": "589ks8b89qdappsllqdtu78ga1",
+          "nativeClientId": "589ks8b89qdappsllqdtu78ga1",
+          "identityPoolId": "us-east-1:07057d76-612a-4045-8522-f38a759cf216",
+          "identityPoolName": "test_id_pool",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::427627510787:role/Cognito_test_id_poolAuth_Role",
+          "authRoleName": "Cognito_test_id_poolAuth_Role",
+          "unauthRoleArn": "arn:aws:iam::427627510787:role/Cognito_test_id_poolUnauth_Role",
+          "unauthRoleName": "Cognito_test_id_poolUnauth_Role"
+        }
+      }
+    }
+  }
+}

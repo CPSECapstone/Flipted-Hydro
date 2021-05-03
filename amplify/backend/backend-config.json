@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "hydro669e0341": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

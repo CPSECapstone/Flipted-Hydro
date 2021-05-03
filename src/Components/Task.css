@@ -1,0 +1,58 @@
+.header {
+    display: flex;
+    justify-content: left;
+    padding: 40px;
+    height: 80px;
+    margin: 40px;
+    position: relative;
+    top: 20px;
+}
+.header h1 {
+    color: #4274F3;
+    text-align: center;
+    margin: auto;
+    font-size: 44px;
+    vertical-align: middle;
+    font-weight: bolder;
+    position: relative;
+    top: -50px;
+}
+.header button {
+    position: relative;
+    top: 0px;
+    width: 150px;
+    height: 50px;
+    margin-bottom: 20px;
+    background-color: #4274F3;
+    border-radius: 10px;
+    border-color: #4274F3;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.page {
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+.page h3 {
+    color: rgb(64, 66, 77);
+    font-size: 18px;
+    font-weight: lighter;
+}
+.tasks img {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tasks video {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
