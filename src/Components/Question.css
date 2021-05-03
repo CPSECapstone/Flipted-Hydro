@@ -1,0 +1,52 @@
+.chunk{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #CFDCFC;
+  margin-top: 10px;
+}
+
+.questionBlock {
+  vertical-align: middle;
+  text-align: center;
+  padding-left: 0;
+  padding-bottom: 10px;
+  margin-top: 0px;
+  padding-top: 0px;
+  top: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
+.questionBlock input[type='radio'], label{   
+  vertical-align: baseline;
+  padding: 10px;
+  margin: 10px;
+}
+
+.questionBlock textarea{   
+  resize: none;
+  width: 90%;
+  height: 5em;
+  font-size: 18px;
+  margin-bottom:1em;
+}
+
+
+.answerChoiceItem {
+  vertical-align: baseline;
+  padding: 10px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.hline {
+  border-top: 1px solid rgb(64, 66, 77);
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.chunk h2 {
+  font-size: 22px;
+}
+
+
+

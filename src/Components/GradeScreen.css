@@ -1,12 +1,12 @@
 .learningtarget {
-    background-color: white;
+    background-color: #CFDCFC;
     border: 1px white;
     position: relative;
     left: 50px;
     text-align: center;
 }
 .learningtarget h3 {
-    color: skyblue;
+    color: black;
 }
 
 .gradescreen-grid {

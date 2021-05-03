@@ -4,19 +4,15 @@ import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router';
-import "./App.css";
 import CourseScreen from './Components/CourseScreen.js';
 import GoalsScreen from './Components/GoalsScreen.js';
-import MCQuizScreen from './Components/MCQuizScreen.js';
-import FillBlank from './Components/FillBlank.js';
-import FreeResponse from './Components/FreeResponse.js';
-import MultiSelect from './Components/MultiSelect.js';
-import VideoScreen from './Components/VideoScreen.js';
-import ImageScreen from './Components/ImageScreen.js';
 import GradeScreen from './Components/GradeScreen';
+import Mission from './Components/Mission';
 import Task from './Components/Task';
+import "./App.css";
+import MTaskOverview from './Components/MTaskOverview';
 
-const HOME_SCREEN_PATH = 'task';
+const HOME_SCREEN_PATH = 'mission';
 
 Amplify.configure({
   Auth: {
@@ -49,10 +45,17 @@ function App() {
 
   const client = new ApolloClient({
     uri: process.env.REACT_APP_PROD_URI,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Answer: {
+          keyFields: ["questionId"],
+        },
+      }
+    }),
     headers: {
       authorization: accessToken == null? null : accessToken.getJwtToken(),
-    }
+    },
+    connectToDevTools: true
   });
 
   const LoginComponent = () => {
@@ -60,7 +63,9 @@ function App() {
     if(accessToken) hist.push(HOME_SCREEN_PATH)
 
     return (
-      <div>
+      <div className="loginPage">
+        <h1 className="logo"> flipt.ED </h1>
+        <h2> Student Portal </h2>
         <button onClick={() => Auth.federatedSignIn()}>Sign In</button>
       </div>
     );
@@ -117,15 +122,10 @@ function App() {
         <div>
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
         <li><a href="/goalsscreen">Goals</a></li>
-        <li><a href="/mcquizscreen">MC Quiz</a></li>
-        <li><a href="/FillBlank">Fill-in-the-Blank</a></li> 
-        <li><a href="/FreeResponse">Free Response</a></li> 
-        <li><a href="/MultiSelect">Multi-Select</a></li> 
-        <li><a href="/VideoScreen">Video</a></li> 
-        <li><a href="/ImageScreen">Image</a></li> 
         <li><a href="/gradescreen">Grades</a></li> 
         <li><a href="/task">Task</a></li>  
-        <li><a href="/coursescreen">Courses</a></li>      
+        <li><a href="/coursescreen">Courses</a></li>
+        <li><a href="/mission">Mission</a></li>      
         </div>}
       </p>
       
@@ -139,14 +139,10 @@ function App() {
           <Route component = {LoginComponent} exact path = '/'/>
           <Route component = {CourseScreen} exact path = '/coursescreen'/>
           <Route component = {GoalsScreen} exact path = '/goalsscreen'/>
-          <Route component = {MCQuizScreen} exact path = '/mcquizscreen'/>
-          <Route component = {FillBlank} exact path = '/FillBlank'/>
-          <Route component = {FreeResponse} exact path = '/FreeResponse'/>
-          <Route component = {MultiSelect} exact path = '/MultiSelect'/>
-          <Route component = {VideoScreen} exact path = '/VideoScreen'/>
-          <Route component = {ImageScreen} exact path = '/ImageScreen'/>
           <Route component = {GradeScreen} exact path = '/gradescreen'/>
+          <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
+          <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
         </Switch>
         </div>
       </ApolloProvider>

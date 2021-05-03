@@ -1,7 +1,6 @@
 import React from 'react';
 
-function ImageScreen(props) {
-   console.log(props.myurl);
+function Image(props) {
     return (
       <div>
          <img src={props.myurl} />
@@ -9,4 +8,4 @@ function ImageScreen(props) {
     );
  }
  
- export default ImageScreen;
+ export default Image;

@@ -1,6 +1,7 @@
 {
   "name": "flipt-ed",
   "version": "0.1.0",
+  "homepage": "https://samiur98.github.io/Flipted-Alpha/",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.11",
@@ -12,6 +13,7 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.24.0",
+    "gh-pages": "^3.1.0",
     "graphql": "^15.5.0",
     "jest": "^26.6.0",
     "react": "^17.0.1",
@@ -26,6 +28,8 @@
   "optionalDependencies": {},
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject"

@@ -1,0 +1,45 @@
+.SubMission {
+    background-color: #F21E1D;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 35px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.Task {
+    background-color: #4274F3;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 35px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.card {
+    padding-top: 5px;
+    background-color: #CFDCFC;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 70%;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+ul {
+    color: #FFF;
+    font-size: 18px;
+    text-align: center;
+  }
