@@ -2,6 +2,10 @@
   "name": "flipt-ed",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.13.4",
+    "node": "12.16.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.3.11",
     "@aws-amplify/ui-react": "^1.0.6",
