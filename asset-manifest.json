@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Flipted-Alpha/static/css/main.39ad31b2.chunk.css",
-    "main.js": "/Flipted-Alpha/static/js/main.bf26dd90.chunk.js",
-    "main.js.map": "/Flipted-Alpha/static/js/main.bf26dd90.chunk.js.map",
+    "main.js": "/Flipted-Alpha/static/js/main.d1ce293e.chunk.js",
+    "main.js.map": "/Flipted-Alpha/static/js/main.d1ce293e.chunk.js.map",
     "runtime-main.js": "/Flipted-Alpha/static/js/runtime-main.065aeeb4.js",
     "runtime-main.js.map": "/Flipted-Alpha/static/js/runtime-main.065aeeb4.js.map",
-    "static/js/2.86ee00bb.chunk.js": "/Flipted-Alpha/static/js/2.86ee00bb.chunk.js",
-    "static/js/2.86ee00bb.chunk.js.map": "/Flipted-Alpha/static/js/2.86ee00bb.chunk.js.map",
+    "static/js/2.aaf4f432.chunk.js": "/Flipted-Alpha/static/js/2.aaf4f432.chunk.js",
+    "static/js/2.aaf4f432.chunk.js.map": "/Flipted-Alpha/static/js/2.aaf4f432.chunk.js.map",
     "static/js/3.f49a502f.chunk.js": "/Flipted-Alpha/static/js/3.f49a502f.chunk.js",
     "static/js/3.f49a502f.chunk.js.map": "/Flipted-Alpha/static/js/3.f49a502f.chunk.js.map",
     "index.html": "/Flipted-Alpha/index.html",
     "static/css/main.39ad31b2.chunk.css.map": "/Flipted-Alpha/static/css/main.39ad31b2.chunk.css.map",
-    "static/js/2.86ee00bb.chunk.js.LICENSE.txt": "/Flipted-Alpha/static/js/2.86ee00bb.chunk.js.LICENSE.txt"
+    "static/js/2.aaf4f432.chunk.js.LICENSE.txt": "/Flipted-Alpha/static/js/2.aaf4f432.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.065aeeb4.js",
-    "static/js/2.86ee00bb.chunk.js",
+    "static/js/2.aaf4f432.chunk.js",
     "static/css/main.39ad31b2.chunk.css",
-    "static/js/main.bf26dd90.chunk.js"
+    "static/js/main.d1ce293e.chunk.js"
   ]
 }
