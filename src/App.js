@@ -12,7 +12,7 @@ import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
 
-const HOME_SCREEN_PATH = 'mission';
+const HOME_SCREEN_PATH = '/Flipted-Hydro/mission';
 
 Amplify.configure({
   Auth: {
@@ -136,11 +136,11 @@ function App() {
 
         <div>
         <Switch>
-          <Route component = {LoginComponent} exact path = '/'/>
+          <Route component = {LoginComponent} exact path = '/Flipted-Hydro/'/>
           <Route component = {CourseScreen} exact path = '/coursescreen'/>
           <Route component = {GoalsScreen} exact path = '/goalsscreen'/>
-          <Route component = {GradeScreen} exact path = '/gradescreen'/>
-          <Route component = {Mission} exact path = '/mission'/>
+          <Route component = {GradeScreen} exact path = '/Flipted-Hydro/gradescreen'/>
+          <Route component = {Mission} exact path = '/Flipted-Hydro/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
         </Switch>
