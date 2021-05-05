@@ -1,7 +1,6 @@
 {
   "name": "flipt-ed",
   "version": "0.1.0",
-  "homepage": "https://cpsecapstone.github.io/Flipted-Hydro/",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.11",
@@ -28,8 +27,6 @@
   "optionalDependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject"
