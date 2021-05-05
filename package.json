@@ -1,7 +1,7 @@
 {
   "name": "flipt-ed",
   "version": "0.1.0",
-  "homepage": "https://samiur98.github.io/Flipted-Alpha/",
+  "homepage": "https://cpsecapstone.github.io/Flipted-Hydro/",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.11",
