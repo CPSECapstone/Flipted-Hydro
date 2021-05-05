@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Flipted-Hydro/static/css/main.39ad31b2.chunk.css",
-    "main.js": "/Flipted-Hydro/static/js/main.badfff02.chunk.js",
-    "main.js.map": "/Flipted-Hydro/static/js/main.badfff02.chunk.js.map",
+    "main.js": "/Flipted-Hydro/static/js/main.66088d24.chunk.js",
+    "main.js.map": "/Flipted-Hydro/static/js/main.66088d24.chunk.js.map",
     "runtime-main.js": "/Flipted-Hydro/static/js/runtime-main.0a011c6c.js",
     "runtime-main.js.map": "/Flipted-Hydro/static/js/runtime-main.0a011c6c.js.map",
     "static/js/2.aaf4f432.chunk.js": "/Flipted-Hydro/static/js/2.aaf4f432.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0a011c6c.js",
     "static/js/2.aaf4f432.chunk.js",
     "static/css/main.39ad31b2.chunk.css",
-    "static/js/main.badfff02.chunk.js"
+    "static/js/main.66088d24.chunk.js"
   ]
 }
