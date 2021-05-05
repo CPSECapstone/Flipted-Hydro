@@ -12,7 +12,7 @@ import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
 
-const HOME_SCREEN_PATH = 'cpsecapstone.github.io/Flipted-Hydro/';
+const HOME_SCREEN_PATH = '/mission';
 
 Amplify.configure({
   Auth: {
@@ -121,11 +121,11 @@ function App() {
         
         <div>
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
-        <li><a href="cpsecapstone.github.io/Flipted-Hydro/goalsscreen">Goals</a></li>
-        <li><a href="cpsecapstone.github.io/Flipted-Hydro/gradescreen">Grades</a></li> 
-        <li><a href="cpsecapstone.github.io/Flipted-Hydro/task">Task</a></li>  
-        <li><a href="cpsecapstone.github.io/Flipted-Hydro/coursescreen">Courses</a></li>
-        <li><a href="cpsecapstone.github.io/Flipted-Hydro/mission">Mission</a></li>      
+        <li><a href="/goalsscreen">Goals</a></li>
+        <li><a href="/gradescreen">Grades</a></li> 
+        <li><a href="/task">Task</a></li>  
+        <li><a href="/coursescreen">Courses</a></li>
+        <li><a href="/mission">Mission</a></li>      
         </div>}
       </p>
       
@@ -136,11 +136,11 @@ function App() {
 
         <div>
         <Switch>
-          <Route component = {LoginComponent} exact path = 'cpsecapstone.github.io/Flipted-Hydro/'/>
-          <Route component = {CourseScreen} exact path = 'cpsecapstone.github.io/Flipted-Hydro/coursescreen'/>
+          <Route component = {LoginComponent} exact path = '/'/>
+          <Route component = {CourseScreen} exact path = '/coursescreen'/>
           <Route component = {GoalsScreen} exact path = '/goalsscreen'/>
-          <Route component = {GradeScreen} exact path = 'cpsecapstone.github.io/Flipted-Hydro/gradescreen'/>
-          <Route component = {Mission} exact path = 'cpsecapstone.github.io/Flipted-Hydro/mission'/>
+          <Route component = {GradeScreen} exact path = '/gradescreen'/>
+          <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
         </Switch>

@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename='/cpsecapstone.github.io/Flipted-Hydro'>
     <App />
   </BrowserRouter>,
   document.getElementById('root')
