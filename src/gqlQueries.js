@@ -141,3 +141,12 @@ export const SAVE_FRQUESTION = gql`
     })
   }
 `;
+
+export const SUBMIT_TASK_PROGRESS = gql`
+  mutation submitTaskProgress($id: String!, $finishedRequirements: [String!]!){
+    submitTaskProgress(taskProgress: {
+      taskId: $id
+      finishedRequirementIds: $finishedRequirements
+    })
+  }
+`;

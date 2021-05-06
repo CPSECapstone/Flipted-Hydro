@@ -114,7 +114,7 @@
 
 .headerButtons {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-items: center;
 }
 
@@ -162,8 +162,33 @@
 }
 
 .taskBlock {
+    margin-top: 2em;
+    margin-bottom: 2em;
     margin-top: 50px;
 }
+
+.greyedButton{
+  background-color: lightgrey;
+  justify-content: center;
+  top: 0;
+}
+
+.greyedButton{
+  background-color: lightgrey;
+  justify-content: center;
+  top: 0;
+  padding: 0;
+  margin: 0;
+  grid-column: 2/3;
+}
+
+.submitButton{
+  justify-content: center;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
+
 
 .taskBlock img{
   max-width: 100%;

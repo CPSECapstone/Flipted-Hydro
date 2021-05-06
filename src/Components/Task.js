@@ -8,6 +8,8 @@ import ProgressBar from './ProgressBar.js';
 import './Task.css';
 import MCQuestion from './MCQuestion.js';
 import FRQuestion from './FRQuestion.js';
+import TaskRubricDrawer from './TaskRubricDrawer.js'
+
 import PREV from './Images/previous.svg';
 import NEXT from './Images/next.svg';
 
@@ -75,7 +77,7 @@ function Task(props) {
   const [rubricOpen, setRubricOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
   const [pDone, setPDone] = useState(1);
-  const [requirements, setRequirements] = useState([
+  const [fakerequirements, setfakeRequirements] = useState([
     {id: 0, description: "Understand the structure of covalent bonds", isComplete: false}, 
     {id: 1, description: "Understand the properties of covalent bonds", isComplete: false}, 
     {id: 2, description: "Understand the intricacies of covalent bonds", isComplete: false}
@@ -99,7 +101,7 @@ function Task(props) {
 
   const pages = data.task.pages;
   const title = data.task.name;
-  // const requirements = data.task.requirements;
+  const requirements = data.task.requirements;
   
   const pTotal = pages.length;
   const responsesOnPage = new Map();
@@ -167,6 +169,8 @@ function Task(props) {
         
         <div className="headerButtons">
           <div>{ renderPrevButton() }</div>
+          {/* <div>{ renderRubricButton() }</div> */}
+          <div>{ (pageNo < pages.length - 1) ? renderAddButton() : null}</div>
           
           <ProgressBar 
             width='700'
@@ -209,9 +213,23 @@ function Task(props) {
   }
 
   function renderSubmitButton() {
-    if(pageNo === pages.length - 1) {
-      return (<button onClick = { () => submitTask() }>Submit</button>);
+    // if(pageNo === pages.length - 1) {
+    //   return (<button onClick = { () => submitTask() }>Submit</button>);
+    // }
+    if (requirementsCompleted())
+      return (<button className="submitButton" onClick = { () => submitTask() }>Submit</button>);
+    else
+      return (<button className="greyedButton">Submit</button>);
+  }
+
+  function requirementsCompleted() {
+    var rc = true;
+    for (var i = 0; i < fakerequirements.length; i++){
+      if (!fakerequirements[i].isComplete){
+        rc = false;
+      }
     }
+    return rc;
   }
 
   function renderRubric() {
@@ -219,7 +237,7 @@ function Task(props) {
     return(
       <div className="rubric">
         {rubricOpen ? (
-          <div className="requirementsList">{RequirementsList()}</div>
+          <div className="requirementsList">{RequirementsList()}{renderSubmitButton()}</div>
         ) : null}
       </div>
     );
@@ -227,7 +245,7 @@ function Task(props) {
 
   //displays a list of requirements
   function RequirementsList(props) {
-    return requirements.map((r) => (
+    return fakerequirements.map((r) => (
       <Requirement key={r.id} r={r} />
     ));
   }
@@ -244,8 +262,8 @@ function Task(props) {
   }
 
   function handleCompleteRequirement(requirementId) {
-    requirements[requirementId].isComplete = !requirements[requirementId].isComplete;
-    setRequirements([...requirements]);
+    fakerequirements[requirementId].isComplete = !fakerequirements[requirementId].isComplete;
+    setfakeRequirements([...fakerequirements]);
   }
 
   function renderPage() {
@@ -307,6 +325,7 @@ function Task(props) {
   return (
     <div className = 'tasks'>  
       { renderHeader() }
+      <TaskRubricDrawer requirements={requirements} taskId={taskId} submitFunction={submitTask}/>
       { renderRubricButton() }
       { renderRubric() }      
       { renderPage() }   
