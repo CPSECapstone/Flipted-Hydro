@@ -209,7 +209,10 @@ function GoalsScreen() {
   function GoalsDisplay() {
     return (
       <div className="mainContainer">
-        <h1 data-testid="test1" className="pageTitle">Goals</h1>
+        <h1 data-testid="test1" className="pageTitle">Goals Demo</h1>
+        <h2 className="demoLabel">This feature is a demo and functionality is not fully implemented yet. 
+         Changes are stored locally and do not fully interact like other aspects of the alpha. Feel free 
+         to experiment with its utility and look forward to its full implementation in future versions</h2>
         <button type="button" className="newGoalButton" onClick={()=>setNewGoalOpen(true)}>New Goal</button>
         <div className="filterBar">
           <h3>Filter by tag:</h3>

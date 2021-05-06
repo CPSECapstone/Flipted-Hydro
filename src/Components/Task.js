@@ -8,6 +8,8 @@ import ProgressBar from './ProgressBar.js';
 import './Task.css';
 import MCQuestion from './MCQuestion.js';
 import FRQuestion from './FRQuestion.js';
+import PREV from './Images/previous.svg';
+import NEXT from './Images/next.svg';
 
 function createTextBlock(blockKey, contents){
   return <div className="taskBlock" key={blockKey}>
@@ -64,7 +66,7 @@ function createFRQuestionBlock(taskId, blockId, blockKey, question, existingAnsw
 
 function Task(props) {
 
-  const taskId = "4f681550ba9";
+  const taskId = props?.location?.state?.id;
 
   const { loading, error, data, refetch} = useQuery(GET_TASK, {
     variables: { id: taskId },
@@ -87,6 +89,7 @@ function Task(props) {
 
   if(error){
     console.log(error);
+    //throw error;
     return (
       <div className = 'tasks'> 
         <h1>Error!</h1>
@@ -160,30 +163,49 @@ function Task(props) {
     return(
       <div className='header'>
         <h1>{ title }</h1>
+        
+        
         <div className="headerButtons">
           <div>{ renderPrevButton() }</div>
-          <div>{ renderRubricButton() }</div>
+          
+          <ProgressBar 
+            width='700'
+            height='10'
+            doneColor='#4274F3'
+            leftColor='rgb(108, 108, 133)'
+            total={pTotal}
+            done={pDone}
+          />
+          
           <div>{ (pageNo < pages.length - 1) ? renderAddButton() : renderSubmitButton()}</div>
+          
         </div>
+        
+        
       </div>
     
     );
   }
 
   function renderPrevButton() {
-    return (<button
+    return (<div
       onClick= { () => subPage() }
-      style={pageNo > 0 ? {} : {visibility: "hidden"}}>Previous</button>);
+      style={pageNo > 0 ? {} : {visibility: "hidden"}}>
+        <img src={PREV} alt="Previous Button" />
+        
+        </div>);
   }
 
   function renderAddButton() {
     if(pageNo < pages.length - 1) {
-      return (<button onClick = { () => addPage() }>Next</button>);
+      return (<div onClick = { () => addPage() }>
+        <img src={NEXT} alt="Next Button" />
+        </div>);
     }
   }
 
   function renderRubricButton() {
-      return (<button onClick = { () => setRubricOpen(!rubricOpen) }>Task Rubric</button>);
+      return (<div className="rubricButton" onClick = { () => setRubricOpen(!rubricOpen) }>TASK RUBRIC</div>);
   }
 
   function renderSubmitButton() {
@@ -283,20 +305,11 @@ function Task(props) {
   }
 
   return (
-    <div className = 'tasks'> 
-      
+    <div className = 'tasks'>  
       { renderHeader() }
-      { renderRubric() }
-      { renderPage() }
-      
-      <ProgressBar 
-        width='700'
-        height='10'
-        doneColor='#4274F3'
-        leftColor='rgb(108, 108, 133)'
-        total={pTotal}
-        done={pDone}
-      />
+      { renderRubricButton() }
+      { renderRubric() }      
+      { renderPage() }   
     </div>
   );
 }

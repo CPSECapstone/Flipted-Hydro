@@ -16,3 +16,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
+.demoLabel {
+    grid-column:2/3;
+    justify-content: center;
+    color: rgb(83, 128, 211);
+    font-size: 15px;
+    margin-bottom: 2em;
+  }

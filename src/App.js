@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router';
 import CourseScreen from './Components/CourseScreen.js';
@@ -11,8 +11,9 @@ import Mission from './Components/Mission';
 import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
+import { onError } from '@apollo/client/link/error';
 
-const HOME_SCREEN_PATH = '/mission';
+const HOME_SCREEN_PATH = 'mission';
 
 Amplify.configure({
   Auth: {
@@ -43,6 +44,23 @@ function App() {
     .catch(() => console.log('not signed in'));
   }
 
+  const httpLink = new HttpLink({
+    uri: process.env.REACT_APP_PROD_URI,
+    headers: {
+      authorization: accessToken == null? null : accessToken.getJwtToken(),
+    },
+  });
+  const logoutLink = onError(({ graphQLErrors, networkError }) => {
+    if(graphQLErrors){
+      graphQLErrors.forEach(({ message, locations, path }) => {
+        console.warn(message);
+      })  
+      hist.push({
+        pathname:'/',
+      })
+    } 
+  })
+
   const client = new ApolloClient({
     uri: process.env.REACT_APP_PROD_URI,
     cache: new InMemoryCache({
@@ -52,6 +70,7 @@ function App() {
         },
       }
     }),
+    link: logoutLink.concat(httpLink),
     headers: {
       authorization: accessToken == null? null : accessToken.getJwtToken(),
     },
@@ -116,15 +135,12 @@ function App() {
     <div>
       <p className="navbar">
         <p className="title">flipt.ED</p>
-
         {accessToken == null? <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
         
         <div>
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
         <li><a href="/goalsscreen">Goals</a></li>
         <li><a href="/gradescreen">Grades</a></li> 
-        <li><a href="/task">Task</a></li>  
-        <li><a href="/coursescreen">Courses</a></li>
         <li><a href="/mission">Mission</a></li>      
         </div>}
       </p>
@@ -137,7 +153,6 @@ function App() {
         <div>
         <Switch>
           <Route component = {LoginComponent} exact path = '/'/>
-          <Route component = {CourseScreen} exact path = '/coursescreen'/>
           <Route component = {GoalsScreen} exact path = '/goalsscreen'/>
           <Route component = {GradeScreen} exact path = '/gradescreen'/>
           <Route component = {Mission} exact path = '/mission'/>

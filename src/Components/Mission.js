@@ -51,10 +51,15 @@ function Mission() {
 
   function renderTask(task){
     return (
+      <div>
+        
     <div key={task.id} className={task.__typename} onClick={() => changeFocusedTask(task)}>         
       <ul>
+        
         {task.name}
       </ul>
+    </div>
+      
     </div>
     )
   }
@@ -74,8 +79,12 @@ function Mission() {
       <h1>{title}</h1>
       <h2>{description}</h2>
       <div className="row">
-        <div className="column">
+        
+        <div className="column">      
           <ul>{displayMissions(loading, error, data)}</ul>
+          
+          
+          
         </div>
         <div className="column">
           {!focusedTask? null: <div className="card">

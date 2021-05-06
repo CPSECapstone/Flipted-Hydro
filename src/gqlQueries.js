@@ -37,8 +37,8 @@ export const GET_TASK = gql`
       startAt
       endAt
       dueDate
-      parentMissionId
-      parentMissionIndex
+      missionId
+      missionIndex
       objectiveId
       pages {
         skippable
@@ -103,8 +103,8 @@ export const GET_MISSION = gql`
           instructions
           points
           dueDate
-          parentMissionId
-          parentMissionIndex
+          missionId
+          missionIndex
           requirements{
             id
             description

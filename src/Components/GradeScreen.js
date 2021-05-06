@@ -64,7 +64,10 @@ export default function GradeScreen() {
     })
     return(
         <div>
-            <h1>GradeBook</h1>
+            <h1>GradeBook (Demo)</h1>
+            <h2 className="demoLabel">This feature is a demo and functionality is not fully implemented yet. 
+         Changes are stored locally and do not fully interact like other aspects of the alpha. Feel free 
+         to experiment with its utility and look forward to its full implementation in future versions</h2>
             <div className='gradescreen-grid'>
                 { learningTargets }
             </div>

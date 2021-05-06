@@ -61,12 +61,14 @@ function FRQuestion(props) {
     return (
       <div>
         <div className="chunk">
+          <div className="questCard">
           <h2>{props.question.description}</h2>
           <form className="questionBlock">
               <textarea id="cname" name="cname" value={response}
                 onChange={updateText}
                 onBlur={saveText}/>
           </form>
+          </div>
         </div>
       </div>
     );

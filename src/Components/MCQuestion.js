@@ -61,7 +61,6 @@ function MCQuestion(props) {
     return props.question.options.map((answerChoice, index) => {
       return (
         <div key={index}>
-          <div className="hline"/>
           <div className="answerChoiceItem">
             <label> 
               <input type="radio" value={index} id={index} name="AnswerChoices" onChange={handleChange}
@@ -76,10 +75,12 @@ function MCQuestion(props) {
 
    return (
     <div className="chunk">
+      <div className="questCard">
       <h2>{props.question.description}</h2>
       <form className="questionBlock">
         {renderAnswerChoices()}
       </form>
+      </div>
     </div>
   );
 }

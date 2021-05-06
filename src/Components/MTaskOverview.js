@@ -26,8 +26,7 @@ function MTaskOverview(props) {
     hist.push({
       pathname:TASK_COMPONENT_PATH,
       state: {
-        id: taskId,
-        test: "string"
+        id: taskId
       }
     });
   }
