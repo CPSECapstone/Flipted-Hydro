@@ -141,3 +141,26 @@ export const SAVE_FRQUESTION = gql`
     })
   }
 `;
+
+export const GET_ALL_GOALS = gql`
+  query {
+    getAllGoals{
+      id
+      title
+      dueDate
+      completed
+      completedDate
+      subGoals{
+        title
+        dueDate
+        completed
+        completedDate
+      }
+      category
+      favorited
+      owner
+      assignee
+      pointValue
+    }
+  }
+`;
