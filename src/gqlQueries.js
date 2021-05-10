@@ -140,3 +140,13 @@ export const SAVE_FRQUESTION = gql`
     })
   }
 `;
+
+export const GET_MISSIONS = gql`
+  query getMissions($id: String!){
+    missions(course: $id) {
+      id
+      name
+      description
+    }
+  }
+`;
