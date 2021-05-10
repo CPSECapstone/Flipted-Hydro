@@ -53,14 +53,34 @@ function TaskRubricDrawer(props) {
     // }
 
     if (!completedIds.includes(requirementId)){
-      setCompletedIds([...completedIds, requirementId])
+      setCompletedIds([...completedIds, requirementId]);//this doesn't update immmediately
       submitTaskProgess({
         variables: {
           id: taskId,
-          finishedRequirements: [completedIds, requirementId]
+          finishedRequirements: [...completedIds, requirementId]
         }
       });
     }
+    else {
+      var temp = uncheck(requirementId);
+      setCompletedIds(temp);//this doesn't update immediately
+      submitTaskProgess({
+        variables: {
+          id: taskId,
+          finishedRequirements: temp
+        }
+      });
+    }
+  }
+
+  function uncheck(requirementId) {
+    var temp = [];
+    for (var i = 0; i < completedIds.length; i++){
+      if (completedIds[i] != requirementId){
+        temp.push(completedIds[i]);
+      }
+    }
+    return temp;
   }
 
   function requirementsCompleted() {

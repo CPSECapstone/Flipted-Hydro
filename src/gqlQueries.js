@@ -162,7 +162,6 @@ export const GET_TASK_AND_PROGRESS = gql`
       dueDate
       missionId
       missionIndex
-      objectiveId
       pages {
         skippable
         blocks {
