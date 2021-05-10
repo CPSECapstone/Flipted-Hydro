@@ -1,12 +1,13 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import React, { useState  } from 'react';
-import { GET_ALL_GOALS } from '../gqlQueries';
+import { GET_ALL_GOALS, EDIT_OR_CREATE_GOAL } from '../gqlQueries';
 import "./GoalsScreen.css";
+import Goal from './Goal';
 
 //This component is used to display the main part of the goals screen
 function GoalsScreen() {
 
-  const {loading, error, data} = useQuery(GET_ALL_GOALS);
+  const {loading, error, data, refetch} = useQuery(GET_ALL_GOALS);
 
   //used to filter goals
   const [searchCategory, setSearchCategory] = useState('');
@@ -20,20 +21,8 @@ function GoalsScreen() {
     return <h1>Error</h1>
   }
 
-  console.log(data);
-
   const goals = data.getAllGoals;
   const allCategories = goals.map(goal => goal.category);
-
-  function addGoal (title, category, subGoals) {
-    
-      // setGoals([...goals, {id: goals.length, title: title, completed: false, favorited: false, dueDate: "00/00/00", category: category, owner: "testuser", assignee: "testuser", open: false, subGoals: subGoals} ]);
-      // goals.push({id: goals.length, title: title, completed: false, favorited: false, dueDate: "00/00/00", category: category, owner: "testuser", assignee: "testuser", open: false, subGoals: subGoals});
-      // setAllCategories(() =>getAllCategories());
-      // setNewGoalOpen(false);  
-      console.log('added');
-      setNewGoalOpen(false); 
-  }
 
   //dropdown for the list of all available categories
   function DropDown() {
@@ -58,65 +47,19 @@ function GoalsScreen() {
     )
   }
 
-  function handleCompleteGoal(goalId, subgoalId) {
-    // goals[goalId].subGoals[subgoalId].completed = !goals[goalId].subGoals[subgoalId].completed;
-    // setGoals([...goals]);
-    console.log('completed');
-  }
-
-  function handleStarGoal(goalId) {
-    // goals[goalId].favorited = !goals[goalId].favorited;
-    // setGoals([...goals]);
-    console.log('starred');
-  }
-
-  //displays a list of subgoals
-  function SubGoalList(props) {
-    return props.g.subGoals.map((subg) => (
-      <SubGoal key={subg.id} sg={subg} goalId={props.g.id}/>
-    ));
-  }
-
-  //displays one goal
-  function Goal(props){
-
-    const [open, setOpen] = useState(false);
-
-    return(
-      <div className="goal">
-        <div className="goalGrid">
-          <button className="arrowButton" onClick={() => setOpen(!open)}>{props.g.open ? "v" : ">" }</button>
-          <h1 >{props.g.title}</h1>
-          <button className="checkButton" courseid={props.g.id} onClick={() => handleStarGoal(props.g.id)}>{props.g.favorited ? "⭐" : ""}</button>
-        </div>
-        {open ? (<SubGoalList g={props.g}/>) : null }
-      </div>
-    );
-  }
+ 
 
   //displays a list of goals
   function StarredGoalList() {
     return goals.filter(({category, favorited}) => {return (category === searchCategory || searchCategory === '') && favorited;}).map((goal) => (
-      <Goal key={goal.id} g={goal}/>
+      <Goal key={goal.id} goal={goal}/>
     ));
   }
 
   function UnstarredGoalList() {
     return goals.filter(({category, favorited}) => {return (category === (searchCategory) || searchCategory === '') && !favorited;}).map((goal) => (
-      <Goal key={goal.id} g={goal}/>
+      <Goal key={goal.id} goal={goal}/>
     ));
-  }
-
-  //displays one subgoal
-  function SubGoal(props){
-    return(
-      <div className={props.sg.completed ? "subGoalDone" : "subGoal"}>
-        <h1>{props.sg.title}</h1>
-        <p>{"due: "+props.sg.dueDate}</p>
-        <button className="checkButton" courseid={props.sg.id} onClick={() => handleCompleteGoal(props.goalId, props.sg.id)}>{props.sg.completed ? "✅" : ""}</button>
-      </div>
-      
-    );
   }
 
   function NewGoalForm() {
@@ -124,25 +67,46 @@ function GoalsScreen() {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [subGoals, setSubGoals] = useState([]);
+    const [dueDate, setDueDate] = useState('');
 
     //used by the form as a new subgoal is built
     const [subTitle, setSubTitle] = useState('');
     const [subDate, setSubDate] = useState('');
+    const [createGoal] = useMutation(EDIT_OR_CREATE_GOAL);
+
+    function submitNewGoal (title, dueDate, category, subGoals) { 
+  
+      createGoal({
+        variables: {
+          goalInput: {
+            title: title,
+            dueDate: dueDate,
+            completed: false,
+            subGoals: subGoals,
+            category: category,
+            favorited: false
+          }
+        }
+      }).then(response => {
+        refetch();
+      });
+        setNewGoalOpen(false); 
+    }
 
     function handleAddSubgoal() {
       if (subTitle != '' && subDate != '') {
-        setSubGoals([...subGoals, {id: subGoals.length, title: subTitle, completed: false, dueDate: subDate}]);
+        setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate}]);
         setSubTitle('');
         setSubDate('');
       }
     }
 
     function handleAddGoal() {
-      if (title != '' && subGoals.length != 0){
-        console.log("addgoal is running");
-        addGoal(title, category, subGoals);
+      if (title != '' && dueDate != '' && subGoals.length != 0){
+        submitNewGoal(title, dueDate, category, subGoals);
         setTitle('');
         setCategory('');
+        setDueDate('');
         setSubGoals([]);
       }
     }
@@ -156,11 +120,16 @@ function GoalsScreen() {
           
           <label className="textInput"> Category: </label>
           <input type="text" id="cname" name="cname" value={category} onChange={event => setCategory(event.target.value)}/>
+
+          <label className="textInput"> Due Date: </label>
+          <input type="text" id="cname" name="cname" value={dueDate} onChange={event => setDueDate(event.target.value)}/>
           
           <label className="textInput"> Subgoal: </label>
           <input type="text" id="cname" name="cname" value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
-          <label className="textInput"> Due date: </label>
+
+          <label className="textInput"> Subgoal Due date: </label>
           <input type="text" id="cname" name="cname" value={subDate} onChange={event => setSubDate(event.target.value)}/>
+
           <button type="button" onClick={handleAddSubgoal}>add subgoal</button>
           
 

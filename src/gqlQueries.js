@@ -164,3 +164,9 @@ export const GET_ALL_GOALS = gql`
     }
   }
 `;
+
+export const EDIT_OR_CREATE_GOAL = gql`
+  mutation editOrCreateGoal($goalInput: GoalInput!){
+    editOrCreateGoal(goal: $goalInput)
+  }
+`;
