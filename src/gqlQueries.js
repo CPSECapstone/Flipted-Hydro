@@ -39,7 +39,6 @@ export const GET_TASK = gql`
       dueDate
       missionId
       missionIndex
-      objectiveId
       pages {
         skippable
         blocks {
