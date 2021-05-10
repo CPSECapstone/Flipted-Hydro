@@ -15,14 +15,14 @@
 }
 
 .hamburgerButton {
-    top: 0;
+    top: 5px;
+    bottom: 0;
     padding:0;
-    margin: 0;
+    margin-bottom: 0;
     color: white;
+    width: 0;
 }
 
 .rubricHamburgerButton {
     float: right;
-    /* transform: [{ rotate: '90deg'}]; */
-    transform: 'rotate(-90deg)';
 }

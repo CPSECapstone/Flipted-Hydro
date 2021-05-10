@@ -170,7 +170,6 @@ function Task(props) {
         <div className="headerButtons">
           <div>{ renderPrevButton() }</div>
           {/* <div>{ renderRubricButton() }</div> */}
-          <div>{ (pageNo < pages.length - 1) ? renderAddButton() : null}</div>
           
           <ProgressBar 
             width='700'
@@ -181,7 +180,7 @@ function Task(props) {
             done={pDone}
           />
           
-          <div>{ (pageNo < pages.length - 1) ? renderAddButton() : renderSubmitButton()}</div>
+          <div>{ (pageNo < pages.length - 1) ? renderNextButton() : renderSubmitButton()}</div>
           
         </div>
         
@@ -200,7 +199,7 @@ function Task(props) {
         </div>);
   }
 
-  function renderAddButton() {
+  function renderNextButton() {
     if(pageNo < pages.length - 1) {
       return (<div onClick = { () => addPage() }>
         <img src={NEXT} alt="Next Button" />
@@ -327,7 +326,7 @@ function Task(props) {
       { renderHeader() }
       <TaskRubricDrawer requirements={requirements} taskId={taskId} submitFunction={submitTask}/>
       { renderRubricButton() }
-      { renderRubric() }      
+      {/* { renderRubric() }       */}
       { renderPage() }   
     </div>
   );
