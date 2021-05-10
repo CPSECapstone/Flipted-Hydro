@@ -1,6 +1,6 @@
 import { useQuery  } from '@apollo/client';
 import { useState } from 'react';
-import { GET_TASK } from '../gqlQueries.js';
+import { GET_TASK_AND_PROGRESS } from '../gqlQueries.js';
 import { TextTask } from './Text.js';
 import Image from './Image.js';
 import Video from './Video.js';
@@ -70,18 +70,13 @@ function Task(props) {
 
   const taskId = props?.location?.state?.id;
 
-  const { loading, error, data, refetch} = useQuery(GET_TASK, {
+  const { loading, error, data, refetch} = useQuery(GET_TASK_AND_PROGRESS, {
     variables: { id: taskId },
   });
 
   const [rubricOpen, setRubricOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
   const [pDone, setPDone] = useState(1);
-  const [fakerequirements, setfakeRequirements] = useState([
-    {id: 0, description: "Understand the structure of covalent bonds", isComplete: false}, 
-    {id: 1, description: "Understand the properties of covalent bonds", isComplete: false}, 
-    {id: 2, description: "Understand the intricacies of covalent bonds", isComplete: false}
-  ]);
 
   if(loading) return (
     <div className = 'tasks'> 
@@ -98,6 +93,8 @@ function Task(props) {
       </div>
     );
   }
+
+  console.log(data);
 
   const pages = data.task.pages;
   const title = data.task.name;
@@ -166,10 +163,8 @@ function Task(props) {
       <div className='header'>
         <h1>{ title }</h1>
         
-        
         <div className="headerButtons">
           <div>{ renderPrevButton() }</div>
-          {/* <div>{ renderRubricButton() }</div> */}
           
           <ProgressBar 
             width='700'
@@ -183,8 +178,6 @@ function Task(props) {
           <div>{ (pageNo < pages.length - 1) ? renderNextButton() : renderSubmitButton()}</div>
           
         </div>
-        
-        
       </div>
     
     );
@@ -212,9 +205,6 @@ function Task(props) {
   }
 
   function renderSubmitButton() {
-    // if(pageNo === pages.length - 1) {
-    //   return (<button onClick = { () => submitTask() }>Submit</button>);
-    // }
     if (requirementsCompleted())
       return (<button className="submitButton" onClick = { () => submitTask() }>Submit</button>);
     else
@@ -223,46 +213,12 @@ function Task(props) {
 
   function requirementsCompleted() {
     var rc = true;
-    for (var i = 0; i < fakerequirements.length; i++){
-      if (!fakerequirements[i].isComplete){
+    for (var i = 0; i < requirements.length; i++){
+      if (!requirements[i].isComplete){
         rc = false;
       }
     }
     return rc;
-  }
-
-  function renderRubric() {
-    
-    return(
-      <div className="rubric">
-        {rubricOpen ? (
-          <div className="requirementsList">{RequirementsList()}{renderSubmitButton()}</div>
-        ) : null}
-      </div>
-    );
-  }
-
-  //displays a list of requirements
-  function RequirementsList(props) {
-    return fakerequirements.map((r) => (
-      <Requirement key={r.id} r={r} />
-    ));
-  }
-
-  //displays one requirement
-  function Requirement(props){
-    return(
-      <div className={props.r.isComplete ? "requirementDone" : "requirement"}>
-        <h1 >{props.r.description}</h1>
-        <button className="reqCheckButton" courseid={props.r.id} onClick={() => handleCompleteRequirement(props.r.id)}>{props.r.isComplete ? "✅" : ""}</button>
-      </div>
-      
-    );
-  }
-
-  function handleCompleteRequirement(requirementId) {
-    fakerequirements[requirementId].isComplete = !fakerequirements[requirementId].isComplete;
-    setfakeRequirements([...fakerequirements]);
   }
 
   function renderPage() {
@@ -323,10 +279,16 @@ function Task(props) {
 
   return (
     <div className = 'tasks'>  
+
       { renderHeader() }
-      <TaskRubricDrawer requirements={requirements} taskId={taskId} submitFunction={submitTask}/>
+      <TaskRubricDrawer 
+      rubricOpen={rubricOpen} 
+      setRubricOpen={setRubricOpen} 
+      requirements={requirements} 
+      taskId={taskId} 
+      submitFunction={submitTask}/>
+
       { renderRubricButton() }
-      {/* { renderRubric() }       */}
       { renderPage() }   
     </div>
   );

@@ -150,3 +150,80 @@ export const SUBMIT_TASK_PROGRESS = gql`
     })
   }
 `;
+
+export const GET_TASK_AND_PROGRESS = gql`
+  query getTask($id: String!){
+    task(taskId: $id){
+      id
+      name
+      instructions
+      points
+      startAt
+      endAt
+      dueDate
+      missionId
+      missionIndex
+      objectiveId
+      pages {
+        skippable
+        blocks {
+          title
+          ... on ImageBlock {
+            imageUrl
+          }
+          ... on TextBlock {
+            contents
+            fontSize
+          }
+          ... on VideoBlock {
+            videoUrl
+          }
+          ... on QuizBlock{
+            blockId
+            questions{
+              ... on FrQuestion{
+                id
+                description
+              }
+              ... on McQuestion {
+                id
+                description
+                points
+                options {
+                  description
+                }
+              }
+            }
+          }        
+        }
+      }
+      requirements {
+        id 
+        description
+        isComplete
+      }
+    },
+    retrieveQuestionProgress(taskId: $id){
+      answers{
+        questionId
+        pointsAwarded
+        answer
+      }
+    },
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;
+
+export const GET_TASK_PROGRESS = gql`
+  query getTask($id: String!){
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;

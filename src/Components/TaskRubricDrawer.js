@@ -2,20 +2,18 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import SpellcheckIcon from '@material-ui/icons/Spellcheck';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import MenuIcon from '@material-ui/icons/Menu';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import "./Drawer.css";
+import { GET_TASK_PROGRESS } from '../gqlQueries.js';
 import { SUBMIT_TASK_PROGRESS } from '../gqlQueries.js';
 import { useMutation  } from '@apollo/client';
+import { useQuery  } from '@apollo/client';
 
 const useStyles = makeStyles({
   list: {
@@ -28,27 +26,38 @@ const useStyles = makeStyles({
 
 function TaskRubricDrawer(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [submitTaskProgess] = useMutation(SUBMIT_TASK_PROGRESS);
-  const [requirements, setRequirements] = React.useState(props.requirements);
+
+  var requirements = props.requirements;
+
+  const { loading, error, data, refetch} = useQuery(GET_TASK_PROGRESS, {
+    variables: { id: props.taskId },
+  });
+
+  function isComplete(requirementID) {
+    return data.retrieveTaskProgress.finishedRequirementIds.includes(requirementID);
+  }
 
   function completeRequirement(taskId, requirementId) {
-        submitTaskProgess({
-          variables: {
-            id: taskId,
-            finishedRequirements: [requirementId]
-          }
-        })
+    if (!data.retrieveTaskProgress.finishedRequirementIds.includes(requirementId)){
+      submitTaskProgess({
+        variables: {
+          id: taskId,
+          finishedRequirements: [...data.retrieveTaskProgress.finishedRequirementIds, requirementId]
+        }
+      });
+    }
   }
 
   function requirementsCompleted() {
-    var rc = true;
-    for (var i = 0; i < requirements.length; i++){
-      if (!requirements[i].isComplete){
-        rc = false;
-      }
-    }
-    return rc;
+    // var rc = true;
+    // for (var i = 0; i < requirements.length; i++){
+    //   if (!requirements[i].isComplete){
+    //     rc = false;
+    //   }
+    // }
+    // return rc;
+    return requirements.length == data.retrieveTaskProgress.finishedRequirementIds.length;
   }
 
   const toggleDrawer = (openParam) => (event) => {
@@ -56,18 +65,8 @@ function TaskRubricDrawer(props) {
       return;
     }
 
-    setOpen(openParam);
+    props.setRubricOpen(openParam);
   };
-
-  function handleClickRequirement(id){
-    let temp = [...requirements];
-    for (var i = 0; i < temp.length; i++){
-      if (temp[i].id == id) {
-        temp[i].isComplete = !temp[i].isComplete;
-      }
-    }
-    setRequirements([...temp]);
-  }
 
   const list = (anchor) => (
     <div
@@ -88,15 +87,15 @@ function TaskRubricDrawer(props) {
 
         {requirements.map((requirement) => (
             
-            <ListItem button  onClick={()=>handleClickRequirement(requirement.id)}>
-                {console.log(requirement.isComplete)}
-                <ListItemIcon>{requirement.isComplete ? (<CheckCircleIcon />) : (<RadioButtonUncheckedIcon />)}</ListItemIcon>
+            // <ListItem button  onClick={()=>handleClickRequirement(requirement.id)}>
+            <ListItem button onClick={()=>completeRequirement(props.taskId, requirement.id)}>
+                <ListItemIcon>{isComplete(requirement.id) ? (<CheckCircleIcon />) : (<RadioButtonUncheckedIcon />)}</ListItemIcon>
                 <ListItemText className="buttonText" primary={requirement.description} />
              </ListItem>
         ))}
 
-            <ListItem button  onClick={requirementsCompleted() ? props.submitFunction : null}>
-              <ListItem button  onClick={props.submitFunction}></ListItem>
+            <ListItem button onClick={requirementsCompleted() ? props.submitFunction : null}>
+              <ListItem button onClick={props.submitFunction}></ListItem>
                 <ListItemText className={requirementsCompleted() ? "blueButtonText" : "buttonText"} primary="SUBMIT TASK" />
              </ListItem>
 
@@ -107,8 +106,8 @@ function TaskRubricDrawer(props) {
 
   return (
     <div>
-        <Button className="rubricHamburgerButton" onClick={toggleDrawer(true)}><MenuIcon/>{"Task Rubric"}</Button>
-        <Drawer anchor='right' open={open} onClose={toggleDrawer(false)}>
+        {/* <Button className="rubricHamburgerButton" onClick={toggleDrawer(true)}><MenuIcon/>{"Task Rubric"}</Button> */}
+        <Drawer anchor='right' open={props.rubricOpen} onClose={toggleDrawer(false)}>
         {list('right')}
         </Drawer>
     </div>
@@ -116,6 +115,3 @@ function TaskRubricDrawer(props) {
 }
 
 export default TaskRubricDrawer;
-
-
-
