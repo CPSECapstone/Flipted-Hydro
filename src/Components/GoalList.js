@@ -1,11 +1,12 @@
 import { useQuery, useMutation } from '@apollo/client';
 import React, { useState  } from 'react';
-import { GET_ALL_GOALS, EDIT_OR_CREATE_GOAL } from '../gqlQueries';
+import { GET_ALL_GOALS } from '../gqlQueries';
 import "./GoalsScreen.css";
 import Goal from './Goal';
+import GoalForm from './GoalForm';
 
 //This component is used to display the main part of the goals screen
-function GoalsScreen() {
+function GoalList() {
 
   const {loading, error, data, refetch} = useQuery(GET_ALL_GOALS);
 
@@ -62,87 +63,7 @@ function GoalsScreen() {
     ));
   }
 
-  function NewGoalForm() {
-    //used by the form as a new goal is built
-    const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('');
-    const [subGoals, setSubGoals] = useState([]);
-    const [dueDate, setDueDate] = useState('');
-
-    //used by the form as a new subgoal is built
-    const [subTitle, setSubTitle] = useState('');
-    const [subDate, setSubDate] = useState('');
-    const [createGoal] = useMutation(EDIT_OR_CREATE_GOAL);
-
-    function submitNewGoal (title, dueDate, category, subGoals) { 
   
-      createGoal({
-        variables: {
-          goalInput: {
-            title: title,
-            dueDate: dueDate,
-            completed: false,
-            subGoals: subGoals,
-            category: category,
-            favorited: false
-          }
-        }
-      }).then(response => {
-        refetch();
-      });
-        setNewGoalOpen(false); 
-    }
-
-    function handleAddSubgoal() {
-      if (subTitle != '' && subDate != '') {
-        setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate}]);
-        setSubTitle('');
-        setSubDate('');
-      }
-    }
-
-    function handleAddGoal() {
-      if (title != '' && dueDate != '' && subGoals.length != 0){
-        submitNewGoal(title, dueDate, category, subGoals);
-        setTitle('');
-        setCategory('');
-        setDueDate('');
-        setSubGoals([]);
-      }
-    }
-
-    return (
-        <form data-testid="test2" className="newGoalForm" >
-          <h3 >Add Goal</h3>
-          <label className="textInput"> Title: </label>
-          <input type="text" id="cname" name="cname" value={title} onChange={event => setTitle(event.target.value)}/>
-          <br />
-          
-          <label className="textInput"> Category: </label>
-          <input type="text" id="cname" name="cname" value={category} onChange={event => setCategory(event.target.value)}/>
-
-          <label className="textInput"> Due Date: </label>
-          <input type="text" id="cname" name="cname" value={dueDate} onChange={event => setDueDate(event.target.value)}/>
-          
-          <label className="textInput"> Subgoal: </label>
-          <input type="text" id="cname" name="cname" value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
-
-          <label className="textInput"> Subgoal Due date: </label>
-          <input type="text" id="cname" name="cname" value={subDate} onChange={event => setSubDate(event.target.value)}/>
-
-          <button type="button" onClick={handleAddSubgoal}>add subgoal</button>
-          
-
-          <div>
-            {subGoals.map((subgoal, i)=>(
-            <p key={i}>{subgoal.title}</p>
-            ))}
-          </div>
-
-          <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
-        </form>
-    )
-  }
 
   function GoalsDisplay() {
     return (
@@ -163,22 +84,27 @@ function GoalsScreen() {
     );
   }
 
+  function closeGoalForm(){
+    refetch();
+    setNewGoalOpen(false);
+  }
+
   function NewGoalFormDisplay() {
     return(
       <div className="popupContainer" key="popupcontainer">
         <div className="newGoalForm" key="newgoalform">
-          <NewGoalForm key="newform"/>
-          <button type="button" onClick={()=>setNewGoalOpen(false)}>close</button>
+          <GoalForm key="newform"/>
+          <button type="button" onClick={closeGoalForm}>close</button>
         </div>
       </div>
     );
   }
 
-    return (
-      <div className="mainGoalsPage" key="maingoalspage" >   
-        {newGoalOpen ? (<NewGoalFormDisplay key="form"/>) : (<GoalsDisplay key="goals"/>)}
-      </div>
-    );
+  return (
+    <div className="mainGoalsPage" key="maingoalspage" >   
+      {newGoalOpen ? (<NewGoalFormDisplay key="form"/>) : (<GoalsDisplay key="goals"/>)}
+    </div>
+  );
 }
 
-export default GoalsScreen;
+export default GoalList;

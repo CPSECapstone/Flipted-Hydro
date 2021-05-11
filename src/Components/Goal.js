@@ -19,9 +19,10 @@ function strip_subgoal_id(current_goal_state){
 }
 
 //displays one goal
-export default function Goal(props){
+function Goal(props){
 
-  const [open, setOpen] = useState(false);
+  const goal_open_key = 'GOAL#' + props.goal.id + '#OPEN'
+  const [open, setOpen] = useState(localStorage.getItem(goal_open_key) === "open");
 
   let current_goal_state = {
     id: props.goal.id,
@@ -99,6 +100,8 @@ export default function Goal(props){
         editOrCreateGoal: props.goal.id
       }
     })
+    localStorage.setItem(goal_open_key, "open");
+    setOpen(true);
   }
 
   function handleStarGoal(goal) {
@@ -136,14 +139,21 @@ export default function Goal(props){
     ));
   }
 
+  function toggleOpenGoal(){
+    localStorage.setItem(goal_open_key, open? "closed" : "open");
+    setOpen(!open);
+  }
+
   return(
     <div className="goal">
       <div className="goalGrid">
-        <button className="arrowButton" onClick={() => setOpen(!open)}>{open ? "v" : ">" }</button>
+        <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button>
         <h1 >{props.goal.title}</h1>
         <button className="checkButton" courseid={props.goal.id} onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
       </div>
-      {open ? (<SubGoalList g={current_goal_state}/>) : null }
+      {open? (<SubGoalList g={current_goal_state}/>) : null }
     </div>
   );
 }
+
+export default Goal;
