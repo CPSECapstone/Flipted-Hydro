@@ -88,7 +88,7 @@ function NavDrawer(props) {
 
   return (
     <div>
-        <Button className="hamburgerButton" onClick={toggleDrawer(true)}><MenuIcon/></Button>
+        <Button className="hamburgerButton" onClick={toggleDrawer(true)}><MenuIcon style={{ color: "white" }}/></Button>
         <Drawer anchor='left' open={open} onClose={toggleDrawer(false)}>
         {list('left')}
         </Drawer>
