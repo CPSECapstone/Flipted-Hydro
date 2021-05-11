@@ -71,7 +71,7 @@ function GoalList() {
         <h1 data-testid="test1" className="pageTitle">My Goals</h1>
         <button type="button" className="newGoalButton" onClick={()=>setNewGoalOpen(true)}>New Goal</button>
         <div className="filterBar">
-          <h3>Filter by Category:</h3>
+          <h2>Filter by Category:</h2>
           <div>
             <DropDown/>
           </div>

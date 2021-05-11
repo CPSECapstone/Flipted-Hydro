@@ -17,8 +17,7 @@
 .pageTitle {
   grid-column:2/3;
   justify-content: center;
-  color: rgb(83, 128, 211);
-  font-size: 90px;
+  font-size: 60px;
   margin-bottom: 1em;
   margin-top: 1em;
 }
@@ -37,7 +36,7 @@
 }
 
 .goal {
-  background-color: grey;
+  background-color: rgb(189, 189, 189);
   color: black;
   font-size: 35px;
   border: 1px;
@@ -46,7 +45,7 @@
 }
 
 .goal:nth-child(odd)  {
-  background-color: rgb(107, 107, 107);
+  background-color: rgb(165, 165, 165);
   color: black;
   font-size: 35px;
   border: 1px;
@@ -148,12 +147,6 @@
   position: relative;
   width: 65px;
   height: 40px;
-  background-color: rgb(103, 103, 243);
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  border: 1px solid white;
-  border-radius: 10%;
   display: flex;
   align-items: center; 
   justify-content: center;
@@ -288,5 +281,10 @@ button:active {
 .newGoalForm {
   grid-column:2/3;
   grid-row:2/3;
-  background-color: #71819b;
+  background-color: white;
+  border-style: solid;
+  border-color: rgb(173, 173, 173);
+  border-radius: 1em;
+  padding: 2em;
+  border-width: 0.1em;
 }

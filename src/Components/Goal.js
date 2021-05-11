@@ -125,8 +125,8 @@ function Goal(props){
   function SubGoal(props){
     return(
       <div className={props.sg.completed ? "subGoalDone" : "subGoal"}>
-        <h1>{props.sg.title}</h1>
-        <p>{"due: "+props.sg.dueDate}</p>
+        <h2>{props.sg.title}</h2>
+        <h2>{"due: "+props.sg.dueDate}</h2>
         <button className="checkButton" courseid={props.sg.id} onClick={() => handleCompleteSubGoal(props.sg.id)}>{props.sg.completed ? "✅" : ""}</button>
       </div>   
     );
@@ -148,7 +148,7 @@ function Goal(props){
     <div className="goal">
       <div className="goalGrid">
         <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button>
-        <h1 >{props.goal.title}</h1>
+        <h2>{props.goal.title}</h2>
         <button className="checkButton" courseid={props.goal.id} onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
       </div>
       {open? (<SubGoalList g={current_goal_state}/>) : null }

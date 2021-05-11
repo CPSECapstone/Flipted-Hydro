@@ -2,6 +2,17 @@ import { useMutation } from '@apollo/client';
 import React, { useState  } from 'react';
 import { EDIT_OR_CREATE_GOAL } from '../gqlQueries';
 import "./GoalsScreen.css";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 function GoalForm() {
   //used by the form as a new goal is built
@@ -49,40 +60,37 @@ function GoalForm() {
     }
   }
 
+  const classes = useStyles();
+
   return (
-      <form data-testid="test2" className="newGoalForm" >
-        <h3 >Add Goal</h3>
-        <label className="textInput"> Title: </label>
-        <input type="text" id="cname" name="cname" value={title} onChange={event => setTitle(event.target.value)}/>
-        <br />
-        
-        <label className="textInput"> Category: </label>
-        <input type="text" id="cname" name="cname" value={category} onChange={event => setCategory(event.target.value)}/>
-        <br />
+    <div>
 
-        <label className="textInput"> Due Date: </label>
-        <input type="text" id="cname" name="cname" value={dueDate} onChange={event => setDueDate(event.target.value)}/>
-        <br />
-
-        <label className="textInput"> Subgoal: </label>
-        <input type="text" id="cname" name="cname" value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
-        <br />
-
-        <label className="textInput"> Subgoal Due date: </label>
-        <input type="text" id="cname" name="cname" value={subDate} onChange={event => setSubDate(event.target.value)}/>
-        <br />
-
+      <form className={classes.root} noValidate autoComplete="off">
+        <h2 style={{display: "flex"}}>Create Goal</h2>
+        <TextField id="outlined-basic" label="Title" variant="outlined"
+          value={title} onChange={event => setTitle(event.target.value)}/>
+        <TextField id="outlined-basic" label="Category" variant="outlined"
+          value={category} onChange={event => setCategory(event.target.value)}/>
+        <TextField id="outlined-basic" label="Due Date" variant="outlined"
+          value={dueDate} onChange={event => setDueDate(event.target.value)}/>
+        <br/><br/>
+        <TextField id="outlined-basic" label="SubGoal Title" variant="outlined"
+          value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
+        <TextField id="outlined-basic" label="SubGoal Due Date" variant="outlined"
+          value={subDate} onChange={event => setSubDate(event.target.value)}/>
         <button type="button" onClick={handleAddSubgoal}>add subgoal</button>
-        
-
-        <div>
-          {subGoals.map((subgoal, i)=>(
-          <p key={i}>{subgoal.title}</p>
-          ))}
-        </div>
-
-        <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
       </form>
+
+      <div>
+        {subGoals.map((subgoal, i)=>(
+        <p key={i}>{subgoal.title}</p>
+        ))}
+      </div>
+
+      <br/>
+      <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
+
+    </div>      
   )
 }
 
