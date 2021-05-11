@@ -4,16 +4,7 @@ import "./GoalsScreen.css";
 //This component is used to display the main part of the goals screen
 function GoalsScreen() {
 
-  //used by the form as a new goal is built
-  const [name, setName] = useState('');
-  const [goal, setGoal] = useState('');
-  const [tag, setTag] = useState('');
-  const [tags, setTags] = useState([]);
-  const [subgoals, setSubgoals] = useState([]);
-
-  //used by the form as a new subgoal is built
-  const [subName, setSubName] = useState('');
-  const [subDate, setSubDate] = useState('');
+  
 
   //used to filter goals
   const [searchTag, setSearchTag] = useState('');
@@ -49,16 +40,17 @@ function GoalsScreen() {
 
   const [newGoalOpen, setNewGoalOpen] = useState(false);
 
-  const handleAddGoal = (event) => {
-    event.preventDefault();
-    setGoals([...goals, {id: goals.length, name: name, done: false, starred: false, goal: goal, duedate: "00/00/00", tags: tags, owner: "testuser", assignee: "testuser", open: false, subgoals: subgoals} ]);
-    goals.push({id: goals.length, name: name, done: false, starred: false, goal: goal, duedate: "00/00/00", tags: tags, owner: "testuser", assignee: "testuser", open: false, subgoals: subgoals});
-    setName('');
-    setGoal('');
-    setTags([]);
-    setSubgoals([]);
-    setAllTags(() =>getAllTags());
-    setNewGoalOpen(false);
+  function addGoal (name, goal, tags, subgoals) {
+    
+      setGoals([...goals, {id: goals.length, name: name, done: false, starred: false, goal: goal, duedate: "00/00/00", tags: tags, owner: "testuser", assignee: "testuser", open: false, subgoals: subgoals} ]);
+      goals.push({id: goals.length, name: name, done: false, starred: false, goal: goal, duedate: "00/00/00", tags: tags, owner: "testuser", assignee: "testuser", open: false, subgoals: subgoals});
+      // setName('');
+      // setGoal('');
+      // setTags([]);
+      // setSubgoals([]);
+      setAllTags(() =>getAllTags());
+      setNewGoalOpen(false);
+    
   }
 
   function getAllTags() {
@@ -77,7 +69,7 @@ function GoalsScreen() {
 
     return (
       <div>
-        <button type="button" className="dropdownArrowButton" onClick={()=>setOpen(!open)}>v</button>
+        <button type="button" className="dropdownButton" onClick={()=>setOpen(!open)}>{searchTag == "" ? "v" : searchTag}</button>
         <br/>
         {open ? (<DisplayDropDownList/>) : null}
       </div>);
@@ -92,17 +84,6 @@ function GoalsScreen() {
         ))}
       </div>
     )
-  }
-
-  function handleAddTag() {
-    setTags(tags.concat(tag));
-    setTag('');
-  }
-
-  function handleAddSubgoal() {
-    setSubgoals([...subgoals, {id: subgoals.length, name: subName, done: false, goal: 'n/a', duedate: subDate}]);
-    setSubName('');
-    setSubDate('');
   }
 
   function handleCompleteGoal(goalId, subgoalId) {
@@ -167,8 +148,46 @@ function GoalsScreen() {
   }
 
   function NewGoalForm() {
+    //used by the form as a new goal is built
+    const [name, setName] = useState('');
+    const [goal, setGoal] = useState('');
+    const [tag, setTag] = useState('');
+    const [tags, setTags] = useState([]);
+    const [subgoals, setSubgoals] = useState([]);
+
+    //used by the form as a new subgoal is built
+    const [subName, setSubName] = useState('');
+    const [subDate, setSubDate] = useState('');
+
+    function handleAddSubgoal() {
+      if (subName != '' && subDate != '') {
+        setSubgoals([...subgoals, {id: subgoals.length, name: subName, done: false, goal: 'n/a', duedate: subDate}]);
+        setSubName('');
+        setSubDate('');
+      }
+    }
+
+    function handleAddTag() {
+      if (tag != ''){
+        setTags(tags.concat(tag));
+        setTag('');
+      }
+      
+    }
+
+    function handleAddGoal() {
+      if (name!= '' && goal != '' && subgoals.length != 0){
+        console.log("addgoal is running");
+        addGoal(name, goal, tags, subgoals);
+        setName('');
+        setGoal('');
+        setTags([]);
+        setSubgoals([]);
+      }
+    }
+
     return (
-        <form data-testid="test2" className="newGoalForm" onSubmit={handleAddGoal}>
+        <form data-testid="test2" className="newGoalForm" >
           <h3 >Add Goal</h3>
           <label className="textInput"> Name: </label>
           <input type="text" id="cname" name="cname" value={name} onChange={event => setName(event.target.value)}/>
@@ -201,7 +220,7 @@ function GoalsScreen() {
             ))}
           </div>
 
-          <button type="submit" className="submitbutton">Submit</button>
+          <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
         </form>
     )
   }
@@ -217,7 +236,6 @@ function GoalsScreen() {
         <div className="filterBar">
           <h3>Filter by tag:</h3>
           <div>
-            <input type="text" value={searchTag} onChange={event => setSearchTag(event.target.value)}/>
             <DropDown/>
           </div>
         </div>
@@ -231,9 +249,9 @@ function GoalsScreen() {
 
   function NewGoalFormDisplay() {
     return(
-      <div className="popupContainer">
-        <div className="newGoalForm">
-          <NewGoalForm/>
+      <div className="popupContainer" key="popupcontainer">
+        <div className="newGoalForm" key="newgoalform">
+          <NewGoalForm key="newform"/>
           <button type="button" onClick={()=>setNewGoalOpen(false)}>close</button>
         </div>
       </div>
@@ -241,7 +259,7 @@ function GoalsScreen() {
   }
 
     return (
-      <div className="mainGoalsPage">   
+      <div className="mainGoalsPage" key="maingoalspage" >   
         {newGoalOpen ? (<NewGoalFormDisplay key="form"/>) : (<GoalsDisplay key="goals"/>)}
       </div>
     );

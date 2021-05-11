@@ -11,6 +11,7 @@ import Mission from './Components/Mission';
 import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
+import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 
 const HOME_SCREEN_PATH = 'mission';
@@ -132,20 +133,20 @@ function App() {
 
   return (
     <div>
-      <p className="navbar">
+      
+      <div className="navbar">
         <p className="title">flipt.ED</p>
         {accessToken == null? <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
         
+
         <div>
+        <NavDrawer className="drawer"/>
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
-        <li><a href="/goalsscreen">Goals</a></li>
-        <li><a href="/gradescreen">Grades</a></li> 
-        <li><a href="/mission">Mission</a></li>      
-        </div>}
-      </p>
-      
-      
-      
+        
+
+        </div>
+        }
+      </div>
       
       <ApolloProvider client={client}>
 
@@ -157,9 +158,12 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
+          <Route component = {NavDrawer} exact path = '/nav'/>
         </Switch>
         </div>
       </ApolloProvider>
+
+      
     </div>
   );
 }

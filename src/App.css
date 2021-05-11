@@ -68,6 +68,11 @@ h2 {
     padding: 0px 16px;
     padding-top: 18px;
 }
+
+.navbar button {
+  padding: 0;
+  float: left;
+}
   
 .navbar li a {
     display: block;

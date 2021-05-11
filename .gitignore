@@ -19,4 +19,4 @@ bin-release/
 node_modules
 .eslintcache
 .env
-
+package-lock.json
