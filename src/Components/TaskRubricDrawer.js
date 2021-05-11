@@ -10,10 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import "./Drawer.css";
-import { GET_TASK_PROGRESS } from '../gqlQueries.js';
 import { SUBMIT_TASK_PROGRESS } from '../gqlQueries.js';
 import { useMutation  } from '@apollo/client';
-import { useQuery  } from '@apollo/client';
 import { useState } from 'react';
 
 const useStyles = makeStyles({
@@ -31,26 +29,13 @@ function TaskRubricDrawer(props) {
 
   var requirements = props.requirements;
 
-  const { loading, error, data, refetch} = useQuery(GET_TASK_PROGRESS, {
-    variables: { id: props.taskId },
-  });
-
-  const [completedIds, setCompletedIds] = useState([...data.retrieveTaskProgress.finishedRequirementIds]);
+  const [completedIds, setCompletedIds] = useState(props.taskProgress == null ? [] : [...props.taskProgress.finishedRequirementIds]);
 
   function isComplete(requirementID) {
-    //return data.retrieveTaskProgress.finishedRequirementIds.includes(requirementID);
     return completedIds.includes(requirementID);
   }
 
   function completeRequirement(taskId, requirementId) {
-    // if (!data.retrieveTaskProgress.finishedRequirementIds.includes(requirementId)){
-    //   submitTaskProgess({
-    //     variables: {
-    //       id: taskId,
-    //       finishedRequirements: [...data.retrieveTaskProgress.finishedRequirementIds, requirementId]
-    //     }
-    //   });
-    // }
 
     if (!completedIds.includes(requirementId)){
       setCompletedIds([...completedIds, requirementId]);//this doesn't update immmediately
@@ -84,16 +69,6 @@ function TaskRubricDrawer(props) {
   }
 
   function requirementsCompleted() {
-    // var rc = true;
-    // for (var i = 0; i < requirements.length; i++){
-    //   if (!requirements[i].isComplete){
-    //     rc = false;
-    //   }
-    // }
-    // return rc;
-
-    //return requirements.length === data.retrieveTaskProgress.finishedRequirementIds.length;
-
     return requirements.length === completedIds.length;
   }
 
@@ -131,7 +106,6 @@ function TaskRubricDrawer(props) {
         ))}
 
             <ListItem button onClick={requirementsCompleted() ? props.submitFunction : null}>
-              <ListItem button onClick={props.submitFunction}></ListItem>
                 <ListItemText className={requirementsCompleted() ? "blueButtonText" : "buttonText"} primary="SUBMIT TASK" />
              </ListItem>
 
@@ -142,7 +116,6 @@ function TaskRubricDrawer(props) {
 
   return (
     <div>
-        {/* <Button className="rubricHamburgerButton" onClick={toggleDrawer(true)}><MenuIcon/>{"Task Rubric"}</Button> */}
         <Drawer anchor='right' open={props.rubricOpen} onClose={toggleDrawer(false)}>
         {list('right')}
         </Drawer>

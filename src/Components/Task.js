@@ -67,7 +67,6 @@ function createFRQuestionBlock(taskId, blockId, blockKey, question, existingAnsw
 }
 
 function Task(props) {
-  console.log(props.history);
   
   const taskId = props?.location?.state?.id;
 
@@ -95,11 +94,10 @@ function Task(props) {
     );
   }
 
-  console.log(data);
-
   const pages = data.task.pages;
   const title = data.task.name;
   const requirements = data.task.requirements;
+  const taskProgress = data.retrieveTaskProgress;
   
   const pTotal = pages.length;
   const responsesOnPage = new Map();
@@ -177,7 +175,7 @@ function Task(props) {
             done={pDone}
           />
           
-          <div>{ (pageNo < pages.length - 1) ? renderNextButton() : renderSubmitButton()}</div>
+          <div>{ (pageNo < pages.length - 1) ? renderNextButton() : renderReviewButton()}</div>
           
         </div>
       </div>
@@ -206,11 +204,8 @@ function Task(props) {
       return (<div className="rubricButton" onClick = { () => setRubricOpen(!rubricOpen) }>TASK RUBRIC</div>);
   }
 
-  function renderSubmitButton() {
-    if (requirementsCompleted())
-      return (<button className="submitButton" onClick = { () => submitTask() }>Submit</button>);
-    else
-      return (<button className="greyedButton">Submit</button>);
+  function renderReviewButton() {
+    return (<button className="submitButton" onClick = { () => setRubricOpen(!rubricOpen) }>Review Rubric</button>);
   }
 
   function requirementsCompleted() {
@@ -288,7 +283,8 @@ function Task(props) {
       setRubricOpen={setRubricOpen} 
       requirements={requirements} 
       taskId={taskId} 
-      submitFunction={submitTask}/>
+      submitFunction={submitTask}
+      taskProgress={taskProgress}/>
 
       { renderRubricButton() }
       { renderPage() }   

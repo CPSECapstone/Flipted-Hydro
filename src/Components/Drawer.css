@@ -1,10 +1,12 @@
 .buttonText {
     color: grey;
+    text-justify: center;
 }
 
 
 .blueButtonText {
     color: #4274F3;
+    text-justify: center;
 }
 
 .logoText {
