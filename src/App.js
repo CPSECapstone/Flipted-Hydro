@@ -3,9 +3,8 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
-import { useHistory } from 'react-router';
-import CourseScreen from './Components/CourseScreen.js';
 import GoalList from './Components/GoalList.js';
+import { useHistory } from 'react-router';
 import GradeScreen from './Components/GradeScreen';
 import Mission from './Components/Mission';
 import Task from './Components/Task';
@@ -35,7 +34,6 @@ Amplify.configure({
 function App() {
   const [accessToken, setAccessToken] = useState(null);
   const hist = useHistory();
-
   const refreshCredentials = () => {
     return Auth.currentSession()
     .then(session => {
