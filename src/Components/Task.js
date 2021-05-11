@@ -65,7 +65,8 @@ function createFRQuestionBlock(taskId, blockId, blockKey, question, existingAnsw
 }
 
 function Task(props) {
-
+  console.log(props.history);
+  
   const taskId = props?.location?.state?.id;
 
   const { loading, error, data, refetch} = useQuery(GET_TASK, {
@@ -125,6 +126,7 @@ function Task(props) {
 
   const submitTask = () => {
     alert(`${title} submitted.`);
+    props.history.push('/');
   }
 
   /* creates a callback function for a MCQuestion component
