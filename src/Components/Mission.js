@@ -75,7 +75,7 @@ function Mission() {
   }
 
   return (
-    <div> 
+    <div className="MissonOverview"> 
       <h1>{title}</h1>
       <h2>{description}</h2>
       <div className="row">
@@ -97,3 +97,4 @@ function Mission() {
 }
 
 export default Mission;
+
