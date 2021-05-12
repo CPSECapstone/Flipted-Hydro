@@ -4,7 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router';
-import CourseScreen from './Components/CourseScreen.js';
+import Course from './Components/Courses.js';
 import GoalsScreen from './Components/GoalsScreen.js';
 import GradeScreen from './Components/GradeScreen';
 import Mission from './Components/Mission';
@@ -141,7 +141,8 @@ function App() {
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
         <li><a href="/goalsscreen">Goals</a></li>
         <li><a href="/gradescreen">Grades</a></li> 
-        <li><a href="/mission">Mission</a></li>      
+        <li><a href="/mission">Mission</a></li>  
+        <li><a href="/coursescreen">My Courses</a></li>      
         </div>}
       </p>
       
@@ -153,6 +154,7 @@ function App() {
         <div>
         <Switch>
           <Route component = {LoginComponent} exact path = '/'/>
+          <Route component = {Course} exact path = '/coursescreen'/>
           <Route component = {GoalsScreen} exact path = '/goalsscreen'/>
           <Route component = {GradeScreen} exact path = '/gradescreen'/>
           <Route component = {Mission} exact path = '/mission'/>
