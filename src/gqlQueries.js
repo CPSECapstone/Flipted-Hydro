@@ -164,8 +164,95 @@ export const GET_ALL_GOALS = gql`
   }
 `;
 
+export const SUBMIT_TASK_PROGRESS = gql`
+  mutation submitTaskProgress($id: String!, $finishedRequirements: [String!]!){
+    submitTaskProgress(taskProgress: {
+      taskId: $id
+      finishedRequirementIds: $finishedRequirements
+    })
+  }
+`;
+
+export const GET_TASK_AND_PROGRESS = gql`
+  query getTask($id: String!){
+    task(taskId: $id){
+      id
+      name
+      instructions
+      points
+      startAt
+      endAt
+      dueDate
+      missionId
+      missionIndex
+      pages {
+        skippable
+        blocks {
+          title
+          ... on ImageBlock {
+            imageUrl
+          }
+          ... on TextBlock {
+            contents
+            fontSize
+          }
+          ... on VideoBlock {
+            videoUrl
+          }
+          ... on QuizBlock{
+            blockId
+            questions{
+              ... on FrQuestion{
+                id
+                description
+              }
+              ... on McQuestion {
+                id
+                description
+                points
+                options {
+                  description
+                }
+              }
+            }
+          }        
+        }
+      }
+      requirements {
+        id 
+        description
+        isComplete
+      }
+    },
+    retrieveQuestionProgress(taskId: $id){
+      answers{
+        questionId
+        pointsAwarded
+        answer
+      }
+    },
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;
+
+
 export const EDIT_OR_CREATE_GOAL = gql`
   mutation editOrCreateGoal($goalInput: GoalInput!){
     editOrCreateGoal(goal: $goalInput)
   }
 `;
+
+export const GET_TASK_PROGRESS = gql`
+  query getTask($id: String!){
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;
+ 

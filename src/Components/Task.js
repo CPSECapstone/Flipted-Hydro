@@ -1,6 +1,6 @@
 import { useQuery  } from '@apollo/client';
 import { useState } from 'react';
-import { GET_TASK } from '../gqlQueries.js';
+import { GET_TASK_AND_PROGRESS } from '../gqlQueries.js';
 import { TextTask } from './Text.js';
 import Image from './Image.js';
 import Video from './Video.js';
@@ -8,6 +8,8 @@ import ProgressBar from './ProgressBar.js';
 import './Task.css';
 import MCQuestion from './MCQuestion.js';
 import FRQuestion from './FRQuestion.js';
+import TaskRubricDrawer from './TaskRubricDrawer.js'
+
 import PREV from './Images/previous.svg';
 import NEXT from './Images/next.svg';
 
@@ -65,22 +67,16 @@ function createFRQuestionBlock(taskId, blockId, blockKey, question, existingAnsw
 }
 
 function Task(props) {
-  console.log(props.history);
   
   const taskId = props?.location?.state?.id;
 
-  const { loading, error, data, refetch} = useQuery(GET_TASK, {
+  const { loading, error, data, refetch} = useQuery(GET_TASK_AND_PROGRESS, {
     variables: { id: taskId },
   });
 
   const [rubricOpen, setRubricOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
   const [pDone, setPDone] = useState(1);
-  const [requirements, setRequirements] = useState([
-    {id: 0, description: "Understand the structure of covalent bonds", isComplete: false}, 
-    {id: 1, description: "Understand the properties of covalent bonds", isComplete: false}, 
-    {id: 2, description: "Understand the intricacies of covalent bonds", isComplete: false}
-  ]);
 
   if(loading) return (
     <div className = 'tasks'> 
@@ -100,7 +96,8 @@ function Task(props) {
 
   const pages = data.task.pages;
   const title = data.task.name;
-  // const requirements = data.task.requirements;
+  const requirements = data.task.requirements;
+  const taskProgress = data.retrieveTaskProgress;
   
   const pTotal = pages.length;
   const responsesOnPage = new Map();
@@ -166,7 +163,6 @@ function Task(props) {
       <div className='header'>
         <h1>{ title }</h1>
         
-        
         <div className="headerButtons">
           <div>{ renderPrevButton() }</div>
           
@@ -179,11 +175,9 @@ function Task(props) {
             done={pDone}
           />
           
-          <div>{ (pageNo < pages.length - 1) ? renderAddButton() : renderSubmitButton()}</div>
+          <div>{ (pageNo < pages.length - 1) ? renderNextButton() : renderReviewButton()}</div>
           
         </div>
-        
-        
       </div>
     
     );
@@ -198,7 +192,7 @@ function Task(props) {
         </div>);
   }
 
-  function renderAddButton() {
+  function renderNextButton() {
     if(pageNo < pages.length - 1) {
       return (<div onClick = { () => addPage() }>
         <img src={NEXT} alt="Next Button" />
@@ -210,44 +204,18 @@ function Task(props) {
       return (<div className="rubricButton" onClick = { () => setRubricOpen(!rubricOpen) }>TASK RUBRIC</div>);
   }
 
-  function renderSubmitButton() {
-    if(pageNo === pages.length - 1) {
-      return (<button onClick = { () => submitTask() }>Submit</button>);
+  function renderReviewButton() {
+    return (<button className="submitButton" onClick = { () => setRubricOpen(!rubricOpen) }>Review Rubric</button>);
+  }
+
+  function requirementsCompleted() {
+    var rc = true;
+    for (var i = 0; i < requirements.length; i++){
+      if (!requirements[i].isComplete){
+        rc = false;
+      }
     }
-  }
-
-  function renderRubric() {
-    
-    return(
-      <div className="rubric">
-        {rubricOpen ? (
-          <div className="requirementsList">{RequirementsList()}</div>
-        ) : null}
-      </div>
-    );
-  }
-
-  //displays a list of requirements
-  function RequirementsList(props) {
-    return requirements.map((r) => (
-      <Requirement key={r.id} r={r} />
-    ));
-  }
-
-  //displays one requirement
-  function Requirement(props){
-    return(
-      <div className={props.r.isComplete ? "requirementDone" : "requirement"}>
-        <h1 >{props.r.description}</h1>
-        <button className="reqCheckButton" courseid={props.r.id} onClick={() => handleCompleteRequirement(props.r.id)}>{props.r.isComplete ? "✅" : ""}</button>
-      </div>
-      
-    );
-  }
-
-  function handleCompleteRequirement(requirementId) {
-    requirements[requirementId].isComplete = !requirements[requirementId].isComplete;
-    setRequirements([...requirements]);
+    return rc;
   }
 
   function renderPage() {
@@ -308,9 +276,17 @@ function Task(props) {
 
   return (
     <div className = 'tasks'>  
+
       { renderHeader() }
+      <TaskRubricDrawer 
+      rubricOpen={rubricOpen} 
+      setRubricOpen={setRubricOpen} 
+      requirements={requirements} 
+      taskId={taskId} 
+      submitFunction={submitTask}
+      taskProgress={taskProgress}/>
+
       { renderRubricButton() }
-      { renderRubric() }      
       { renderPage() }   
     </div>
   );
