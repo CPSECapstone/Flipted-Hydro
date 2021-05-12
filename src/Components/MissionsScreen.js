@@ -35,17 +35,20 @@ export default function MissionsScreen() {
           <div>
             <h1>{props.mission.name}</h1>
             <h2>{props.mission.description}</h2>
-            <h1>70% Complete</h1>
+            <div className="progress">
+            <div></div>
             <ProgressBar 
-            width='700'
-            height='10'
-            doneColor='#4274F3'
-            leftColor='rgb(108, 108, 133)'
-            total={10}
-            done={7}
-          />
+              width='700'
+              height='10'
+              doneColor='#4274F3'
+              leftColor='rgb(108, 108, 133)'
+              total={10}
+              done={7}
+            />
+            <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center", "padding-bottom": "20px"}}>70% Complete</h1>
+            </div>
             <div className="start">
-              <button onClick={()=>redirectToMission(props.mission.id)}>Start</button>
+              <button style={{top: "0"}}onClick={()=>redirectToMission(props.mission.id)}>Continue</button>
             </div>
           </div>
         );
@@ -79,7 +82,7 @@ export default function MissionsScreen() {
 
     return (
         <div className="missions">
-          <h1 >Integrated Science</h1>
+          <h1 style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em"}}>Integrated Science</h1>
           <h2>Missions</h2>
             {displayMissionList()}
             {!focusedMission ? null : 
