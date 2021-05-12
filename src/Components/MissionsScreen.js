@@ -16,17 +16,26 @@ export default function MissionsScreen() {
     const { loading, error, data, refetch} = useQuery(GET_MISSIONS, {
         variables: { id: "Integrated Science" },
     });
+
+    const fakedata = {missions: [
+      {name: "FakeMission1", description: "this is the 1st fake mission", id: 1},
+      {name: "FakeMission2", description: "this is the 2nd fake mission", id: 2},
+      {name: "FakeMission3", description: "this is the 3rd fake mission", id: 3},
+    ]}
+
     const hist = useHistory();
     const [focusedMission, setFocusedMission] = useState(null);
 
     function displayMissionList(){
         console.log("data");
         console.log(data);
-        return data.missions.map((mission) => (
-        <div className="Mission" onClick={()=>setFocusedMission(mission)}>
-          <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/>
-          {/* <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1> */}
-        </div>));
+        return (<div className="missionList"> 
+          {fakedata.missions.map((mission) => (
+            <div className="Mission" onClick={()=>setFocusedMission(mission)}>
+              <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/>
+              {/* <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1> */}
+            </div>))} 
+        </div>);
     }
 
     function MissionOverview(props) {
@@ -65,20 +74,20 @@ export default function MissionsScreen() {
     }
 
     if(loading) return (
-        <div className = 'tasks'> 
-          <h1>Loading...</h1>
-        </div>
+      <div className = 'tasks'> 
+        <h1>Loading...</h1>
+      </div>
     )
 
     if(error){
-        console.log(error);
-        //throw error;
-        return (
-          <div className = 'tasks'> 
-            <h1>Error!</h1>
-          </div>
-        );
-      }
+      console.log(error);
+      //throw error;
+      return (
+        <div className = 'tasks'> 
+          <h1>Error!</h1>
+        </div>
+      );
+    }
 
     return (
         <div className="missions">
