@@ -151,6 +151,29 @@ export const GET_MISSIONS = gql`
   }
 `;
 
+export const GET_ALL_GOALS = gql`
+  query {
+    getAllGoals{
+      id
+      title
+      dueDate
+      completed
+      completedDate
+      subGoals{
+        title
+        dueDate
+        completed
+        completedDate
+      }
+      category
+      favorited
+      owner
+      assignee
+      pointValue
+    }
+  }
+`;
+
 export const SUBMIT_TASK_PROGRESS = gql`
   mutation submitTaskProgress($id: String!, $finishedRequirements: [String!]!){
     submitTaskProgress(taskProgress: {
@@ -226,6 +249,13 @@ export const GET_TASK_AND_PROGRESS = gql`
   }
 `;
 
+
+export const EDIT_OR_CREATE_GOAL = gql`
+  mutation editOrCreateGoal($goalInput: GoalInput!){
+    editOrCreateGoal(goal: $goalInput)
+  }
+`;
+
 export const GET_TASK_PROGRESS = gql`
   query getTask($id: String!){
     retrieveTaskProgress(taskId: $id){
@@ -235,3 +265,4 @@ export const GET_TASK_PROGRESS = gql`
     }
   }
 `;
+ 
