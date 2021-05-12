@@ -3,8 +3,8 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
-import { useHistory } from 'react-router';
 import CourseScreen from './Components/CourseScreen.js';
+import { useHistory } from 'react-router';
 import GoalsScreen from './Components/GoalsScreen.js';
 import GradeScreen from './Components/GradeScreen';
 import MissionsScreen from './Components/MissionsScreen';
@@ -12,6 +12,7 @@ import Mission from './Components/Mission';
 import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
+import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 
 const HOME_SCREEN_PATH = 'mission';
@@ -36,7 +37,6 @@ Amplify.configure({
 function App() {
   const [accessToken, setAccessToken] = useState(null);
   const hist = useHistory();
-
   const refreshCredentials = () => {
     return Auth.currentSession()
     .then(session => {
@@ -134,20 +134,20 @@ function App() {
 
   return (
     <div>
-      <p className="navbar">
+      
+      <div className="navbar">
         <p className="title">flipt.ED</p>
         {accessToken == null? <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
         
+
         <div>
+        <NavDrawer className="drawer"/>
         <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
-        <li><a href="/goalsscreen">Goals</a></li>
-        <li><a href="/gradescreen">Grades</a></li> 
-        <li><a href="/mission">Mission</a></li>      
-        </div>}
-      </p>
-      
-      
-      
+        
+
+        </div>
+        }
+      </div>
       
       <ApolloProvider client={client}>
 
@@ -160,13 +160,14 @@ function App() {
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
+          {/* <Route component = {NavDrawer} exact path = '/nav'/> */}
         </Switch>
         </div>
       </ApolloProvider>
+
+      
     </div>
   );
 }
-
-
 
 export default App;
