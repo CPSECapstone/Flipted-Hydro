@@ -123,7 +123,12 @@ function Task(props) {
 
   const submitTask = () => {
     alert(`${title} submitted.`);
-    props.history.push('/');
+    props.history.push({
+      pathname: "/mission",
+      state: {
+        id: data.task.missionId
+      }
+    });
   }
 
   /* creates a callback function for a MCQuestion component

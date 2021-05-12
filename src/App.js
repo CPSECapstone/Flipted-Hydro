@@ -15,7 +15,7 @@ import MTaskOverview from './Components/MTaskOverview';
 import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 
-const HOME_SCREEN_PATH = 'mission';
+const HOME_SCREEN_PATH = 'missions';
 
 Amplify.configure({
   Auth: {
@@ -139,12 +139,9 @@ function App() {
         <p className="title">flipt.ED</p>
         {accessToken == null? <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
         
-
         <div>
-        <NavDrawer className="drawer"/>
-        <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
-        
-
+          <NavDrawer className="drawer"/>
+          <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
         </div>
         }
       </div>
@@ -160,7 +157,6 @@ function App() {
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
-          {/* <Route component = {NavDrawer} exact path = '/nav'/> */}
         </Switch>
         </div>
       </ApolloProvider>
