@@ -8,13 +8,14 @@ import { useHistory } from 'react-router';
 import GradeScreen from './Components/GradeScreen';
 import Mission from './Components/Mission';
 import Task from './Components/Task';
-import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
 import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
+import "./App.css";
 
 const HOME_SCREEN_PATH = 'mission';
 
+//configures amplify to connect to our authentication server in AWS
 Amplify.configure({
   Auth: {
       identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID,
@@ -35,14 +36,29 @@ Amplify.configure({
 function App() {
   const [accessToken, setAccessToken] = useState(null);
   const hist = useHistory();
+
+  /*
+   * This function will refresh the current users credentials,
+   * if their credentials are present. The Auth.currentSession()
+   * throws an error if the user is not signed in, but this is
+   * not actual error to us, since this will happen anytime the user
+   * opens the app but is not signed in. That is why the catch block
+   * is empty in this function */
   const refreshCredentials = () => {
     return Auth.currentSession()
-    .then(session => {
-      setAccessToken(session.getAccessToken());
-    })
-    .catch(() => console.log('not signed in'));
+      .then(session => {
+        setAccessToken(session.getAccessToken());
+      })
+      .catch(() => {});
   }
 
+  /*
+   * The following two objects are used to define custom error logic
+   * for the Apollo client. By defining the onError function in
+   * 'logoutLink', we can decide what happens when one of our queries
+   * results in a network error. Right now, the function just sends the
+   * user back to the login screen (which will forward to home screen if
+   * they are already signed in).*/
   const httpLink = new HttpLink({
     uri: process.env.REACT_APP_PROD_URI,
     headers: {
@@ -60,6 +76,8 @@ function App() {
     } 
   })
 
+  /* Main ApolloClient object, any apollo configuration
+   * for our frontend will likely live here. */
   const client = new ApolloClient({
     uri: process.env.REACT_APP_PROD_URI,
     cache: new InMemoryCache({
@@ -76,6 +94,7 @@ function App() {
     connectToDevTools: true
   });
 
+  
   const LoginComponent = () => {
   
     if(accessToken) hist.push(HOME_SCREEN_PATH)
@@ -103,27 +122,34 @@ function App() {
     });
   }
 
+  /*
+   * This side effect is used to handle when a user signs in.
+   * After the user signs in and returns from the Hosted UI, this
+   * side effect will run and event will have value 'signIn'. At
+   * this point, we can store the retrieved auth token in the 
+   * ApolloClient object and forward the user to the home screen.
+   * A console.log is left to log the auth token for convenient
+   * development purposes, since it is needed to access the API*/
   useEffect(() => {
     Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
         case 'signIn':
-        case 'cognitoHostedUI':
           login(data.signInUserSession.getAccessToken());
-          console.log('Successful Sign In.');
           console.log(data);
           break;
         case 'signUp':
           login(data.signInUserSession.getAccessToken());
-          console.log('user signed up');
           break;
         case 'signOut':
           logout();
           break;
         case 'signIn_failure':
-          console.log('Sign In Failure.');
+          console.error('Sign In Failure.');
           break;
         case 'cognitoHostedUI_failure':
-          console.log('Sign in failure', data);
+          console.error('HostedUI Sign in failure', data);
+          break;
+        default:
           break;
       }
     });
@@ -135,20 +161,19 @@ function App() {
       
       <div className="navbar">
         <p className="title">flipt.ED</p>
-        {accessToken == null? <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
-        
 
-        <div>
-        <NavDrawer className="drawer"/>
-        <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>  
-        
+        {accessToken == null ?
 
-        </div>
-        }
+          <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
+    
+          <div>
+          <NavDrawer className="drawer"/>
+          <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
+          </div>}
+
       </div>
       
       <ApolloProvider client={client}>
-
         <div>
         <Switch>
           <Route component = {LoginComponent} exact path = '/'/>
@@ -160,13 +185,9 @@ function App() {
           <Route component = {NavDrawer} exact path = '/nav'/>
         </Switch>
         </div>
-      </ApolloProvider>
-
-      
+      </ApolloProvider>     
     </div>
   );
 }
-
-
 
 export default App;
