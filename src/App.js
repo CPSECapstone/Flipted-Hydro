@@ -6,6 +6,7 @@ import {Route, Switch} from 'react-router-dom';
 import GoalList from './Components/GoalList.js';
 import { useHistory } from 'react-router';
 import GradeScreen from './Components/GradeScreen';
+import MissionsScreen from './Components/MissionsScreen';
 import Mission from './Components/Mission';
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
@@ -13,7 +14,7 @@ import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
-const HOME_SCREEN_PATH = 'mission';
+const HOME_SCREEN_PATH = 'missions';
 
 //configures amplify to connect to our authentication server in AWS
 Amplify.configure({
@@ -167,8 +168,8 @@ function App() {
           <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
     
           <div>
-          <NavDrawer className="drawer"/>
-          <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
+            <NavDrawer className="drawer"/>
+            <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
           </div>}
 
       </div>
@@ -182,7 +183,7 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
-          <Route component = {NavDrawer} exact path = '/nav'/>
+          <Route component = {MissionsScreen} exact path = '/missions'/>
         </Switch>
         </div>
       </ApolloProvider>     

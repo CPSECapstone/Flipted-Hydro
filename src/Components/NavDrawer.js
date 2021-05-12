@@ -65,7 +65,7 @@ function NavDrawer(props) {
             <ListItemIcon><DoneAllIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Goals" />
           </ListItem>
-          <ListItem button key="Missions" onClick={() => (props.history.push('/mission'))}> 
+          <ListItem button key="Missions" onClick={() => (props.history.push('/missions'))}> 
             <ListItemIcon><AssignmentTurnedInIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Missions" />
           </ListItem>
