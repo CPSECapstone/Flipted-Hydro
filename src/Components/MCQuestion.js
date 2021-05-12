@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation  } from '@apollo/client';
 import { SAVE_MCQUESTION } from '../gqlQueries.js';
 import { gql } from '@apollo/client';
@@ -38,6 +38,9 @@ function MCQuestion(props) {
     }
   });
 
+  useEffect(() => {
+    setAnswer(props.existingAnswer);
+  }, [props.existingAnswer])
 
   function saveResponse(value){ 
     saveMCQuestion({
