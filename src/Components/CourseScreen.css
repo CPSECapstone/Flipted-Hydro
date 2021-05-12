@@ -47,13 +47,13 @@
   background-color: #F21E1D;
 }
 
-form {
+/* form {
   position: relative;
   top:50px;
   margin:auto;
   text-align: center;
   padding-left: 100 px;
-}
+} */
 
 .submitbutton {
   vertical-align: middle;
@@ -76,7 +76,7 @@ form {
   padding-right:5px;
 }
 
-h3 {
+/* h3 {
   color: #4274F3;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
@@ -88,31 +88,31 @@ p {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
   font-size: 15px;
-}
+} */
 
 .btn {
   text-align: center;
 }
 
-button:hover {
+/* button:hover {
   background-color: navy;
   cursor: pointer;
 }
 
 button:active {
   background-color: #F21E1D;
-}
+} */
 
-ul {
+/* ul {
   color: #4274F3;
   padding-left:0;
   list-style-type: none;
-}
+} */
 
-.row {
+/* .row {
   display: flex;
 }
 
 .column {
   flex: 50%;
-}
+} */
