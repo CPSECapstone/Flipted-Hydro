@@ -288,3 +288,24 @@ button:active {
   padding: 2em;
   border-width: 0.1em;
 }
+
+.datePicker {
+  display: inline;
+}
+
+.datePicker button{
+  top: auto;
+  width: auto;
+  height: auto;
+  color:gray;
+}
+
+.datePicker label{
+  margin: auto;
+}
+
+.MuiIconButton-root{
+  top: auto;
+  width: auto;
+  height: auto;
+}
