@@ -5,9 +5,11 @@ import MTaskOverview from './MTaskOverview.js';
 import './Mission.css';
 
 //This component is used to display the mission page.
-function Mission() {
+function Mission(props) {
+  const missionId = props?.location?.state?.id;
+
   const { loading, error, data, refetch} = useQuery(GET_MISSION, {
-    variables: { id: "da0719ba103" },
+    variables: { id: missionId },
   });
 
   const [focusedTask, setFocusedTask] = useState(null);
@@ -75,7 +77,7 @@ function Mission() {
   }
 
   return (
-    <div> 
+    <div className="MissonOverview"> 
       <h1>{title}</h1>
       <h2>{description}</h2>
       <div className="row">

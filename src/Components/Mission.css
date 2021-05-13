@@ -13,6 +13,14 @@
     justify-content: center;
 }
 
+.row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
+
 .Task {    
     position: relative;
     display: flex;
@@ -54,10 +62,12 @@
     width: 100%;
 }
 
-ul {
+.MissonOverview ul {
     color: #FFF;
     font-size: 18px;
     text-align: center;
+    padding-left:0;
+    list-style-type: none;
   }
 
 
