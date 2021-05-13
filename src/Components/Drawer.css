@@ -1,0 +1,30 @@
+.buttonText {
+    color: grey;
+    text-justify: center;
+}
+
+
+.blueButtonText {
+    color: #4274F3;
+    text-justify: center;
+}
+
+.logoText {
+    color: #4274F3;
+    font-family: "Poppins", sans-serif;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.hamburgerButton {
+    top: 5px;
+    bottom: 0;
+    padding:0;
+    margin-bottom: 0;
+    color: white;
+    width: 0;
+}
+
+.rubricHamburgerButton {
+    float: right;
+}

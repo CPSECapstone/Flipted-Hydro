@@ -52,7 +52,7 @@ function Course() {
     ]
   }
 
-  const MISSION_COMPONENT_PATH = "/mission";
+  const MISSION_COMPONENT_PATH = "/missions";
 
   const hist = useHistory();
 
