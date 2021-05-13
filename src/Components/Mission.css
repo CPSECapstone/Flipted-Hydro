@@ -1,4 +1,5 @@
 .SubMission {
+    position: relative;
     background-color: #F21E1D;
     color: white;
     font-family: "Poppins", sans-serif;
@@ -57,7 +58,7 @@
 ul {
     color: #FFF;
     font-size: 18px;
-    text-align: center;
+    text-align: center;    
   }
 
 
@@ -77,15 +78,10 @@ ul {
     margin-left: -1px;
 }*/
 
-.verticalLine {
-    position: relative; 
-    border: 3px solid #000; 
-    width: 0; 
-    height: 631px; 
-    display: block; 
-    content: ''; 
-    left: 50%; 
-    z-index: 1; 
-    top: -656px; 
-    margin-left: -1px;
-  }
+
+.vl {
+    position: absolute;    
+    border-left: 6px solid #000;
+    margin-left: 480px;
+    height: 640px;
+}

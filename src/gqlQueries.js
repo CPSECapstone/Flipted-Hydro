@@ -140,3 +140,14 @@ export const SAVE_FRQUESTION = gql`
     })
   }
 `;
+
+export const GET_COURSE = gql`
+  query {
+    courseInfos(instructor: "Mr. Butcher"){
+      courseId
+      course
+      instructor
+      description
+    }
+  }
+`;
