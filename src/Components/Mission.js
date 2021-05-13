@@ -1,13 +1,15 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation  } from '@apollo/client';
 import React, { useState } from 'react';
 import { GET_MISSION } from '../gqlQueries.js';
 import MTaskOverview from './MTaskOverview.js';
 import './Mission.css';
 
 //This component is used to display the mission page.
-function Mission() {
-  const { loading, error, data } = useQuery(GET_MISSION, {
-    variables: { id: "da0719ba103" },
+function Mission(props) {
+  const missionId = props?.location?.state?.id;
+
+  const { loading, error, data, refetch} = useQuery(GET_MISSION, {
+    variables: { id: missionId },
   });
 
   const [focusedTask, setFocusedTask] = useState(null);
@@ -17,18 +19,16 @@ function Mission() {
   )
 
   if(error){
-    console.error(error);
+    console.log(error);
     return (
       <h2>Error!</h2>
     );
   }
 
-  //check if mission is null
   const title = data.mission.name;
   const description = data.mission.description;
 
-  function displayMissions(data) {
-    if (data != null) {
+  function displayMissions(loading, error, data) {
     return data.mission.missionContent.map((missionContentItem) => {
       if (missionContentItem.__typename === 'Task') {
         return renderTask(missionContentItem);
@@ -36,7 +36,7 @@ function Mission() {
       else if (missionContentItem.__typename === 'SubMission') {
         return renderSubMission(missionContentItem);
       }
-    })};
+    });
   }
 
   function changeFocusedTask(task){
@@ -53,13 +53,16 @@ function Mission() {
 
   function renderTask(task){
     return (
-      <div>        
-        <div key={task.id} className={task.__typename} onClick={() => changeFocusedTask(task)}>         
-          <ul>        
-            {task.name}
-          </ul>
-        </div>      
-      </div>
+      <div>
+        
+    <div key={task.id} className={task.__typename} onClick={() => changeFocusedTask(task)}>         
+      <ul>
+        
+        {task.name}
+      </ul>
+    </div>
+      
+    </div>
     )
   }
 
@@ -74,12 +77,16 @@ function Mission() {
   }
 
   return (
-    <div> 
+    <div className="MissonOverview"> 
       <h1>{title}</h1>
       <h2>{description}</h2>
-      <div className="row">        
+      <div className="row">
+        
         <div className="column">      
-          <ul>{displayMissions(loading, error, data)}</ul>               
+          <ul>{displayMissions(loading, error, data)}</ul>
+          
+          
+          
         </div>
         <div className="column">
           {!focusedTask? null: <div className="card">
