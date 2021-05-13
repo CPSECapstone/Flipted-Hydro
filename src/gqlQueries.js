@@ -266,3 +266,26 @@ export const GET_TASK_PROGRESS = gql`
   }
 `;
  
+export const SUBMIT_TASK = gql`
+  mutation submitTask($taskId: String!){
+    submitTask(taskId: $taskId){
+      graded
+      pointsAwarded
+      pointsPossible
+      questionAndAnswers {
+        question {
+          id
+          description
+          points
+          feedback
+        }
+        answer {
+          questionId
+          pointsAwarded
+          answer
+        }
+      }
+      teacherComment
+    }
+  }
+`;
