@@ -76,7 +76,7 @@ function NavDrawer(props) {
             <ListItemText className="buttonText" primary="Task" />
           </ListItem>
 
-          <ListItem button key="Courses" onClick={() => (props.history.push('/coursescreen'))}>
+          <ListItem button key="Courses" onClick={() => (props.history.push('/courses'))}>
             <ListItemIcon><ViewModuleIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Courses" />
           </ListItem>
