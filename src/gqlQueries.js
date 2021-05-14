@@ -119,6 +119,19 @@ export const GET_MISSION = gql`
   }
 `;
 
+export const GET_COURSE = gql`
+  query getCourse($id: String!){
+    courseInfo(courseId: $id){
+      courseId
+      course
+      instructor
+      description
+    }
+  }
+`;
+
+
+
 export const SAVE_MCQUESTION = gql`
   mutation saveMCQuestion($taskId: String!, $blockId: String!, $questionId: String!, $answerId: Int!) {
     saveMultipleChoiceProgress(mcBlockInput: {
@@ -138,5 +151,154 @@ export const SAVE_FRQUESTION = gql`
       questionId: $questionId
       answer: $answer
     })
+  }
+`;
+
+export const GET_MISSIONS = gql`
+  query getMissions($id: String!){
+    missions(course: $id) {
+      id
+      name
+      description
+    }
+  }
+`;
+
+export const GET_ALL_GOALS = gql`
+  query {
+    getAllGoals{
+      id
+      title
+      dueDate
+      completed
+      completedDate
+      subGoals{
+        title
+        dueDate
+        completed
+        completedDate
+      }
+      category
+      favorited
+      owner
+      assignee
+      pointValue
+    }
+  }
+`;
+
+export const SUBMIT_TASK_PROGRESS = gql`
+  mutation submitTaskProgress($id: String!, $finishedRequirements: [String!]!){
+    submitTaskProgress(taskProgress: {
+      taskId: $id
+      finishedRequirementIds: $finishedRequirements
+    })
+  }
+`;
+
+export const GET_TASK_AND_PROGRESS = gql`
+  query getTask($id: String!){
+    task(taskId: $id){
+      id
+      name
+      instructions
+      points
+      startAt
+      endAt
+      dueDate
+      missionId
+      missionIndex
+      pages {
+        skippable
+        blocks {
+          title
+          ... on ImageBlock {
+            imageUrl
+          }
+          ... on TextBlock {
+            contents
+            fontSize
+          }
+          ... on VideoBlock {
+            videoUrl
+          }
+          ... on QuizBlock{
+            blockId
+            questions{
+              ... on FrQuestion{
+                id
+                description
+              }
+              ... on McQuestion {
+                id
+                description
+                points
+                options {
+                  description
+                }
+              }
+            }
+          }        
+        }
+      }
+      requirements {
+        id 
+        description
+        isComplete
+      }
+    },
+    retrieveQuestionProgress(taskId: $id){
+      answers{
+        questionId
+        pointsAwarded
+        answer
+      }
+    },
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;
+
+
+export const EDIT_OR_CREATE_GOAL = gql`
+  mutation editOrCreateGoal($goalInput: GoalInput!){
+    editOrCreateGoal(goal: $goalInput)
+  }
+`;
+
+export const GET_TASK_PROGRESS = gql`
+  query getTask($id: String!){
+    retrieveTaskProgress(taskId: $id){
+      taskId
+      username
+      finishedRequirementIds
+    }
+  }
+`;
+ 
+export const SUBMIT_TASK = gql`
+  mutation submitTask($taskId: String!){
+    submitTask(taskId: $taskId){
+      graded
+      pointsAwarded
+      pointsPossible
+      questionAndAnswers {
+        question {
+          id
+          description
+          points
+          feedback
+        }
+        answer {
+          questionId
+          pointsAwarded
+          answer
+        }
+      }
+      teacherComment
+    }
   }
 `;
