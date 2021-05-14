@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
 import GoalList from './Components/GoalList.js';
 import { useHistory } from 'react-router';
+import Courses from './Components/Courses.js';
 import GradeScreen from './Components/GradeScreen';
 import MissionsScreen from './Components/MissionsScreen';
 import Mission from './Components/Mission';
@@ -70,9 +71,11 @@ function App() {
     if(graphQLErrors){
       graphQLErrors.forEach(({ message, locations, path }) => {
         console.warn(message);
-      })  
-      hist.push({
-        pathname:'/',
+        if(message.includes('JWT')){
+          hist.push({
+            pathname:'/',
+          })
+        }
       })
     } 
   })
@@ -158,15 +161,11 @@ function App() {
   }, []);
 
   return (
-    <div>
-      
+    <div>      
       <div className="navbar">
         <p className="title">flipt.ED</p>
-
         {accessToken == null ?
-
           <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
-    
           <div>
             <NavDrawer className="drawer"/>
             <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
@@ -183,6 +182,7 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
+          <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
         </Switch>
         </div>

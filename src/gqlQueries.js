@@ -119,6 +119,19 @@ export const GET_MISSION = gql`
   }
 `;
 
+export const GET_COURSE = gql`
+  query getCourse($id: String!){
+    courseInfo(courseId: $id){
+      courseId
+      course
+      instructor
+      description
+    }
+  }
+`;
+
+
+
 export const SAVE_MCQUESTION = gql`
   mutation saveMCQuestion($taskId: String!, $blockId: String!, $questionId: String!, $answerId: Int!) {
     saveMultipleChoiceProgress(mcBlockInput: {
@@ -266,3 +279,26 @@ export const GET_TASK_PROGRESS = gql`
   }
 `;
  
+export const SUBMIT_TASK = gql`
+  mutation submitTask($taskId: String!){
+    submitTask(taskId: $taskId){
+      graded
+      pointsAwarded
+      pointsPossible
+      questionAndAnswers {
+        question {
+          id
+          description
+          points
+          feedback
+        }
+        answer {
+          questionId
+          pointsAwarded
+          answer
+        }
+      }
+      teacherComment
+    }
+  }
+`;
