@@ -71,9 +71,11 @@ function App() {
     if(graphQLErrors){
       graphQLErrors.forEach(({ message, locations, path }) => {
         console.warn(message);
-      })  
-      hist.push({
-        pathname:'/',
+        if(message.includes('JWT')){
+          hist.push({
+            pathname:'/',
+          })
+        }
       })
     } 
   })
