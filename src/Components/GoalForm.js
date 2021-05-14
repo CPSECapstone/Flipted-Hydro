@@ -4,6 +4,12 @@ import { EDIT_OR_CREATE_GOAL } from '../gqlQueries';
 import "./GoalsScreen.css";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import MomentUtils from '@date-io/moment';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,12 +25,13 @@ function GoalForm() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [subGoals, setSubGoals] = useState([]);
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(new Date());
 
   //used by the form as a new subgoal is built
   const [subTitle, setSubTitle] = useState('');
-  const [subDate, setSubDate] = useState('');
+  const [subDate, setSubDate] = useState(new Date());
   const [createGoal] = useMutation(EDIT_OR_CREATE_GOAL);
+
 
   function submitNewGoal (title, dueDate, category, subGoals) { 
 
@@ -32,7 +39,7 @@ function GoalForm() {
       variables: {
         goalInput: {
           title: title,
-          dueDate: dueDate,
+          dueDate: dueDate.format('yyyy-MM-DD'),
           completed: false,
           subGoals: subGoals,
           category: category,
@@ -43,19 +50,26 @@ function GoalForm() {
   }
 
   function handleAddSubgoal() {
-    if (subTitle != '' && subDate != '') {
-      setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate}]);
+    if(subTitle == '' || subDate == ''){
+      alert('All fields are required to create a sub goal')
+    }
+    else {
+      setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate.format('yyyy-MM-DD')}]);
       setSubTitle('');
-      setSubDate('');
     }
   }
 
   function handleAddGoal() {
-    if (title != '' && dueDate != '' && subGoals.length != 0){
+    if(title == '' || dueDate == ''){
+      alert('All fields are required to create a goal')
+    }
+    else if(subGoals.length == 0){
+      alert('Every goal must have a sub goal')
+    }
+    else{
       submitNewGoal(title, dueDate, category, subGoals);
       setTitle('');
       setCategory('');
-      setDueDate('');
       setSubGoals([]);
     }
   }
@@ -65,21 +79,61 @@ function GoalForm() {
   return (
     <div>
 
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+      <Grid container justify="space-evenly" alignItems="center">
+
       <form className={classes.root} noValidate autoComplete="off">
-        <h2 style={{display: "flex"}}>Create Goal</h2>
-        <TextField id="outlined-basic" label="Title" variant="outlined"
-          value={title} onChange={event => setTitle(event.target.value)}/>
-        <TextField id="outlined-basic" label="Category" variant="outlined"
-          value={category} onChange={event => setCategory(event.target.value)}/>
-        <TextField id="outlined-basic" label="Due Date" variant="outlined"
-          value={dueDate} onChange={event => setDueDate(event.target.value)}/>
-        <br/><br/>
-        <TextField id="outlined-basic" label="SubGoal Title" variant="outlined"
-          value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
-        <TextField id="outlined-basic" label="SubGoal Due Date" variant="outlined"
-          value={subDate} onChange={event => setSubDate(event.target.value)}/>
-        <button type="button" onClick={handleAddSubgoal}>add subgoal</button>
+          <h2 style={{display: "flex"}}>Create Goal</h2>
+          
+          <TextField id="outlined-basic" label="Title" variant="outlined"
+            value={title} onChange={event => setTitle(event.target.value)}/>
+          
+          <TextField id="outlined-basic" label="Category" variant="outlined"
+            value={category} onChange={event => setCategory(event.target.value)}/>
+          
+          <div className="datePicker">
+            <KeyboardDatePicker
+              wrapperClassName="datePicker"
+              disableToolbar
+              variant="inline"
+              format="yyyy-MM-DD"
+              margin="normal"
+              id="date-picker-inline"
+              label="Due Date"
+              value={dueDate}
+              onChange={date => setDueDate(date)}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </div>
+          <br/><br/>
+
+          <TextField id="outlined-basic" label="SubGoal Title" variant="outlined"
+            value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
+
+          <div className="datePicker">
+            <KeyboardDatePicker
+              wrapperClassName="datePicker"
+              disableToolbar
+              variant="inline"
+              format="yyyy-MM-DD"
+              margin="normal"
+              id="date-picker-inline"
+              label="SubGoal Due Date"
+              value={subDate}
+              onChange={date => setSubDate(date)}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </div>
+          <button type="button" onClick={handleAddSubgoal}>add subgoal</button>      
+
+
       </form>
+      </Grid>
+      </MuiPickersUtilsProvider>
 
       <div>
         {subGoals.map((subgoal, i)=>(
