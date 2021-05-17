@@ -3,6 +3,11 @@ import "./GoalsScreen.css";
 import { useMutation } from '@apollo/client';
 import { EDIT_OR_CREATE_GOAL } from '../gqlQueries';
 import { gql } from '@apollo/client';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 
 function strip_subgoal_id(current_goal_state){
   return {
@@ -23,6 +28,19 @@ function Goal(props){
 
   const goal_open_key = 'GOAL#' + props.goal.id + '#OPEN'
   const [open, setOpen] = useState(localStorage.getItem(goal_open_key) === "open");
+
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  function handleEditGoal(){
+    props.editGoalCallback(strip_subgoal_id(current_goal_state));
+  }
+
 
   let current_goal_state = {
     id: props.goal.id,
@@ -77,6 +95,10 @@ function Goal(props){
     }
   });
 
+  function allSubGoalsComplete(){
+    return current_goal_state.subGoals.filter((subGoal) => !(subGoal.completed)).length === 0;
+  }
+
   function handleCompleteSubGoal(subgoalId) {
 
     current_goal_state = {
@@ -91,6 +113,8 @@ function Goal(props){
         }
       }),
     }
+
+    current_goal_state.completed = allSubGoalsComplete();
 
     editGoal({
       variables: {
@@ -110,6 +134,20 @@ function Goal(props){
       ...current_goal_state,
       favorited: !(goal.favorited),
     }
+
+    editGoal({
+      variables: {
+        goalInput: strip_subgoal_id(current_goal_state)
+      },
+      optimisticResponse: {
+        editOrCreateGoal: props.goal.id
+      }
+    })
+  }
+
+  function handleCompleteGoal() {
+
+    current_goal_state.completed = !(current_goal_state.completed);
 
     editGoal({
       variables: {
@@ -144,14 +182,43 @@ function Goal(props){
     setOpen(!open);
   }
 
+  function hasSubGoals(){
+    return current_goal_state.subGoals.length != 0;
+  }
+
+  const useStyles = makeStyles(() => ({
+    root: {
+      color: "black",
+    }
+  }));
+  const classes = useStyles();
+
   return(
     <div className="goal">
       <div className="goalGrid">
-        <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button>
-        <h2>{props.goal.title}</h2>
         <button className="checkButton" courseid={props.goal.id} onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
+        <h2>{props.goal.title}</h2>
+        <p className="checkMark">{current_goal_state.completed ? "✅" : ""}</p>
+        <div/>
+        <IconButton aria-label="edit goal" component="span" onClick={handleClick}><EditIcon/></IconButton>
+        {hasSubGoals() ?
+          <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button> :
+          <button className="checkButton" onClick={() => handleCompleteGoal()}>{current_goal_state.completed ? "✅" : ""}</button>
+        }
       </div>
       {open? (<SubGoalList g={current_goal_state}/>) : null }
+
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem className={classes.root} onClick={handleEditGoal}>Edit Goal</MenuItem>
+        <MenuItem className={classes.root} onClick={handleClose}>Delete Goal</MenuItem>
+      </Menu>
+      
     </div>
   );
 }

@@ -15,6 +15,8 @@ function GoalList() {
 
   const [newGoalOpen, setNewGoalOpen] = useState(false);
 
+  const [currentGoal, setCurrentGoal] = useState(null);
+
   if(loading){
     return <h1>Loading</h1>
   }
@@ -48,18 +50,21 @@ function GoalList() {
     )
   }
 
- 
+  const editGoalCallback = (goal) => {
+    setCurrentGoal(goal);
+    setNewGoalOpen(true);
+  }
 
   //displays a list of goals
   function StarredGoalList() {
     return goals.filter(({category, favorited}) => {return (category === searchCategory || searchCategory === '') && favorited;}).map((goal) => (
-      <Goal key={goal.id} goal={goal}/>
+      <Goal key={goal.id} goal={goal} editGoalCallback={editGoalCallback}/>
     ));
   }
 
   function UnstarredGoalList() {
     return goals.filter(({category, favorited}) => {return (category === (searchCategory) || searchCategory === '') && !favorited;}).map((goal) => (
-      <Goal key={goal.id} goal={goal}/>
+      <Goal key={goal.id} goal={goal} editGoalCallback={editGoalCallback}/>
     ));
   }
 
@@ -87,13 +92,14 @@ function GoalList() {
   function closeGoalForm(){
     refetch();
     setNewGoalOpen(false);
+    setCurrentGoal(null);
   }
 
   function NewGoalFormDisplay() {
     return(
       <div className="popupContainer" key="popupcontainer">
         <div className="newGoalForm" key="newgoalform">
-          <GoalForm key="newform"/>
+          <GoalForm key="newform" goal={currentGoal}/>
           <button type="button" onClick={closeGoalForm}>close</button>
         </div>
       </div>

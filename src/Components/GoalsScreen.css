@@ -60,8 +60,10 @@
 
 .goalGrid {
   display:grid;
-  grid-template-columns:1fr 3fr 1fr;
-  align-items: flex-start; 
+  grid-template-columns:1fr 10fr 1fr 10fr 3fr 1fr;
+  align-items: flex-start;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .testGoal{
@@ -170,6 +172,11 @@
   background-color: transparent;
 }
 
+.arrowButton:hover {
+  background-color: navy;
+  cursor: pointer;
+}
+
 .dropdownButton {
   position: relative;
   width: auto;
@@ -236,6 +243,19 @@
   margin: auto;
 }
 
+.checkMark {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin: auto;
+}
+
 .submitbutton {
   position: relative;
   margin:auto;
@@ -269,13 +289,9 @@
   font-size: 15px;
 }
 
-button:hover {
+.checkButton:hover {
   background-color: navy;
   cursor: pointer;
-}
-
-button:active {
-  background-color: #70a4e7;
 }
 
 .newGoalForm {
@@ -308,4 +324,26 @@ button:active {
   top: auto;
   width: auto;
   height: auto;
+}
+
+.checkIcon {
+  color: green;
+}
+
+.subGoalFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.subGoalItem {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+}
+
+.menuItem {
+  color: black;
 }

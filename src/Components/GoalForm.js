@@ -10,6 +10,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,16 +21,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GoalForm() {
+function GoalForm(props) {
   //used by the form as a new goal is built
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [subGoals, setSubGoals] = useState([]);
-  const [dueDate, setDueDate] = useState(new Date());
+  const id = props.goal?.id;
+  const [title, setTitle] = useState(props.goal?.title);
+  const [category, setCategory] = useState(props.goal?.category);
+  const [subGoals, setSubGoals] = useState(props.goal?.subGoals ? props.goal?.subGoals : []);
+  const [dueDate, setDueDate] = useState(props.goal?.dueDate ? moment(props.goal.dueDate) : moment());
 
   //used by the form as a new subgoal is built
   const [subTitle, setSubTitle] = useState('');
-  const [subDate, setSubDate] = useState(new Date());
+  const [subDate, setSubDate] = useState(moment());
   const [createGoal] = useMutation(EDIT_OR_CREATE_GOAL);
 
 
@@ -38,6 +40,7 @@ function GoalForm() {
     createGoal({
       variables: {
         goalInput: {
+          id: id ? id : undefined,
           title: title,
           dueDate: dueDate.format('yyyy-MM-DD'),
           completed: false,
@@ -63,15 +66,18 @@ function GoalForm() {
     if(title == '' || dueDate == ''){
       alert('All fields are required to create a goal')
     }
-    else if(subGoals.length == 0){
-      alert('Every goal must have a sub goal')
-    }
     else{
       submitNewGoal(title, dueDate, category, subGoals);
       setTitle('');
       setCategory('');
       setSubGoals([]);
     }
+  }
+
+  function deleteSubGoal(event, index){
+    event.preventDefault();
+    subGoals.splice(index, 1);
+    setSubGoals([...subGoals]);
   }
 
   const classes = useStyles();
@@ -83,7 +89,7 @@ function GoalForm() {
       <Grid container justify="space-evenly" alignItems="center">
 
       <form className={classes.root} noValidate autoComplete="off">
-          <h2 style={{display: "flex"}}>Create Goal</h2>
+          <h1 style={{display: "flex"}}>{props.goal ? "Edit Goal" : "Create Goal"}</h1>
           
           <TextField id="outlined-basic" label="Title" variant="outlined"
             value={title} onChange={event => setTitle(event.target.value)}/>
@@ -108,6 +114,18 @@ function GoalForm() {
             />
           </div>
           <br/><br/>
+
+          <h2 style={{display: "flex"}}>Add Sub Goals</h2>
+
+          <div className="subGoalFormContainer">
+            {subGoals.map((subgoal, index)=>(
+            <div key={index} className="subGoalItem">
+              <p>{subgoal.title}</p>
+              <p>{subgoal.dueDate}</p>
+              <button onClick={(event) => deleteSubGoal(event, index)}>Delete</button>
+            </div>
+            ))}
+          </div>
 
           <TextField id="outlined-basic" label="SubGoal Title" variant="outlined"
             value={subTitle} onChange={event => setSubTitle(event.target.value)}/>
@@ -135,15 +153,9 @@ function GoalForm() {
       </Grid>
       </MuiPickersUtilsProvider>
 
-      <div>
-        {subGoals.map((subgoal, i)=>(
-        <p key={i}>{subgoal.title}</p>
-        ))}
-      </div>
-
       <br/>
-      <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
-
+        <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
+      <br/>
     </div>      
   )
 }
