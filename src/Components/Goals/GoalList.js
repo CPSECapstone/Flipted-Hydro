@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@apollo/client';
 import React, { useState  } from 'react';
-import { GET_ALL_GOALS } from '../gqlQueries';
+import { GET_ALL_GOALS } from '../../gqlQueries';
 import "./GoalsScreen.css";
 import Goal from './Goal';
 import GoalForm from './GoalForm';

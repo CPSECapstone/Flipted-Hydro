@@ -1,7 +1,7 @@
 import React, { useState  } from 'react';
 import "./GoalsScreen.css";
 import { useMutation } from '@apollo/client';
-import { EDIT_OR_CREATE_GOAL } from '../gqlQueries';
+import { EDIT_OR_CREATE_GOAL } from '../../gqlQueries';
 import { gql } from '@apollo/client';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';

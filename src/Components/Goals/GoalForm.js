@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import React, { useState  } from 'react';
-import { EDIT_OR_CREATE_GOAL } from '../gqlQueries';
+import { EDIT_OR_CREATE_GOAL } from '../../gqlQueries';
 import "./GoalsScreen.css";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '100%',
     },
   },
 }));
@@ -89,6 +89,7 @@ function GoalForm(props) {
       <Grid container justify="space-evenly" alignItems="center">
 
       <form className={classes.root} noValidate autoComplete="off">
+
           <h2 style={{display: "flex"}}>{props.goal ? "Edit Goal" : "Create Goal"}</h2>
           
           <TextField id="outlined-basic" label="Title" variant="outlined"
@@ -145,7 +146,6 @@ function GoalForm(props) {
             />
           </div>
           <button type="button" onClick={handleAddSubgoal}>add subgoal</button>      
-
 
       </form>
       </Grid>
