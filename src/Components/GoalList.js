@@ -57,15 +57,17 @@ function GoalList() {
 
   //displays a list of goals
   function StarredGoalList() {
-    return goals.filter(({category, favorited}) => {return (category === searchCategory || searchCategory === '') && favorited;}).map((goal) => (
-      <Goal key={goal.id} goal={goal} editGoalCallback={editGoalCallback}/>
-    ));
+    return (
+      goals.filter(({category, favorited}) => {return (category === searchCategory || searchCategory === '') && favorited;})
+        .map((goal) => (<div key={goal.id} data-testid={"starredGoal"}><Goal goal={goal} editGoalCallback={editGoalCallback}/></div>))
+    );
   }
 
   function UnstarredGoalList() {
-    return goals.filter(({category, favorited}) => {return (category === (searchCategory) || searchCategory === '') && !favorited;}).map((goal) => (
-      <Goal key={goal.id} goal={goal} editGoalCallback={editGoalCallback}/>
-    ));
+    return (
+      goals.filter(({category, favorited}) => {return (category === (searchCategory) || searchCategory === '') && !favorited;})
+      .map((goal) => (<div key={goal.id} data-testid={"unStarredGoal"}><Goal goal={goal} editGoalCallback={editGoalCallback}/></div>))
+    );
   }
 
   
@@ -73,18 +75,23 @@ function GoalList() {
   function GoalsDisplay() {
     return (
       <div className="mainContainer">
-        <h1 data-testid="test1" className="pageTitle">My Goals</h1>
-        <button type="button" className="newGoalButton" onClick={()=>setNewGoalOpen(true)}>New Goal</button>
-        <div className="filterBar">
-          <h2>Filter by Category:</h2>
-          <div>
-            <DropDown/>
+        <div/>
+        <div>
+          <h1 data-testid="test1" className="pageTitle">My Goals</h1>
+          <button data-testid="addGoalButton" type="button" className="newGoalButton"
+            onClick={()=>setNewGoalOpen(true)}>New Goal</button>
+          <div className="filterBar">
+            <h2>Filter by Category:</h2>
+            <div>
+              <DropDown/>
+            </div>
           </div>
+
+          <StarredGoalList/>
+          <UnstarredGoalList/>
+
         </div>
-
-        <StarredGoalList/>
-        <UnstarredGoalList/>
-
+        <div/>
       </div>
     );
   }

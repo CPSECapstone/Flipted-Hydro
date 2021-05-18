@@ -192,15 +192,21 @@ function Goal(props){
     }
   }));
   const classes = useStyles();
+  const open_goal_style = {
+    "border-style": "solid",
+    "border-width": "0.06em"
+  }
 
   return(
-    <div className="goal">
+    <div className="goal" data-testid={current_goal_state.id} style={open ? open_goal_style : null}>
       <div className="goalGrid">
-        <button className="checkButton" courseid={props.goal.id} onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
+        <button data-testid={current_goal_state.id + "#starButton"} className="checkButton" 
+          onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
         <h2>{props.goal.title}</h2>
         <p className="checkMark">{current_goal_state.completed ? "✅" : ""}</p>
         <div/>
-        <IconButton aria-label="edit goal" component="span" onClick={handleClick}><EditIcon/></IconButton>
+        <IconButton data-testid={current_goal_state.id + "#editIconButton"}
+          aria-label="edit goal" component="span" onClick={handleClick}><EditIcon/></IconButton>
         {hasSubGoals() ?
           <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button> :
           <button className="checkButton" onClick={() => handleCompleteGoal()}>{current_goal_state.completed ? "✅" : ""}</button>
@@ -215,7 +221,8 @@ function Goal(props){
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem className={classes.root} onClick={handleEditGoal}>Edit Goal</MenuItem>
+        <MenuItem data-testid={current_goal_state.id + "#editMenuButton"} className={classes.root}
+          onClick={handleEditGoal}>Edit Goal</MenuItem>
         <MenuItem className={classes.root} onClick={handleClose}>Delete Goal</MenuItem>
       </Menu>
       

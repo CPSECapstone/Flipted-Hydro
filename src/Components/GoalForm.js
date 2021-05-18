@@ -83,13 +83,13 @@ function GoalForm(props) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div data-testid="goalForm">
 
       <MuiPickersUtilsProvider utils={MomentUtils}>
       <Grid container justify="space-evenly" alignItems="center">
 
       <form className={classes.root} noValidate autoComplete="off">
-          <h1 style={{display: "flex"}}>{props.goal ? "Edit Goal" : "Create Goal"}</h1>
+          <h2 style={{display: "flex"}}>{props.goal ? "Edit Goal" : "Create Goal"}</h2>
           
           <TextField id="outlined-basic" label="Title" variant="outlined"
             value={title} onChange={event => setTitle(event.target.value)}/>
@@ -99,7 +99,6 @@ function GoalForm(props) {
           
           <div className="datePicker">
             <KeyboardDatePicker
-              wrapperClassName="datePicker"
               disableToolbar
               variant="inline"
               format="yyyy-MM-DD"
@@ -132,7 +131,6 @@ function GoalForm(props) {
 
           <div className="datePicker">
             <KeyboardDatePicker
-              wrapperClassName="datePicker"
               disableToolbar
               variant="inline"
               format="yyyy-MM-DD"
