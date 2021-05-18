@@ -9,6 +9,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 function strip_subgoal_id(current_goal_state){
   return {
     ...current_goal_state,
@@ -164,8 +168,14 @@ function Goal(props){
     return(
       <div className={props.sg.completed ? "subGoalDone" : "subGoal"}>
         <h2>{props.sg.title}</h2>
+        <p className="checkMark">{props.sg.completed ? "✅" : ""}</p>
         <h2>{"due: "+props.sg.dueDate}</h2>
-        <button className="checkButton" courseid={props.sg.id} onClick={() => handleCompleteSubGoal(props.sg.id)}>{props.sg.completed ? "✅" : ""}</button>
+        <div className="subGoalCheckContainer">
+          <IconButton aria-label="complete subgoal" component="span"
+            onClick={() => handleCompleteSubGoal(props.sg.id)} style={props.sg.completed ? {color: "#00b500"} : {color: "#4274F3"}}>
+                <CheckCircleIcon/>
+          </IconButton>
+        </div>
       </div>   
     );
   }
@@ -205,11 +215,16 @@ function Goal(props){
         <h2>{props.goal.title}</h2>
         <p className="checkMark">{current_goal_state.completed ? "✅" : ""}</p>
         <div/>
-        <IconButton data-testid={current_goal_state.id + "#editIconButton"}
+        <IconButton data-testid={current_goal_state.id + "#editIconButton"} style={{color: "#4274F3"}}
           aria-label="edit goal" component="span" onClick={handleClick}><EditIcon/></IconButton>
         {hasSubGoals() ?
-          <button className="arrowButton" onClick={toggleOpenGoal}>{open ? "v" : ">" }</button> :
-          <button className="checkButton" onClick={() => handleCompleteGoal()}>{current_goal_state.completed ? "✅" : ""}</button>
+          <IconButton style={{color: "#4274F3"}} aria-label="expand goal" component="span" onClick={toggleOpenGoal}>
+              {open ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+          </IconButton> :
+          <IconButton aria-label="complete goal" component="span"
+          onClick={handleCompleteGoal} style={current_goal_state.completed ? {color: "#00b500"} : {color: "#4274F3"}}>
+              <CheckCircleIcon/>
+          </IconButton> 
         }
       </div>
       {open? (<SubGoalList g={current_goal_state}/>) : null }

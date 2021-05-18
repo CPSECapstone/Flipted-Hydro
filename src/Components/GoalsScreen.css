@@ -23,10 +23,10 @@
 }
 
 .filterBar {
-  background-color: darkgrey;
+  background-color: rgb(235, 235, 235);
   grid-column:2/3;
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   justify-items:center;
   align-items:center;
 }
@@ -36,10 +36,9 @@
 }
 
 .goal {
-  background-color: rgb(223, 223, 223);
+  background-color: white;
   color: black;
   font-size: 35px;
-  border: 1px;
   align-items: center;
   grid-column:2/3;
 }
@@ -55,6 +54,7 @@
   align-items: flex-start;
   padding-left: 1em;
   padding-right: 1em;
+  border-bottom: 2px solid rgb(223, 223, 223);
 }
 
 .testGoal{
@@ -64,8 +64,8 @@
 
 .subGoal {
   display:grid;
-  grid-template-columns:2fr 2fr 1fr;
-  background-color: rgb(223, 223, 223);
+  grid-template-columns:2fr 1fr 2fr 1fr;
+  background-color: white;
   border: 1px;
   grid-column:2/3;
   align-items: center;
@@ -82,8 +82,8 @@
 
 .subGoalDone {
   display:grid;
-  grid-template-columns:2fr 2fr 1fr;
-  background-color: rgb(123, 218, 123);
+  grid-template-columns:2fr  1fr 2fr 1fr;
+  background-color: white;
   border: 1px;
   grid-column:2/3;
   align-items: center;
@@ -96,6 +96,11 @@
   color: black;
   font-size: 35px;
   align-items: center;
+}
+
+.subGoalCheckContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .mainButton {
@@ -122,7 +127,6 @@
   align-items: center; 
   justify-content: center;
   margin: auto;
-  grid-column:2/3;
 }
 
 .arrowButton {
@@ -315,4 +319,10 @@
 
 .menuItem {
   color: black;
+}
+
+.goalBoxContainter {
+  border-top: 2px solid rgb(235, 235, 235);
+  border-left: 2px solid rgb(235, 235, 235);
+  border-right: 2px solid rgb(235, 235, 235);
 }

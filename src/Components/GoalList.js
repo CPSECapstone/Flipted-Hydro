@@ -5,6 +5,10 @@ import "./GoalsScreen.css";
 import Goal from './Goal';
 import GoalForm from './GoalForm';
 
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
+import Button from '@material-ui/core/Button';
+
 //This component is used to display the main part of the goals screen
 function GoalList() {
 
@@ -31,9 +35,17 @@ function GoalList() {
   function DropDown() {
     const [open, setOpen] = useState(false);
 
+    const filterButtonStyle = {
+      "color": "#4274F3",
+      "width": "100%",
+      "fontSize": "16px",
+      "textTransform": "none",
+      "fontWeight": "bold"
+    }
+
     return (
       <div>
-        <button type="button" className="dropdownButton" onClick={()=>setOpen(!open)}>{searchCategory == "" ? "v" : searchCategory}</button>
+        <Button style={filterButtonStyle} onClick={()=>setOpen(!open)}>Filter By Category</Button>
         <br/>
         {open ? (<DisplayDropDownList/>) : null}
       </div>);
@@ -78,17 +90,25 @@ function GoalList() {
         <div/>
         <div>
           <h1 data-testid="test1" className="pageTitle">My Goals</h1>
-          <button data-testid="addGoalButton" type="button" className="newGoalButton"
-            onClick={()=>setNewGoalOpen(true)}>New Goal</button>
-          <div className="filterBar">
-            <h2>Filter by Category:</h2>
-            <div>
-              <DropDown/>
+          
+          <div className="goalBoxContainter">
+            <div className="filterBar">
+                            
+              <div>
+                <DropDown/>
+              </div>
+              
+              <IconButton data-testid="addGoalButton" aria-label="complete subgoal" component="span"
+                onClick={()=>setNewGoalOpen(true)} style={{color: "#4274F3"}}>
+                    <AddCircleOutlinedIcon/>
+              </IconButton>
+                
             </div>
-          </div>
 
-          <StarredGoalList/>
-          <UnstarredGoalList/>
+            <StarredGoalList/>
+            <UnstarredGoalList/>
+
+          </div>
 
         </div>
         <div/>
