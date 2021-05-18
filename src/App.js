@@ -184,7 +184,6 @@ function App() {
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
           <Route component = {QAScreen} exact path = '/qascreen'/>
-          <Route component = {NavDrawer} exact path = '/nav'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
         </Switch>
