@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import GoalsScreen from './Components/GoalsScreen.js';
 import GradeScreen from './Components/GradeScreen';
 import Mission from './Components/Mission';
+import QAScreen from './Components/QAScreen';
 import Task from './Components/Task';
 import "./App.css";
 import MTaskOverview from './Components/MTaskOverview';
@@ -158,6 +159,7 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
+          <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {NavDrawer} exact path = '/nav'/>
         </Switch>
         </div>
