@@ -183,13 +183,10 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
-<<<<<<< HEAD
           <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {NavDrawer} exact path = '/nav'/>
-=======
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
->>>>>>> main
         </Switch>
         </div>
       </ApolloProvider>     
