@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import ProgressBar from './ProgressBar.js';
+import React from 'react';
+import TaskReviewStats from './TaskReviewStats.js';
 
-//export default function TaskReview(props) {
 export default function TaskReview() {
 
-  const q = {
+  const props = {
     "data": {
       "submitTask": {
         "graded": false,
@@ -66,50 +65,25 @@ export default function TaskReview() {
         ],
         "teacherComment": null
       }
-    }
+    },
+    "id": "4f681550ba9",
+        "name": "Introduction to Covalent Bonding",
+        "instructions": "Analyze the content and answer the questions",
+        "points": 20,
+        "dueDate": "2021-05-30",
+        "parentMissionId": "da0719ba103",
+        "parentMissionIndex": 0,
+        "requirements": [
+          {
+            "id": "f681550ba90",
+            "description": "Understand the structure of covalent bonds"
+          },
+          {
+            "id": "681550ba909",
+            "description": "Understand the properites of covalent bonds"
+          }
+        ]
   }
-  
-   const props = {
-      "id": "4f681550ba9",
-      "name": "Introduction to Covalent Bonding",
-      "instructions": "Analyze the content and answer the questions",
-      "points": 20,
-      "dueDate": "2021-05-30",
-      "parentMissionId": "da0719ba103",
-      "parentMissionIndex": 0,
-      "requirements": [
-        {
-          "id": "f681550ba90",
-          "description": "Understand the structure of covalent bonds"
-        },
-        {
-          "id": "681550ba909",
-          "description": "Understand the properites of covalent bonds"
-        }
-      ],
-      "width": '700',
-      "height": '10',
-      "doneColor":'#4274F3',
-      "leftColor":'rgb(108, 108, 133)',
-      "total": 30,
-      "done": 10
-    };
-
-   var total = 10;
-   if(props.total) {
-       total = props.total.toString();
-   } else {
-       console.warn('Total missing, default value of 10 being used');
-   }
-   const totalNum = total;
-   var done = 1;
-   if(props.done) {
-       done = props.done.toString();
-   } else {
-       console.warn('Done missing, default value of 1 being used');
-   }
-   const doneNum = done;
-
     const mapRequirements = (req) => {
       if(!req) return [];
       return req.map(({description,id}) => (
@@ -119,49 +93,14 @@ export default function TaskReview() {
         </div>))
     }
 
-   function getScore(){
-     var n = 0;
-     for(var i = 0; i < q.data.submitTask.questionAndAnswers.length; i++){
-      if(q.data.submitTask.questionAndAnswers[i].answer.pointsAwarded != 0){
-        n++;
-      }
-     }
-     return n
-   }
-
-   function scoreTotal(){
-     return (q.data.submitTask.questionAndAnswers.length);
-   }
-
-   function scoreBar(){
-     return ( <div> 
-      <h2>Score: {getScore()}/{scoreTotal()} </h2>
-      <ProgressBar 
-      width='700'
-      height='20'
-      doneColor='#4274F3'
-      leftColor='rgb(108, 108, 133)'
-      total={scoreTotal()}
-      done={getScore()}/></div>);
-   }
-
-   function pointBar(){
-    return ( <div> 
-    <h2>Points Gained: {q.data.submitTask.pointsAwarded}</h2>
-    <ProgressBar 
-    width='700'
-    height='20'
-    doneColor='#4274F3'
-    leftColor='rgb(108, 108, 133)'
-    total={q.data.pointsAwarded}
-    done={q.data.pointsPossible}/></div>);
-   }
+    const getStats = () => {
+      return <div>{TaskReviewStats(props)}</div>
+    }
 
    return(
       <div>
          <h2>{mapRequirements(props.requirements)}</h2>
-         { scoreBar() }
-         { pointBar() }
+         { getStats() }
       </div>
    );
 }

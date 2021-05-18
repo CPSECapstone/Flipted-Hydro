@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 import './TaskOverview.css';
 
@@ -12,7 +12,7 @@ function MTaskOverview(props) {
     return <div></div>;
   }
     
-  const mapRequirements = (req) => {
+  const mapRequirementsToCheck = (req) => {
     if(!req) return [];
     return req.map(({description,id}) => (
       <div key={id}>
@@ -37,7 +37,7 @@ function MTaskOverview(props) {
          <h2>{props.task.instructions}</h2>
          <h2>Points: {props.task.points}</h2>
          <h2>Due: {props.task.dueDate}</h2>
-         <h2>{mapRequirements(props.task.requirements)}</h2>
+         <h2>{mapRequirementsToCheck(props.task.requirements)}</h2>
          <div  className="start">
          <button onClick={() => changeToTaskScreen(props.task.id)}>Start</button>
          </div>
