@@ -1,6 +1,6 @@
-import { useQuery  } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useState } from 'react';
-import { GET_TASK_AND_PROGRESS } from '../gqlQueries.js';
+import { GET_TASK_AND_PROGRESS, SUBMIT_TASK } from '../gqlQueries.js';
 import { TextTask } from './Text.js';
 import Image from './Image.js';
 import Video from './Video.js';
@@ -74,6 +74,8 @@ function Task(props) {
     variables: { id: taskId },
   });
 
+  const [submitTaskMutation] = useMutation(SUBMIT_TASK);
+
   const [rubricOpen, setRubricOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
   const [pDone, setPDone] = useState(1);
@@ -122,8 +124,26 @@ function Task(props) {
   }
 
   const submitTask = () => {
-    alert(`${title} submitted.`);
-    props.history.push('/');
+
+    submitTaskMutation({
+      variables: {
+        taskId: taskId
+      }
+    }).then((response) => {
+      console.log(response);
+      alert(`${title} submitted.`);
+      props.history.push({
+        pathname: "/mission",
+        state: {
+          id: data.task.missionId
+        }
+      });
+    }).catch((error) => {
+      console.log(error)
+      if(error.message.includes("ineligible for submission")){
+        alert('Task ineliglbe for submission, please answer all questions')
+      }
+    })
   }
 
   /* creates a callback function for a MCQuestion component
