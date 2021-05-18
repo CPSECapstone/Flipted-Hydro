@@ -39,13 +39,32 @@ function getLineStyle(width, color) {
     const uLineStyle = getLineStyle(
         (width * (props.untouched/total)).toString(), 'red');
 
+    const cLine = () => {
+        if(props.completed === 0) {
+            return null;
+        }
+        return(<hr style={ cLineStyle }/>);
+    }
+    const pLine = () => {
+        if(props.prog === 0) {
+            return null;
+        }
+        return(<hr style={ pLineStyle }/>);
+    }
+    const uLine = () => {
+        if(props.untouched === 0) {
+            return null;
+        }
+        return(<hr style={ uLineStyle }/>);
+    }
+
     return(
         <div className='learningtarget' data-testid={ props.name } 
         style={ bookStyle }>
             <h3>{props.name}</h3>
-            <hr style={ cLineStyle }/>
-            <hr style={ pLineStyle }/>
-            <hr style={ uLineStyle }/>
+            {cLine()}
+            {pLine()}
+            {uLine()}
         </div>
     );
 }
