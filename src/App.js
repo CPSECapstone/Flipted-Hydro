@@ -9,11 +9,8 @@ import Courses from './Components/Courses.js';
 import GradeScreen from './Components/GradeScreen';
 import MissionsScreen from './Components/MissionsScreen';
 import Mission from './Components/Mission';
-<<<<<<< HEAD
 import TaskReview from './Components/TaskReview';
-=======
 import QAScreen from './Components/QAScreen';
->>>>>>> 0b8bc238454d5b3281f6bfea224102fb30d7817e
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
 import NavDrawer from './Components/NavDrawer';
@@ -187,13 +184,10 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
-<<<<<<< HEAD
           <Route component = {TaskReview} exact path = '/taskreview'/>
-=======
           <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
->>>>>>> 0b8bc238454d5b3281f6bfea224102fb30d7817e
         </Switch>
         </div>
       </ApolloProvider>     
