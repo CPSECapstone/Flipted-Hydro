@@ -59,16 +59,16 @@ const sampleData = [
       },
 ];
 
-export default function QAScreen() {
+export default function QAScreen(props) {
+
+  const height = props.height ? props.height : "150px";
+  const spacing = props.spacing ? props.spacing : 45;
 
   function GetBlockColor(id, points, pointsAwarded) {
     const type = id.split('#')[0];
-    console.log(type);
-    console.log(id);
-    console.log(points);
-    console.log(pointsAwarded);
+
     if(type === 'FR_QUESTION') {
-      return 'rgb(171, 172, 111)';
+      return '#F2C94C';
     }
     if(pointsAwarded/points >= 1) {
       return '#27AE60';
@@ -78,7 +78,7 @@ export default function QAScreen() {
 
   function ScrollableGridList() {
     return(
-      <GridList cellHeight={45} className='scroll-grid' cols={1}>
+      <GridList cellHeight={spacing} className='scroll-grid' cols={1} style={{'height' : `${height}`}}>
         {sampleData.map((tile) => (
           <GridListTile key={tile.question.id} cols={1} >
             <label style={{'backgroundColor' : GetBlockColor(tile.question.id, tile.question.points, tile.answer.pointsAwarded)}}>
