@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProgressBar.css'
 
 export default function ProgressBar(props) {
@@ -43,7 +43,7 @@ export default function ProgressBar(props) {
         );
     }
 
-    function getLeft() {
+    function getRemaining() {
         const style = {
             'color' : leftColor,
             'backgroundColor' : leftColor,
@@ -61,7 +61,7 @@ export default function ProgressBar(props) {
     return(
         <div className='pbar' style = {barStyle}>
             { getDone() }
-            { getLeft() }
+            { getRemaining() }
         </div>
     );
 }
