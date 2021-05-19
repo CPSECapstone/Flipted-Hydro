@@ -265,4 +265,23 @@ export const GET_TASK_PROGRESS = gql`
     }
   }
 `;
+
+export const GET_ALL_MISSION_PROGRESS = gql`
+  query getMissionsProgress($id: String!) {
+    getAllMissionProgress(courseId: $id) {
+      mission {
+        id
+        name
+      }
+      progress {
+        taskId
+        name
+        submission{
+          graded
+        }
+      }
+      student
+    }
+  }
+`;
  

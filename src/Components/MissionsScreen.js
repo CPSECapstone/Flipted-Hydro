@@ -1,86 +1,36 @@
-import { GET_MISSIONS } from '../gqlQueries.js';
+import { GET_MISSIONS, GET_ALL_MISSION_PROGRESS } from '../gqlQueries.js';
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import Button from '@material-ui/core/Button';
 import './MissionsScreen.css';
-import EcoIcon from '@material-ui/icons/Eco';
-import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import HdrWeakIcon from '@material-ui/icons/HdrWeak';
 import ProgressBar from './ProgressBar.js';
 
 const MISSION_COMPONENT_PATH = "/mission";
 
+//this component displays all of the Missions in a course
 export default function MissionsScreen() {
+
+    const hist = useHistory();
+
+    const [focusedMission, setFocusedMission] = useState(null);
 
     const { loading, error, data, refetch} = useQuery(GET_MISSIONS, {
         variables: { id: "Integrated Science" },
     });
 
-    const fakedata = {missions: [
-      {name: "FakeMission1", description: "this is the 1st fake mission", id: 1},
-      {name: "FakeMission2", description: "this is the 2nd fake mission", id: 2},
-      {name: "FakeMission3", description: "this is the 3rd fake mission", id: 3},
-    ]}
+    const { loading: progressLoading, error: progressError, data: progressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
+      variables: { id: " " },
+    });
 
-    const hist = useHistory();
-    const [focusedMission, setFocusedMission] = useState(null);
-
-    function displayMissionList(){
-        console.log("data");
-        console.log(data);
-        return (<div className="missionList"> 
-          {fakedata.missions.map((mission) => (
-            <div className="Mission" onClick={()=>setFocusedMission(mission)}>
-              <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/>
-              {/* <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1> */}
-            </div>))} 
-        </div>);
-    }
-
-    function MissionOverview(props) {
-      if (props.mission != null)
-        return (
-          <div>
-            <h1>{props.mission.name}</h1>
-            <h2>{props.mission.description}</h2>
-            <div className="progress">
-            <div></div>
-            <ProgressBar 
-              width='700'
-              height='10'
-              doneColor='#4274F3'
-              leftColor='rgb(108, 108, 133)'
-              total={10}
-              done={7}
-            />
-            <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center", "padding-bottom": "20px"}}>70% Complete</h1>
-            </div>
-            <div className="start">
-              <button style={{top: "0"}}onClick={()=>redirectToMission(props.mission.id)}>Continue</button>
-            </div>
-          </div>
-        );
-      else return null;
-    }
-
-    function redirectToMission(missionId){
-      hist.push({
-        pathname: MISSION_COMPONENT_PATH,
-        state: {
-          id: missionId
-        }
-      });
-    }
-
-    if(loading) return (
+    if(loading || progressLoading) return (
       <div className = 'tasks'> 
         <h1>Loading...</h1>
       </div>
     )
 
-    if(error){
-      console.log(error);
+    if(error || progressError){
+      console.warn(error);
       //throw error;
       return (
         <div className = 'tasks'> 
@@ -89,16 +39,97 @@ export default function MissionsScreen() {
       );
     }
 
-    return (
-        <div className="missions">
-          <h1 style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em"}}>Integrated Science</h1>
-          <h2>Missions</h2>
-            {displayMissionList()}
-            {!focusedMission ? null : 
-              (<div className="card">
-                <MissionOverview mission={focusedMission}/>
-              </div>)
-            }
+    return MissionsScreenDisplay(data, progressData, hist, focusedMission, setFocusedMission);
+}
+
+//this function allows for dependency injection during testing
+export function MissionsScreenDisplay(data, progressData, hist, focusedMission, setFocusedMission) {
+
+  function displayMissionList(){
+      return (<div className="missionList"> 
+        {data.missions.map((mission) => (
+          <div data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
+            <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/>
+          </div>))} 
+      </div>);
+  }
+
+  function MissionOverview(props) {
+
+    if (props.mission != null){
+      var prog = calculateMissionProgress("MISSION#123", progressData);
+      return (
+        <div data-testid="missionOverview">
+          <h1>{props.mission.name}</h1>
+          <h2>{props.mission.description}</h2>
+          <div className="progress">
+          <div></div>
+          <div data-testid="missionOverviewProgressBar">  
+            <ProgressBar 
+              width='700'
+              height='10'
+              doneColor='#4274F3'
+              leftColor='rgb(108, 108, 133)'
+              total={100}
+              done={prog}
+            />
+          </div>
+          <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center", "padding-bottom": "20px"}}>{prog}% Complete</h1>
+          </div>
+          <div className="start">
+            <button data-testid="redirectToMissionButton" style={{top: "0"}}onClick={()=>redirectToMission(hist, props.mission.id)}>Continue</button>
+          </div>
         </div>
-    )
+      );
+    }
+    else return null;
+  }
+
+  return (
+    <div className="missions">
+      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em"}}>Integrated Science</h1>
+      <h2>Missions</h2>
+        {displayMissionList()}
+        {!focusedMission ? null : 
+          (<div className="card">
+            <MissionOverview mission={focusedMission}/>
+          </div>)
+        }
+    </div>
+  )
+}
+
+//returns a percentage of tasks in the specified mission that have been submitted
+export function calculateMissionProgress(missionId, progressData){
+
+  //retrieve the progress object that matches the specified missionId
+  var progress = null;
+  for (var i = 0; i < progressData.getAllMissionProgress.length; i++){
+    if (progressData.getAllMissionProgress[i].mission.id == missionId) {
+      progress = progressData.getAllMissionProgress[i].progress;
+    }
+  }
+
+  //progress object not found
+  if (progress == null){
+    console.warn("Mission progress not found.");
+    return 0;
+  } 
+
+  //calculate percentage of tasks completed
+  var completedCount = 0;
+  var nTasks = progress.length;
+  for(var i = 0; i < nTasks; i++){
+    if (progress[i].submission != null) completedCount++;
+  }
+  return 100 * completedCount/nTasks;
+}
+
+export function redirectToMission(hist, missionId){
+  hist.push({
+    pathname: MISSION_COMPONENT_PATH,
+    state: {
+      id: missionId
+    }
+  });
 }

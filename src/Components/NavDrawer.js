@@ -48,7 +48,6 @@ function NavDrawer(props) {
       onKeyDown={toggleDrawer(false)}
     >
       
-      
       <List>
           <ListItem  key="Logo" >
             <ListItemText className="logoText" primary="flipt.ED" />
@@ -65,15 +64,10 @@ function NavDrawer(props) {
             <ListItemIcon><DoneAllIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Goals" />
           </ListItem>
+
           <ListItem button key="Missions" onClick={() => (props.history.push('/missions'))}> 
             <ListItemIcon><AssignmentTurnedInIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Missions" />
-          </ListItem>
-
-          
-          <ListItem button key="Task" onClick={() => (props.history.push('/task'))}>
-            <ListItemIcon><LinearScaleIcon /></ListItemIcon>
-            <ListItemText className="buttonText" primary="Task" />
           </ListItem>
 
           <ListItem button key="Courses" onClick={() => (props.history.push('/coursescreen'))}>
