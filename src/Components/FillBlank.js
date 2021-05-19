@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./QuestionScreen.css";
+import "./Question.css";
 //var List = require("collections/list");
 
 function FillBlank() {
@@ -15,7 +15,7 @@ function FillBlank() {
      {myname: 'B1'}];
 
    const textMap = (data) => {
-    return data.map(({name}) => (<input type="text" id="cname" name="cname" value={name} onChange={event => setName(event.target.value)}/>));
+    return data.map(({name}, index) => (<input key={index} type="text" id="cname" name="cname" value={name} onChange={event => setName(event.target.value)}/>));
    }
  
     return (
