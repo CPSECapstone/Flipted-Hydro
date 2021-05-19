@@ -22,8 +22,8 @@ export default function QAScreen(props) {
   function ScrollableGridList() {
     return(
       <GridList cellHeight={spacing} className='scroll-grid' cols={1} style={{'height' : `${height}`}}>
-        {props.map((tile) => (
-          <GridListTile key={tile.question.id} cols={1} >
+        {props.questionAndAnswers.map((tile) => (
+          <GridListTile key={tile.question.id} cols={1} onClick={() => props.setFocusedQACallback(tile)}>
             <label style={{'backgroundColor' : GetBlockColor(tile.question.id, tile.question.points, tile.answer.pointsAwarded)}}>
               {tile.question.description}
             </label>
