@@ -40,8 +40,8 @@ export default function TaskReviewStats(props) {
     height='20'
     doneColor='#F2C94C'
     leftColor='rgb(108, 108, 133)'
-    total={submission.pointsAwarded}
-    done={submission.pointsPossible}/></div>);
+    total={submission.pointsPossible}
+    done={submission.pointsAwarded}/></div>);
    }
 
    return(
