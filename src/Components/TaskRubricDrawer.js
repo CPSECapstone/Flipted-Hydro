@@ -13,6 +13,7 @@ import "./Drawer.css";
 import { SUBMIT_TASK_PROGRESS } from '../gqlQueries.js';
 import { useMutation  } from '@apollo/client';
 import { useState } from 'react';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
 const useStyles = makeStyles({
   list: {
@@ -91,7 +92,8 @@ function TaskRubricDrawer(props) {
       
       
       <List>
-          <ListItem  key="Logo" >
+          <ListItem button onClick={()=>props.setRubricOpen(false)} key="Logo" >
+            <ListItemIcon><DoubleArrowIcon/></ListItemIcon>
             <ListItemText className="logoText" primary="Task Rubric" />
           </ListItem>
 
@@ -116,7 +118,7 @@ function TaskRubricDrawer(props) {
 
   return (
     <div>
-        <Drawer anchor='right' open={props.rubricOpen} onClose={toggleDrawer(false)}>
+        <Drawer anchor='right' variant="persistent" open={props.rubricOpen} onClose={toggleDrawer(false)}>
         {list('right')}
         </Drawer>
     </div>
