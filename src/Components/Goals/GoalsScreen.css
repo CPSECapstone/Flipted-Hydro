@@ -229,16 +229,24 @@
   margin: auto;
 }
 
+.closebutton {
+  position: relative;
+  margin:auto;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 15px;
+}
+
 .submitbutton {
   position: relative;
   margin:auto;
   justify-content: center;
   display: flex;
   align-items: center;
-  background-color: #F21E1D;
   color: white;
   font-size: 15px;
-  border: 1px solid #F21E1D;
 }
 
 .textInput {
@@ -303,7 +311,7 @@
   color: green;
 }
 
-.subGoalFormContainer {
+.subGoalPreviewContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -325,4 +333,28 @@
   border-top: 2px solid rgb(235, 235, 235);
   border-left: 2px solid rgb(235, 235, 235);
   border-right: 2px solid rgb(235, 235, 235);
+}
+
+.subGoalInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.goalInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.subGoalDeleteButton {
+  width: auto;
+  height: auto;
+}
+
+.submitButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

@@ -4,7 +4,6 @@ import { GET_ALL_GOALS } from '../../gqlQueries';
 import "./GoalsScreen.css";
 import Goal from './Goal';
 import GoalForm from './GoalForm';
-
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
 import Button from '@material-ui/core/Button';
@@ -126,8 +125,7 @@ function GoalList() {
     return(
       <div className="popupContainer" key="popupcontainer">
         <div className="newGoalForm" key="newgoalform">
-          <GoalForm key="newform" goal={currentGoal}/>
-          <button type="button" onClick={closeGoalForm}>close</button>
+          <GoalForm key="newform" goal={currentGoal} closeFormCallBack={closeGoalForm}/>
         </div>
       </div>
     );

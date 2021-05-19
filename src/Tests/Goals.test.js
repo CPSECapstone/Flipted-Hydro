@@ -1,6 +1,6 @@
 import { render, fireEvent, screen, cleanup, act } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import GoalList from '../Components/GoalList';
+import GoalList from '../Components/Goals/GoalList';
 import { GET_ALL_GOALS, EDIT_OR_CREATE_GOAL } from '../gqlQueries';
 import { InMemoryCache } from '@apollo/client';
 
