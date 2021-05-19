@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
-import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -91,6 +90,3 @@ function NavDrawer(props) {
 }
 
 export default withRouter(NavDrawer);
-
-
-
