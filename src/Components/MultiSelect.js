@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import "./QuestionScreen.css";
-//import { useQuery, useMutation  } from '@apollo/client';
-//import { GET_QUIZ_QUESTIONS, SUBMIT_QUIZ } from '../gqlQueries.js';
-//get Questions
-//submit button
-//selection buttons
 
 function MultiSelect() {
   const [answer,setAnswer]=useState('');
@@ -13,13 +8,12 @@ function MultiSelect() {
       setAnswer( e.target.value);
    }
 
-   const onSubmit = async (event) => {
+   const onSubmit = async () => {
     alert("Submitted!");
   }
 
     return (
       <div>
-
         <h1>MULTI-SELECT QUIZ</h1>
         <div className="chunk">
           <h2>What is the meaning of life?</h2>

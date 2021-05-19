@@ -75,7 +75,6 @@ export const GET_TASK = gql`
       requirements {
         id 
         description
-        isComplete
       }
     },
     retrieveQuestionProgress(taskId: $id){
@@ -242,7 +241,6 @@ export const GET_TASK_AND_PROGRESS = gql`
       requirements {
         id 
         description
-        isComplete
       }
     },
     retrieveQuestionProgress(taskId: $id){
@@ -304,10 +302,19 @@ export const SUBMIT_TASK = gql`
       pointsPossible
       questionAndAnswers {
         question {
-          id
-          description
-          points
-          feedback
+          ... on McQuestion {
+            id
+            description
+            points
+            feedback
+            answers
+          }
+          ... on FrQuestion {
+            id
+            description
+            points
+            feedback
+          }
         }
         answer {
           questionId
