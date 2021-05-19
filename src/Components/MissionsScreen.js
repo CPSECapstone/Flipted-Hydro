@@ -49,7 +49,8 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
       return (<div className="missionList"> 
         {data.missions.map((mission) => (
           <div data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
-            <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/>
+            {/* <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/> */}
+            <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1>
           </div>))} 
       </div>);
   }
