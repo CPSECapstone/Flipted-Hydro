@@ -3,7 +3,7 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
-import GoalList from './Components/GoalList.js';
+import GoalList from './Components/Goals/GoalList.js';
 import { useHistory } from 'react-router';
 import Courses from './Components/Courses.js';
 import GradeScreen from './Components/GradeScreen';
@@ -17,6 +17,7 @@ import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
 const HOME_SCREEN_PATH = 'missions';
+const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_PROD_URI;
 
 //configures amplify to connect to our authentication server in AWS
 Amplify.configure({
@@ -63,7 +64,7 @@ function App() {
    * user back to the login screen (which will forward to home screen if
    * they are already signed in).*/
   const httpLink = new HttpLink({
-    uri: process.env.REACT_APP_PROD_URI,
+    uri: CURRENT_GRAPHQL_API_URI,
     headers: {
       authorization: accessToken == null? null : accessToken.getJwtToken(),
     },
@@ -84,7 +85,7 @@ function App() {
   /* Main ApolloClient object, any apollo configuration
    * for our frontend will likely live here. */
   const client = new ApolloClient({
-    uri: process.env.REACT_APP_PROD_URI,
+    uri: CURRENT_GRAPHQL_API_URI,
     cache: new InMemoryCache({
       typePolicies: {
         Answer: {
