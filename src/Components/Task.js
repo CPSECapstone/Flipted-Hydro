@@ -296,7 +296,13 @@ function Task(props) {
   }
 
   return (
-    <div className = 'tasks'>  
+    <div className = 'tasks' style={rubricOpen? {
+      width: `calc(100% - ${500}px)`,
+      marginRight: "500px", 
+      } : {
+        width: `calc(100% - ${0}px)`,
+        marginRight: "0px",
+        }}>  
 
       { renderHeader() }
       <TaskRubricDrawer 
