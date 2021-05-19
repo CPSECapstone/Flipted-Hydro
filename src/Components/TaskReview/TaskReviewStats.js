@@ -22,7 +22,7 @@ export default function TaskReviewStats(props) {
 
    function scoreBar(){
      return ( <div> 
-      <h2>Score: {getScore()}/{scoreTotal()} </h2>
+      <h2>Questions Correct: {getScore()}/{scoreTotal()} </h2>
       <ProgressBar 
       width='700'
       height='20'
@@ -34,7 +34,7 @@ export default function TaskReviewStats(props) {
 
    function pointBar(){
     return ( <div> 
-    <h2>Points Gained: {submission.pointsAwarded}</h2>
+    <h2>Points Gained: {submission.pointsAwarded} / {submission.pointsPossible}</h2>
     <ProgressBar 
     width='700'
     height='20'
