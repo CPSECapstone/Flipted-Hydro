@@ -11,6 +11,7 @@ import MissionsScreen from './Components/MissionsScreen';
 import Mission from './Components/Mission';
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
+import ProgressOverview from './Components/ProgressOverview';
 import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 import "./App.css";
@@ -184,6 +185,7 @@ function App() {
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
+          <Route component = {ProgressOverview} exact path = '/progoverview'/>
         </Switch>
         </div>
       </ApolloProvider>     

@@ -6,10 +6,6 @@ import { useHistory } from 'react-router';
 
 //This component is used to display a student's courses.
 function Course() {
-  /*const { loading, error, data } = useQuery(GET_COURSE, {
-    variables: { id: "a71e775af83" },
-  });*/
-
   const courses =
   {
     "courseInfos": [
@@ -67,8 +63,7 @@ function Course() {
   }
 
   function displayCourses(data) {
-    return data.courseInfos.map((courseItem) => {   
-      //if (courseItem.course === 'Integrated Science') {
+    return data.courseInfos.map((courseItem) => {
         return ( 
           <div key={courseItem.courseId} className='courseItem' onClick={() => changeToMissionsScreen(courseItem.courseId)}>
             <ul>
@@ -77,16 +72,6 @@ function Course() {
           </div>
         )
       } 
-      /*else { 
-        return ( 
-          <div key={courseItem.courseId} className='courseItem'>
-            <ul>
-              {courseItem.course}
-            </ul>
-          </div>
-        )
-      }*/
-    //}
     );
   }
 
