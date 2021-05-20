@@ -28,7 +28,7 @@ export default function TaskReviewStats(props) {
       doneColor='#4274F3'
       leftColor='rgb(108, 108, 133)'
       total={scoreTotal()}
-      done={getScore()}/></div>);
+      done={getScore()-1}/></div>);
    }
 
    function pointBar(){
@@ -40,7 +40,7 @@ export default function TaskReviewStats(props) {
     doneColor='#F2C94C'
     leftColor='rgb(108, 108, 133)'
     total={submission.pointsPossible}
-    done={submission.pointsAwarded}/></div>);
+    done={submission.pointsAwarded-1}/></div>);
    }
 
    return(
