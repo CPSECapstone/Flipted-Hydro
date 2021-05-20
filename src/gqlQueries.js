@@ -75,7 +75,6 @@ export const GET_TASK = gql`
       requirements {
         id 
         description
-        isComplete
       }
     },
     retrieveQuestionProgress(taskId: $id){
@@ -129,8 +128,6 @@ export const GET_COURSE = gql`
     }
   }
 `;
-
-
 
 export const SAVE_MCQUESTION = gql`
   mutation saveMCQuestion($taskId: String!, $blockId: String!, $questionId: String!, $answerId: Int!) {
@@ -244,7 +241,6 @@ export const GET_TASK_AND_PROGRESS = gql`
       requirements {
         id 
         description
-        isComplete
       }
     },
     retrieveQuestionProgress(taskId: $id){
@@ -278,6 +274,25 @@ export const GET_TASK_PROGRESS = gql`
     }
   }
 `;
+
+export const GET_ALL_MISSION_PROGRESS = gql`
+  query getMissionsProgress($id: String!) {
+    getAllMissionProgress(courseId: $id) {
+      mission {
+        id
+        name
+      }
+      progress {
+        taskId
+        name
+        submission{
+          graded
+        }
+      }
+      student
+    }
+  }
+`;
  
 export const SUBMIT_TASK = gql`
   mutation submitTask($taskId: String!){
@@ -287,10 +302,19 @@ export const SUBMIT_TASK = gql`
       pointsPossible
       questionAndAnswers {
         question {
-          id
-          description
-          points
-          feedback
+          ... on McQuestion {
+            id
+            description
+            points
+            feedback
+            answers
+          }
+          ... on FrQuestion {
+            id
+            description
+            points
+            feedback
+          }
         }
         answer {
           questionId

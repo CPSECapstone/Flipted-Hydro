@@ -133,9 +133,10 @@ function Task(props) {
       console.log(response);
       alert(`${title} submitted.`);
       props.history.push({
-        pathname: "/mission",
+        pathname: "/taskreview",
         state: {
-          id: data.task.missionId
+          submitTask: response.data.submitTask,
+          task: data.task
         }
       });
     }).catch((error) => {
@@ -295,7 +296,13 @@ function Task(props) {
   }
 
   return (
-    <div className = 'tasks'>  
+    <div className = 'tasks' style={rubricOpen? {
+      width: `calc(100% - ${500}px)`,
+      marginRight: "500px", 
+      } : {
+        width: `calc(100% - ${0}px)`,
+        marginRight: "0px",
+        }}>  
 
       { renderHeader() }
       <TaskRubricDrawer 

@@ -3,12 +3,14 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import {Route, Switch} from 'react-router-dom';
-import GoalList from './Components/GoalList.js';
+import GoalList from './Components/Goals/GoalList.js';
 import { useHistory } from 'react-router';
 import Courses from './Components/Courses.js';
 import GradeScreen from './Components/GradeScreen';
 import MissionsScreen from './Components/MissionsScreen';
 import Mission from './Components/Mission';
+import TaskReview from './Components/TaskReview/TaskReview';
+import QAScreen from './Components/TaskReview/QAScreen';
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
 import ProgressOverview from './Components/ProgressOverview';
@@ -17,6 +19,7 @@ import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
 const HOME_SCREEN_PATH = 'missions';
+const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_PROD_URI;
 
 //configures amplify to connect to our authentication server in AWS
 Amplify.configure({
@@ -63,7 +66,7 @@ function App() {
    * user back to the login screen (which will forward to home screen if
    * they are already signed in).*/
   const httpLink = new HttpLink({
-    uri: process.env.REACT_APP_PROD_URI,
+    uri: CURRENT_GRAPHQL_API_URI,
     headers: {
       authorization: accessToken == null? null : accessToken.getJwtToken(),
     },
@@ -84,7 +87,7 @@ function App() {
   /* Main ApolloClient object, any apollo configuration
    * for our frontend will likely live here. */
   const client = new ApolloClient({
-    uri: process.env.REACT_APP_PROD_URI,
+    uri: CURRENT_GRAPHQL_API_URI,
     cache: new InMemoryCache({
       typePolicies: {
         Answer: {
@@ -183,6 +186,8 @@ function App() {
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
           <Route component = {MTaskOverview} exact path = '/mtaskoverview'/>
+          <Route component = {TaskReview} exact path = '/taskreview'/>
+          <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
           <Route component = {ProgressOverview} exact path = '/progoverview'/>
