@@ -51,38 +51,17 @@ const styling = {
 }
 
 const [focusedMission, setFocusedMission] = useState(null);
-const [focusedTarget, setFocusedTarget] = useState(null);
 
 //Query Mission Data
 const { loading, error, data, refetch} = useQuery(GET_MISSIONS, {
   variables: { id: "Integrated Science" }
 });
 
-//Query Mission Progress Data
+//Query Mission Progress Data (not currently user - using hard coded data above)
 const { loading: progressLoading, error: progressError, data: progressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
   variables: { id: " " }
 });
 
-//Query Target Data
-const { loading: targetLoad, error: targetError, data: targetData, refetch: targetRefecth} = useQuery(GET_TARGETS, {
-  variables: {id: "Integrated Science"}
-});
-
-//Query Target Progress Data
-const { loading: tpLoad, error: tpError, data: tpData, refetch: tpRefecth} = useQuery(GET_ALL_TARGET_PROGRESS, {
-  variables: {id: "Integrated Science"}
-});
-
-if(progressLoading) return (
-  <h2>Loading...</h2>
-)
-
-if(progressError){
-  console.log(progressError);
-  return (
-    <h2>Error!</h2>
-  );
-}
 
 if(loading) return (
   <h2>Loading...</h2>
@@ -95,28 +74,17 @@ if(error){
   );
 }
 
-if(targetLoad) return (
+if(progressLoading) return (
   <h2>Loading...</h2>
 )
 
-if(targetError){
-  console.log(targetError);
+if(progressError){
+  console.log(progressError);
   return (
     <h2>Error!</h2>
   );
 }
 
-function displayTasks(progressArray) {
-  return progressArray.map((task) => {
-    return (
-      <div key={task.id}>
-        <ul>
-          {task.name}
-        </ul>
-      </div>
-    )        
-  });
-}
 
 function calculateMissionProgress(mission, progressData){
   //retrieve the progress object that matches the specified missionId
@@ -187,6 +155,61 @@ function displayMissions(data) {
   });
 }
 
+function displayTasks(progressArray) {
+  return progressArray.map((task) => {
+    return (
+      <div key={task.id}>
+        <ul>
+          {task.name}
+        </ul>
+      </div>
+    )        
+  });
+}
+
+//----------- Mastery Progress (Learning Targets)----------
+const [focusedTarget, setFocusedTarget] = useState(null);
+
+//Query Target Data
+const { loading: targetLoad, error: targetError, data: targetData, refetch: targetRefecth} = useQuery(GET_TARGETS, {
+  variables: {id: "Integrated Science"}
+});
+
+//Query Target Progress Data
+const { loading: tpLoad, error: tpError, data: tpData, refetch: tpRefecth} = useQuery(GET_ALL_TARGET_PROGRESS, {
+  variables: {id: "Integrated Science"}
+});
+
+if(targetLoad) return (
+  <h2>Loading...</h2>
+)
+
+if(targetError){
+  console.log(targetError);
+  return (
+    <h2>Error!</h2>
+  );
+}
+
+if(tpLoad) return (
+  <h2>Loading...</h2>
+)
+
+if(tpError){
+  console.log(tpError);
+  return (
+    <h2>Error!</h2>
+  );
+}
+
+function changeFocusedTarget(target){
+  console.log(focusedTarget);
+  setFocusedTarget({
+    targetId: target.targetId,
+    targetName: target.targetName
+  })
+}
+
 function displayTargets(data) {
   return data.targets.map((target) => {
     return (
@@ -203,29 +226,19 @@ function displayObjectives(data) {
   return (
     data.getAllTargetProgress.map((targetItem) => {
 
-    return (
-    targetItem.objectives.map((objective) => {
       return (
-        <div key={objective.objectiveId} >
-          <ul>
-            {objective.objectiveName}
-          </ul>
-        </div>
+        targetItem.objectives.map((objective) => {
+          return (
+            <div key={objective.objectiveId} >
+              <ul>
+                {objective.objectiveName}
+              </ul>
+            </div>
+          )
+        })
       )
-    })
-    )
-  })   
-     
+    })    
   )
-}
-
-function changeFocusedTarget(target){
-  console.log(focusedTarget);
-  setFocusedTarget({
-    targetId: target.targetId,
-    targetName: target.targetName
-  })
-
 }
 
 return (
@@ -257,10 +270,10 @@ return (
         <div className="row">
           <div className="column">
             {!focusedTarget? null: 
-            <div className="card">
-              <ul>
-                {displayObjectives(tpData)}
-              </ul>
+              <div className="card">
+                <ul>
+                  {displayObjectives(tpData)}
+                </ul>
               </div>
             }
           </div>
