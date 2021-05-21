@@ -74,6 +74,11 @@ function NavDrawer(props) {
             <ListItemText className="buttonText" primary="Courses" />
           </ListItem>
 
+          <ListItem button key="Progress Overview" onClick={() => (props.history.push('/progoverview'))}>
+            <ListItemIcon><SpellcheckIcon /></ListItemIcon>
+            <ListItemText className="buttonText" primary="Progress Overview" />
+          </ListItem>
+
       </List>
       <Divider />
     </div>
