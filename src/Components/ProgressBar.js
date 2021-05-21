@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProgressBar.css'
 
 export default function ProgressBar(props) {
@@ -14,8 +14,8 @@ export default function ProgressBar(props) {
         console.warn('Total missing, default value of 10 being used');
     }
     const totalNum = total;
-    var done = 1;
-    if(props.done) {
+    var done = 0;
+    if(props.done || props.done == 0) {
         done = props.done.toString();
     } else {
         console.warn('Done missing, default value of 1 being used');
@@ -43,7 +43,7 @@ export default function ProgressBar(props) {
         );
     }
 
-    function getLeft() {
+    function getRemaining() {
         const style = {
             'color' : leftColor,
             'backgroundColor' : leftColor,
@@ -61,7 +61,7 @@ export default function ProgressBar(props) {
     return(
         <div className='pbar' style = {barStyle}>
             { getDone() }
-            { getLeft() }
+            { getRemaining() }
         </div>
     );
 }

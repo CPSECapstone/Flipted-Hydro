@@ -1,0 +1,20 @@
+.continueButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.questionReviewContainer {
+  border: 4px solid white;
+}
+
+.questionReviewPointsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.questionReviewText {
+  color: white;
+}
