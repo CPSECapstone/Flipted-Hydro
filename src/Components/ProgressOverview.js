@@ -62,6 +62,18 @@ const { loading: progressLoading, error: progressError, data: progressData, refe
   variables: { id: " " }
 });
 
+const [focusedTarget, setFocusedTarget] = useState(null);
+
+//Query Target Data
+const { loading: targetLoad, error: targetError, data: targetData, refetch: targetRefecth} = useQuery(GET_TARGETS, {
+  variables: {id: "Integrated Science"}
+});
+
+//Query Target Progress Data
+const { loading: tpLoad, error: tpError, data: tpData, refetch: tpRefecth} = useQuery(GET_ALL_TARGET_PROGRESS, {
+  variables: {id: "Integrated Science"}
+});
+
 
 if(loading) return (
   <h2>Loading...</h2>
@@ -168,18 +180,6 @@ function displayTasks(progressArray) {
 }
 
 //----------- Mastery Progress (Learning Targets)----------
-const [focusedTarget, setFocusedTarget] = useState(null);
-
-//Query Target Data
-const { loading: targetLoad, error: targetError, data: targetData, refetch: targetRefecth} = useQuery(GET_TARGETS, {
-  variables: {id: "Integrated Science"}
-});
-
-//Query Target Progress Data
-const { loading: tpLoad, error: tpError, data: tpData, refetch: tpRefecth} = useQuery(GET_ALL_TARGET_PROGRESS, {
-  variables: {id: "Integrated Science"}
-});
-
 if(targetLoad) return (
   <h2>Loading...</h2>
 )
