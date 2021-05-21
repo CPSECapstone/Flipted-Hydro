@@ -172,7 +172,7 @@ function Goal(props){
         <h2>{"due: "+props.sg.dueDate}</h2>
         <div className="subGoalCheckContainer">
           <IconButton aria-label="complete subgoal" component="span"
-            onClick={() => handleCompleteSubGoal(props.sg.id)} style={props.sg.completed ? {color: "#00b500"} : {color: "#4274F3"}}>
+            onClick={() => handleCompleteSubGoal(props.sg.id)} style={props.sg.completed ? {color: "#00b500"} : {color: "gray"}}>
                 <CheckCircleIcon/>
           </IconButton>
         </div>

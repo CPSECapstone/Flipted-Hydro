@@ -129,8 +129,6 @@ export const GET_COURSE = gql`
   }
 `;
 
-
-
 export const SAVE_MCQUESTION = gql`
   mutation saveMCQuestion($taskId: String!, $blockId: String!, $questionId: String!, $answerId: Int!) {
     saveMultipleChoiceProgress(mcBlockInput: {
@@ -273,6 +271,25 @@ export const GET_TASK_PROGRESS = gql`
       taskId
       username
       finishedRequirementIds
+    }
+  }
+`;
+
+export const GET_ALL_MISSION_PROGRESS = gql`
+  query getMissionsProgress($id: String!) {
+    getAllMissionProgress(courseId: $id) {
+      mission {
+        id
+        name
+      }
+      progress {
+        taskId
+        name
+        submission{
+          graded
+        }
+      }
+      student
     }
   }
 `;

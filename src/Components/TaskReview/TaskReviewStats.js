@@ -1,7 +1,6 @@
 import React from 'react';
 import ProgressBar from '../ProgressBar.js';
 
-//export default function TaskReview(props) {
 export default function TaskReviewStats(props) {
 
   const submission = props?.submission;
