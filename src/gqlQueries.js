@@ -339,9 +339,11 @@ export const GET_ALL_TARGET_PROGRESS = gql `
         objectiveId
       	objectiveName
         tasks {
-          taskId
-          taskName
           mastery
+          task {
+            id
+            name
+          }
         }
       }
       student
