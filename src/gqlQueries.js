@@ -326,3 +326,37 @@ export const SUBMIT_TASK = gql`
     }
   }
 `;
+
+
+
+export const GET_ALL_TARGET_PROGRESS = gql `
+  query getTargetProgress($id: String!) {
+    getAllTargetProgress(courseId: $id) {
+      target {
+        targetId
+        targetName
+      }
+      objectives {
+        objectiveId
+      	objectiveName
+        tasks {
+          mastery
+          task {
+            id
+            name
+          }
+        }
+      }
+      student
+    }
+  }
+`;
+
+export const GET_TARGETS = gql `
+  query getTargets($id: String!) {
+    targets(course: $id) {
+      targetId
+      targetName
+    }
+  }
+`;

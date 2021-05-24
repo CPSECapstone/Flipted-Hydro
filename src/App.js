@@ -13,12 +13,14 @@ import TaskReview from './Components/TaskReview/TaskReview';
 import QAScreen from './Components/TaskReview/QAScreen';
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
+import ProgressOverview from './Components/ProgressOverview';
+import MasteryProgress from './Components/MasteryProgress/MasteryProgress'
 import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
 const HOME_SCREEN_PATH = 'missions';
-const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_PROD_URI;
+const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_DEV_URI;
 
 //configures amplify to connect to our authentication server in AWS
 Amplify.configure({
@@ -189,6 +191,8 @@ function App() {
           <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
+          <Route component = {ProgressOverview} exact path = '/progoverview'/>
+          <Route component = {MasteryProgress} exact path = '/mastery'/>
         </Switch>
         </div>
       </ApolloProvider>     

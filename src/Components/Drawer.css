@@ -28,3 +28,7 @@
 .rubricHamburgerButton {
     float: right;
 }
+
+ul {
+    display: absolute;
+}
