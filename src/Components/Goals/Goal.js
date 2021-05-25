@@ -214,7 +214,7 @@ function Goal(props){
           onClick={() => handleStarGoal(props.goal)}>{props.goal.favorited ? "⭐" : ""}</button>
         <h2>{props.goal.title}</h2>
         <p className="checkMark">{current_goal_state.completed ? "✅" : ""}</p>
-        <div/>
+        <h2>{"due: " + props.goal.dueDate}</h2>
         <IconButton data-testid={current_goal_state.id + "#editIconButton"} style={{color: "#4274F3"}}
           aria-label="edit goal" component="span" onClick={handleClick}><EditIcon/></IconButton>
         {hasSubGoals() ?
