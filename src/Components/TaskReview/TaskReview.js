@@ -6,14 +6,33 @@ import QuestionReview from './QuestionReview'
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import './TaskReview.css';
+import { findRenderedComponentWithType } from 'react-dom/test-utils';
+import {oBarBlueStyle, oBarBlueStyleLeft, oBarBlueStyleRight, oBarGrayStyle, oBarGrayStyleLeft, oBarGrayStyleRight, reviewButtonStyle, clButtonStyle} from './TaskReviewStyles.js'
+import QuizReview from './QuizReview';
 
 export default function TaskReview(props) {
-
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
   const taskQAs = TaskReviewService.combineQuestionDataWithQAs(task, submission.questionAndAnswers);
   const [focusedQA, setFocusedQA] = useState(taskQAs[0]);
+  const [compDisplayed, setCompDisplayed] = useState('quiz-review');
+  const [oBarStyleArray, setOBarStyleArray] = useState([oBarBlueStyleLeft, oBarGrayStyle, oBarGrayStyleRight]);
+
+  function onClickQuizReview() {
+    setCompDisplayed('quiz-review');
+    setOBarStyleArray([oBarBlueStyleLeft, oBarGrayStyle, oBarGrayStyleRight]);
+  }
+
+  function onClickTaskResults() {
+    setCompDisplayed('task-results');
+    setOBarStyleArray([oBarGrayStyleLeft, oBarBlueStyle, oBarGrayStyleRight]);
+  }
+
+  function onClickGetHelp() {
+    setCompDisplayed('get-help');
+    setOBarStyleArray([oBarGrayStyleLeft, oBarGrayStyle, oBarBlueStyleRight]);
+  }
 
   const mapRequirements = (req) => {
     if (!req) return [];
@@ -24,6 +43,35 @@ export default function TaskReview(props) {
       </div>))
   }
 
+  function renderOptions() {
+    return(
+      <div className='options-bar-wrapper'>
+        <div className='options-bar'>
+        <h2 onClick = {() => {onClickQuizReview()}} style = {oBarStyleArray[0]}>Quiz Review</h2>
+        <h2 onClick = {() => {onClickTaskResults()}} style = {oBarStyleArray[1]}>Task Results</h2>
+        <h2 onClick = {() => {onClickGetHelp()}} style = {oBarStyleArray[2]}>Get Help</h2>
+        </div>
+      </div>
+      
+    );
+  }
+
+  function renderComp() {
+    if(compDisplayed === 'quiz-review') {
+      return(<QuizReview 
+        pointsAwarded={props.location.state.submitTask.pointsAwarded}
+        pointsTotal={props.location.state.submitTask.pointsPossible}
+      />);
+    }
+  }
+
+  function getHeader() {
+    if(compDisplayed === 'quiz-review') {
+      return 'QUIZ REVIEW';
+    }
+
+  }
+
   function continueToMission() {
     hist.push({
       pathname: '/mission',
@@ -32,29 +80,23 @@ export default function TaskReview(props) {
       }
     });
   }
-  return (
-    <div>
-      <h1>Task Review</h1>
-      <div className="row">
-        <div className="column">
-          <div>
-            <h1>Questions</h1>
-            <QAScreen questionAndAnswers={taskQAs} height="300px"
-              setFocusedQACallback={(qa) => setFocusedQA(qa)}/>
-          </div>
-        </div>
-        <div className="column">
-          <h2>Selected Question</h2>
-          <QuestionReview questionAndAnswer={focusedQA}/>
-        </div>
-        <div className="column">
-          <h1>Requirements</h1>
-          <h2>{mapRequirements(task.requirements)}</h2>
-        </div>
+
+  function getButtons() {
+    return(
+      <div className='task-review-buttons'>
+        <button style={reviewButtonStyle()}>{"<   Review Tasks"}</button>
+        <button style={clButtonStyle()} onClick={continueToMission}>{"Continue Learning   >"}</button>
       </div>
-      <h1>Results</h1>
-      <div><TaskReviewStats submission={submission} /></div>
-      <div className="continueButtonContainer"><button style={{"position": "inherit"}} onClick={continueToMission}>Continue</button></div>
+    );
+  }
+
+  return (
+    <div className='task-review'>
+      <h1>{getHeader()}</h1>
+      <h2>{`TASK: ${task.name}`}</h2>
+      { renderOptions() }
+      { renderComp() }
+      { getButtons() }
     </div>
   );
 }
