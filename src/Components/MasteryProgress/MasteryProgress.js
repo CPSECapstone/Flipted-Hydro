@@ -160,9 +160,7 @@ function MasteryProgress() {
 
   function renderHeader(){
     if(!focusedTarget){
-      return (
-        <h1>Mastery Progress</h1>
-      );
+      return null;
     } else {
       return (
         <div className="targetDetailsHeaderGrid">
