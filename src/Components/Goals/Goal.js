@@ -8,10 +8,16 @@ import EditIcon from '@material-ui/icons/Edit';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function strip_subgoal_id(current_goal_state){
   return {
@@ -44,6 +50,15 @@ function Goal(props){
   function handleEditGoal(){
     props.editGoalCallback(strip_subgoal_id(current_goal_state));
   }
+
+  const [dialogueOpen, setDialogueOpen] = React.useState(false);
+  const handleOpenDialogue = () => {
+    setDialogueOpen(true);
+  };
+  const handleCloseDialogue = () => {
+    setDialogueOpen(false);
+    handleClose();
+  };
 
 
   let current_goal_state = {
@@ -123,10 +138,8 @@ function Goal(props){
       variables: {
         id: current_goal_state.id
       }
-    }).then(response => {
-      console.log("response:");
-      console.log(response)
     })
+    handleCloseDialogue();
   }
 
   function allSubGoalsComplete(){
@@ -269,8 +282,30 @@ function Goal(props){
         <MenuItem data-testid={current_goal_state.id + "#editMenuButton"} className={classes.root}
           onClick={handleEditGoal}>Edit Goal</MenuItem>
         <MenuItem className={classes.root} onClick={handleClose}
-          onClick={deleteGoal}>Delete Goal</MenuItem>
+          onClick={handleOpenDialogue}>Delete Goal</MenuItem>
       </Menu>
+
+      <Dialog
+        open={dialogueOpen}
+        onClose={handleCloseDialogue}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Goal"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {"Are you sure you want to delete goal \'" + current_goal_state.title + "\'?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions style={{justifyContent: "center"}}>
+          <Button style={{top: "auto"}} onClick={handleCloseDialogue} color="primary" autoFocus>
+            No
+          </Button>
+          <Button style={{top: "auto"}} onClick={deleteGoal} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       
     </div>
   );
