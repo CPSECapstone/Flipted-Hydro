@@ -1,7 +1,7 @@
 import React, { useState  } from 'react';
 import "./GoalsScreen.css";
 import { useMutation } from '@apollo/client';
-import { EDIT_OR_CREATE_GOAL } from '../../gqlQueries';
+import { EDIT_OR_CREATE_GOAL, DELETE_GOAL } from '../../gqlQueries';
 import { gql } from '@apollo/client';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
@@ -98,6 +98,36 @@ function Goal(props){
       });
     }
   });
+
+  const [deleteGoalMutation] = useMutation(DELETE_GOAL, {
+  
+    update(cache) {
+
+      const ref = cache.identify({
+        __typename: "Goal",
+        id: current_goal_state.id
+      })
+
+      cache.modify({
+        fields: {
+          getAllGoals(existingGoals = []) {  
+            return existingGoals.filter(goal => goal.__ref != ref)
+          }
+        }
+      });
+    }
+  });
+
+  function deleteGoal(){
+    deleteGoalMutation({
+      variables: {
+        id: current_goal_state.id
+      }
+    }).then(response => {
+      console.log("response:");
+      console.log(response)
+    })
+  }
 
   function allSubGoalsComplete(){
     return current_goal_state.subGoals.filter((subGoal) => !(subGoal.completed)).length === 0;
@@ -238,7 +268,8 @@ function Goal(props){
       >
         <MenuItem data-testid={current_goal_state.id + "#editMenuButton"} className={classes.root}
           onClick={handleEditGoal}>Edit Goal</MenuItem>
-        <MenuItem className={classes.root} onClick={handleClose}>Delete Goal</MenuItem>
+        <MenuItem className={classes.root} onClick={handleClose}
+          onClick={deleteGoal}>Delete Goal</MenuItem>
       </Menu>
       
     </div>
