@@ -18,6 +18,9 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     borderTop: "1em solid #4274F3",
+    '&:hover': {
+      background: "#E0E0E0",
+   },
   },
   bullet: {
     display: "inline-block",
@@ -44,7 +47,8 @@ const useStyles = makeStyles({
     fontFamily: "\"Poppins\", sans-serif",
   },
   targetName: {
-    paddingTop: "0.5em",
+    paddingTop: "1em",
+    paddingBottom: "1em",
     fontFamily: "\"Poppins\", sans-serif",
   }
 });
@@ -82,7 +86,8 @@ function MasteryProgress() {
 
     return allTargetProgress.map((progress) => {
       return (
-        <Card key={progress.target.targetId} className={classes.root}>
+        <Card key={progress.target.targetId} className={classes.root}
+          onClick={() => changeFocusedTarget(progress)}>
         <CardContent className={classes.cardContent}>
           <Typography
             className={classes.title}
@@ -96,10 +101,6 @@ function MasteryProgress() {
           </Typography>
           <MasteryLabel mastery="NEARLY_MASTERED"/>
         </CardContent>
-        <CardActions>
-          <Button className={classes.button} size="small" 
-            onClick={() => changeFocusedTarget(progress)}>Details</Button>
-        </CardActions>
       </Card>
       )        
     });
