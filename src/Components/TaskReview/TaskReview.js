@@ -12,7 +12,7 @@ export default function TaskReview(props) {
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
-  const taskQAs = TaskReviewService.addAnswerValuesToQAs(task, submission.questionAndAnswers);
+  const taskQAs = TaskReviewService.combineQuestionDataWithQAs(task, submission.questionAndAnswers);
   const [focusedQA, setFocusedQA] = useState(taskQAs[0]);
 
   const mapRequirements = (req) => {

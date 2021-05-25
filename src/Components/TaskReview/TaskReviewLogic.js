@@ -37,6 +37,21 @@ function getAnswerForQA(qa, questions){
   };
 }
 
+/* This function takes in a single question-answer object and
+ * a list of questions for the task, and returns a list of that
+ * question's multiple choice options. Returns undefined for free
+ * response questions
+ */
+function getQuestionOptionsForQA(qa, questions){
+  const question = questions.filter(question => question.id == qa.question.id)[0]
+
+  if(!question || question.__typename == 'FrQuestion'){
+    return undefined;
+  }
+
+  return question.options;
+}
+
 /*
  * This function takes in a task object and question-answer list from
  * the backend, and adds the answer value of the user's answer to the
@@ -45,11 +60,15 @@ function getAnswerForQA(qa, questions){
  * This will also add a correctAnswer field to multiple choice question,
  * which holds the value of the correct answer.
  */
-function addAnswerValuesToQAs(task, qas){
+function combineQuestionDataWithQAs(task, qas){
   const questions = getTaskQuestions(task);
   return qas.map(qa => {
     return {
       ...qa,
+      question: {
+        ...(qa.question),
+        options: getQuestionOptionsForQA(qa, questions)
+      },
       answer: {
         ...(qa.answer),
         ...(getAnswerForQA(qa, questions))
@@ -59,6 +78,6 @@ function addAnswerValuesToQAs(task, qas){
 }
 
 export const TaskReviewService = {
-  addAnswerValuesToQAs,
+  combineQuestionDataWithQAs,
   getTaskQuestions
 };
