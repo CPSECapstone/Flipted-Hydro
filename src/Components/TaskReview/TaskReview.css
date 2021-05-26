@@ -76,7 +76,9 @@
 
 .task-review-buttons {
   margin: auto;
-  width: 30%;
+  width: 50%;
+  text-align: center;
+  justify-content: center;
 }
 
 .task-review-buttons button:hover {
