@@ -54,12 +54,7 @@ function NavDrawer(props) {
 
           <Divider />
 
-          <ListItem button key="Grades" onClick={() => (props.history.push('/gradescreen'))}>
-            <ListItemIcon><SpellcheckIcon /></ListItemIcon>
-            <ListItemText className="buttonText" primary="Grades" />
-          </ListItem>
-
-          <ListItem button key="Goals" onClick={() => (props.history.push('/goalsscreen'))}>
+          <ListItem button key="Goals" onClick={() => (props.history.push('/goals'))}>
             <ListItemIcon><DoneAllIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Goals" />
           </ListItem>
@@ -76,7 +71,7 @@ function NavDrawer(props) {
 
           <ListItem button key="Progress Overview" onClick={() => (props.history.push('/progoverview'))}>
             <ListItemIcon><SpellcheckIcon /></ListItemIcon>
-            <ListItemText className="buttonText" primary="Progress Overview" />
+            <ListItemText className="buttonText" primary="Progress" />
           </ListItem>
 
       </List>

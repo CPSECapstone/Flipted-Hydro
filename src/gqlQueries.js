@@ -265,6 +265,12 @@ export const EDIT_OR_CREATE_GOAL = gql`
   }
 `;
 
+export const DELETE_GOAL = gql`
+  mutation deleteGoal($id: String!){
+    deleteGoal(id: $id)
+  }
+`;
+
 export const GET_TASK_PROGRESS = gql`
   query getTask($id: String!){
     retrieveTaskProgress(taskId: $id){
@@ -287,6 +293,8 @@ export const GET_ALL_MISSION_PROGRESS = gql`
         name
         submission{
           graded
+          pointsAwarded
+          pointsPossible
         }
       }
       student
