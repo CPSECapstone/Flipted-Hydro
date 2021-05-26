@@ -54,7 +54,7 @@ function NavDrawer(props) {
 
           <Divider />
 
-          <ListItem button key="Goals" onClick={() => (props.history.push('/goalsscreen'))}>
+          <ListItem button key="Goals" onClick={() => (props.history.push('/goals'))}>
             <ListItemIcon><DoneAllIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Goals" />
           </ListItem>

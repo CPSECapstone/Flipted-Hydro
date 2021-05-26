@@ -42,14 +42,17 @@ ul {
 
 .detailsTableGrid {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr 1fr;
   justify-items: center;
-  padding-top: 2em;
+  padding-top: 1em;
+  height: max-content;
+  padding-right: 2em;
 }
 
 .targetDetailsHeaderGrid{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   justify-items: center;
   padding-top: 2em;
+  padding-bottom: 1em;
 }
