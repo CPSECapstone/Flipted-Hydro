@@ -11,13 +11,7 @@ import PREV from '../Images/previous.svg';
 import ProgressBar from '../ProgressBar.js'
 
 const useRowStyles = makeStyles({
-  root: {
-    
-  },
-  objectiveName: {
-    fontFamily: "\"Poppins\", sans-serif",
-    fontSize: "20px"
-  },
+
   subTitle: {
     fontFamily: "\"Poppins\", sans-serif",
     fontSize: "16px"
@@ -53,7 +47,7 @@ function Row(props) {
     return (
         <React.Fragment>
         <TableRow className={classes.root}>
-            <TableCell component="th" scope="row" className={classes.objectiveName}>
+            <TableCell component="th" scope="row" className={classes.subTitle}>
             {"Task: " + task.name}
             </TableCell>
             <TableCell align="left">
@@ -66,7 +60,7 @@ function Row(props) {
                     done={score ? score : 0}
                 />
             </TableCell>
-            <TableCell component="th" scope="row" className={classes.objectiveName}>
+            <TableCell component="th" scope="row" className={classes.subTitle}>
             {score ? score + "%" : "--%"}
             </TableCell>
         </TableRow>
@@ -92,6 +86,18 @@ function MissionProgressDetails(props){
   const mission = props.missionProgress.mission;
   const classes = useTableStyles();
 
+  function allMissionsColumn() {
+    return(
+        <div style={{width: "80%", margin: "auto", "margin-top": "10em"}}>
+            <div className="row">
+                <div className="column" style={{display: "grid", "grid-template-columns": "1fr", "justify-items": "center"}}>
+                    {props.displayMissions(props.missionData)}
+                </div>
+            </div>
+        </div>
+    );
+  }
+
   return (
     <div className="detailsContainer">
       <div className="targetDetailsHeaderGrid">
@@ -101,26 +107,31 @@ function MissionProgressDetails(props){
         <h1 style={{width: "auto"}}>{"Mission: " + mission.name}</h1>
         <div/>
       </div>
-      <div className="detailsTableGrid">
-        <div/>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left"><h2 className={classes.columnTitle}>Target Item</h2></TableCell>
-                <TableCell align="left"><h2 className={classes.columnTitle}>Score</h2></TableCell>
-                <TableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {progress.map((task) => (
-                <Row key={task.taskId} task={task} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div/>
+      <div style={{display: "grid", "grid-template-columns" : "1fr 20fr 1fr ", "justify-items": "center"}}>
+        <div></div>
+        <div className="detailsTableGrid">
+          <div/>
+          <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left"><h2 className={classes.columnTitle}>Target Item</h2></TableCell>
+                  <TableCell align="left"><h2 className={classes.columnTitle}>Score</h2></TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {progress.map((task) => (
+                  <Row key={task.taskId} task={task} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div/>
+        </div>
+        <div style={{"transform": "translate(-250%, -100%)", height: "100px"}}>{allMissionsColumn()}</div>
       </div>
+      
     </div>
   );
 }

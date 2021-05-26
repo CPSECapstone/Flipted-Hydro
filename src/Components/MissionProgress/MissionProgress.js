@@ -55,8 +55,6 @@ export default function MissionProgress() {
         return 100 * completedCount/nTasks;
     }
 
-    
-      
     //Used to select which Mission Progress information should be shared
     function changeFocusedMission(mission){
         setFocusedMission({
@@ -93,7 +91,11 @@ export default function MissionProgress() {
     }
 
     return (focusedMission!=null ? 
-        (<MissionProgressDetails missionProgress={mockMissionProgressData.getAllMissionProgress[0]} closeCallback={() => setFocusedMission(null)} />) 
+        (<MissionProgressDetails 
+            missionData={data}
+            missionProgress={mockMissionProgressData.getAllMissionProgress[0]} 
+            closeCallback={() => setFocusedMission(null) } 
+            displayMissions={displayMissions}/>) 
         : allMissions()
     );
 }
