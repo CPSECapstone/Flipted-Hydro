@@ -4,7 +4,8 @@ import './TaskReviewHelp.css';
 function TaskReviewHelp(props) {
    const [response, setName] = useState('');
     
-   const onSubmit = async () => {
+   const onSubmit = async (event) => {
+     event.preventDefault();
      alert("Submitted!");
    }
  
@@ -14,7 +15,7 @@ function TaskReviewHelp(props) {
         <form className="HelpBlock" onSubmit={onSubmit}>
             <textarea type="text" id="cname" name="cname" value={response} 
             onChange={event => setName(event.target.value)}/>
-           <button type="submit" className="sendbutton">Send</button>
+           <button type="send" className="sendbutton">Send</button>
         </form>
       </div>
     );
