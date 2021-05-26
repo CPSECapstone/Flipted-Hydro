@@ -11,7 +11,6 @@ import PREV from '../Images/previous.svg';
 import ProgressBar from '../ProgressBar.js'
 
 const useRowStyles = makeStyles({
-
   subTitle: {
     fontFamily: "\"Poppins\", sans-serif",
     fontSize: "16px"
@@ -26,6 +25,7 @@ function calculateTaskScore(taskSubmission){
         return Math.round(100*(taskSubmission.pointsAwarded/taskSubmission.pointsPossible));
 }
 
+//The task score determines which color the progress bar should be
 function getBarColor(score){
     if (!score)
         return null;
@@ -80,12 +80,14 @@ const useTableStyles = makeStyles({
   },
 });
 
+//displays a table with scores for tasks within a mission
 function MissionProgressDetails(props){
 
   const progress = props.missionProgress.progress;
   const mission = props.missionProgress.mission;
   const classes = useTableStyles();
 
+  //a column display of the circular mission progress bars
   function allMissionsColumn() {
     return(
         <div style={{width: "80%", margin: "auto", "margin-top": "10em"}}>
