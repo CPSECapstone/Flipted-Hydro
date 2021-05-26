@@ -336,7 +336,6 @@ export const SUBMIT_TASK = gql`
 `;
 
 
-
 export const GET_ALL_TARGET_PROGRESS = gql `
   query getTargetProgress($id: String!) {
     getAllTargetProgress(courseId: $id) {
