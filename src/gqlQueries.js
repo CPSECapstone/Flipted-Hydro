@@ -293,6 +293,8 @@ export const GET_ALL_MISSION_PROGRESS = gql`
         name
         submission{
           graded
+          pointsAwarded
+          pointsPossible
         }
       }
       student
