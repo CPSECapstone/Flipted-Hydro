@@ -182,7 +182,7 @@ function App() {
         <div>
         <Switch>
           <Route component = {LoginComponent} exact path = '/'/>
-          <Route component = {GoalList} exact path = '/goalsscreen'/>
+          <Route component = {GoalList} exact path = '/goals'/>
           <Route component = {GradeScreen} exact path = '/gradescreen'/>
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>

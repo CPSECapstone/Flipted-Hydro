@@ -34,7 +34,7 @@ function MasteryLabel(props){
 
   return (
     <div style={labelStyle}>
-      <h2>{getLabelText()}</h2>
+      <h2 style={{margin: "0em"}}>{getLabelText()}</h2>
     </div>
   );
 }
