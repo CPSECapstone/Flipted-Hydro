@@ -63,7 +63,8 @@ export default function TaskReview(props) {
       return(<QuizReview 
         pointsAwarded={props.location.state.submitTask.pointsAwarded}
         pointsTotal={props.location.state.submitTask.pointsPossible}
-        qa={props.location.state.submitTask.questionAndAnswers}
+        // qa={props.location.state.submitTask.questionAndAnswers}
+        qa={taskQAs}
       />);
     }
   }
