@@ -74,7 +74,7 @@ export default function MissionProgress() {
                 <CircularProgress style={{transform: "scale(5, 5) translate(20%, 0%) ", color: "#E0E0E0"}} variant="determinate" value={100} /> 
                 {/* <CircularProgress style={{transform: "scale(-5, 5)", color: "#4274F3" }} variant="determinate" value={calculateMissionProgress(progressData.getAllMissionProgress[1].mission.id, progressData)} />  */}
                 <CircularProgress style={{transform: "scale(5, 5) rotate(-90deg)", color: "#4274F3" }} variant="determinate" value={65} /> 
-                <h1 style={{color: "black", fontFamily: "\"Poppins\", sans-serif",  transform: "translate(20%, -75%)", fontSize: "16px" }}>{mission.name}</h1>
+                <h1 style={{color: "black", fontFamily: "\"Poppins\", sans-serif",  transform: "translate(20%, -90%)", fontSize: "16px", width: "70px", height: "40px" }}>{mission.name}</h1>
             </div>
             )        
         });
