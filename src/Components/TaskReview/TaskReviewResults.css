@@ -1,0 +1,26 @@
+.stat-box {
+   margin: auto;
+   width: 692px;
+   height: auto;
+   background: #F2F2F2;
+   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+   border-radius: 15px;
+   justify-content: center;
+   text-align: center;
+}
+.score-box h3 {
+   /* Blue 1 */
+   color: #2F80ED;
+   padding-top: 30px;
+}
+
+.objective-column {
+   margin-left: 30%;
+   width: auto;
+   height: 100%;
+   background: #F2F2F2;
+   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+   border-radius: 15px;
+   justify-content: center;
+   text-align: center;
+}

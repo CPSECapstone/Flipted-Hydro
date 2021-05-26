@@ -1,28 +1,19 @@
 import React from 'react';
-import TaskReviewStats from './TaskReviewStats.js';
 import { TaskReviewService } from './TaskReviewLogic';
-import QAScreen from './QAScreen.js'
-import QuestionReview from './QuestionReview'
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import './TaskReview.css';
-<<<<<<< HEAD
-=======
-import { findRenderedComponentWithType } from 'react-dom/test-utils';
 import {oBarBlueStyle, oBarBlueStyleLeft, oBarBlueStyleRight, oBarGrayStyle, oBarGrayStyleLeft, oBarGrayStyleRight, reviewButtonStyle, clButtonStyle} from './TaskReviewStyles.js'
 import QuizReview from './QuizReview';
->>>>>>> task-result-sam
+import TaskReviewHelp from './TaskReviewHelp';
+import TaskReviewResults from './TaskReviewResults';
 
 export default function TaskReview(props) {
   console.log(props);
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
-<<<<<<< HEAD
-  const taskQAs = TaskReviewService.addAnswerValuesToQAs(task, submission.questionAndAnswers);
-=======
   const taskQAs = TaskReviewService.combineQuestionDataWithQAs(task, submission.questionAndAnswers);
->>>>>>> task-result-sam
   const [focusedQA, setFocusedQA] = useState(taskQAs[0]);
   const [compDisplayed, setCompDisplayed] = useState('quiz-review');
   const [oBarStyleArray, setOBarStyleArray] = useState([oBarBlueStyleLeft, oBarGrayStyle, oBarGrayStyleRight]);
@@ -42,15 +33,6 @@ export default function TaskReview(props) {
     setOBarStyleArray([oBarGrayStyleLeft, oBarGrayStyle, oBarBlueStyleRight]);
   }
 
-  const mapRequirements = (req) => {
-    if (!req) return [];
-    return req.map(({ description, id }) => (
-      <div key={id}>
-        <input type="checkbox" value="A1" id="A1" checked={true}/>
-        <label for="A1">{description}</label>
-      </div>))
-  }
-
   function renderOptions() {
     return(
       <div className='options-bar-wrapper'>
@@ -60,7 +42,6 @@ export default function TaskReview(props) {
         <h2 onClick = {() => {onClickGetHelp()}} style = {oBarStyleArray[2]}>Get Help</h2>
         </div>
       </div>
-      
     );
   }
 
@@ -73,13 +54,26 @@ export default function TaskReview(props) {
         qa={props.location.state.submitTask.questionAndAnswers}
       />);
     }
+    else if(compDisplayed === 'get-help') {
+      return(<TaskReviewHelp/>);
+    }
+    else if(compDisplayed === 'task-results') {
+      return(<TaskReviewResults 
+        submission = {submission}
+      />);
+    }
   }
 
   function getHeader() {
     if(compDisplayed === 'quiz-review') {
       return 'QUIZ REVIEW';
     }
-
+    else if(compDisplayed === 'get-help') {
+      return 'GET HELP';
+    }
+    else if(compDisplayed === 'task-results') {
+      return 'TASK RESULTS!';
+    }
   }
 
   function continueToMission() {
