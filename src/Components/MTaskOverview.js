@@ -34,9 +34,12 @@ function MTaskOverview(props) {
    return (
       <div>
          <h1>{props.task.name}</h1>
-         <h2>{props.task.instructions}</h2>
-         <h2>Points: {props.task.points}</h2>
-         <h2>Due: {props.task.dueDate}</h2>
+         <div className="line"></div>
+         <h3>Task Description:</h3>
+         <h4>{props.task.instructions}</h4>
+         <h4>Points: {props.task.points}</h4>
+         <h4>Due: {props.task.dueDate}</h4>
+         <div className="line"></div>
          <h2>{mapRequirementsToCheck(props.task.requirements)}</h2>
          <div  className="start">
          <button onClick={() => changeToTaskScreen(props.task.id)}>Start</button>
