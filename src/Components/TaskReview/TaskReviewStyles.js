@@ -71,7 +71,6 @@ export const oBarGrayStyleRight = {
       'fontStyle': 'normal',
       'fontWeight': '800',
       'fontSize': '21px',
-      'marginLeft' : '400px',
     };
   }
 
@@ -85,6 +84,6 @@ export const oBarGrayStyleRight = {
       'fontStyle': 'normal',
       'fontWeight': '800',
       'fontSize': '21px',
-      'marginLeft' : '250px',
+      'marginLeft': '320px',
     };
   }

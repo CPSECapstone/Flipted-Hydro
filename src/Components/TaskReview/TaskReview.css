@@ -73,3 +73,12 @@
 .options-bar h2:active {
   color: white;
 }
+
+.task-review-buttons {
+  margin: auto;
+  width: 30%;
+}
+
+.task-review-buttons button:hover {
+  cursor: pointer;
+}

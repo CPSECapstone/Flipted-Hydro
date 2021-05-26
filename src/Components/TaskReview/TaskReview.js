@@ -11,6 +11,7 @@ import {oBarBlueStyle, oBarBlueStyleLeft, oBarBlueStyleRight, oBarGrayStyle, oBa
 import QuizReview from './QuizReview';
 
 export default function TaskReview(props) {
+  console.log(props);
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
@@ -57,10 +58,12 @@ export default function TaskReview(props) {
   }
 
   function renderComp() {
+    console.log(props.location.state.submitTask.questionAndAnswers);
     if(compDisplayed === 'quiz-review') {
       return(<QuizReview 
         pointsAwarded={props.location.state.submitTask.pointsAwarded}
         pointsTotal={props.location.state.submitTask.pointsPossible}
+        qa={props.location.state.submitTask.questionAndAnswers}
       />);
     }
   }
@@ -84,7 +87,7 @@ export default function TaskReview(props) {
   function getButtons() {
     return(
       <div className='task-review-buttons'>
-        <button style={reviewButtonStyle()}>{"<   Review Tasks"}</button>
+        <button style={reviewButtonStyle()} onClick={() => {hist.goBack()}}>{"<   Review Tasks"}</button>
         <button style={clButtonStyle()} onClick={continueToMission}>{"Continue Learning   >"}</button>
       </div>
     );
