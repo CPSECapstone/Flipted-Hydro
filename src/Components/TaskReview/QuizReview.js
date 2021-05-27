@@ -30,6 +30,58 @@ export default function QuizReview(props) {
         };
     }
 
+    const optionGrayStyle = {
+        'backgroundColor' : '#F2F2F2',
+        'color' : '#4F4F4F',
+        'fontFamily' : 'Poppins',
+        'fontStyle' : 'normal',
+        'fontWeight': 'normal',
+        'fontSize' : '16px',
+        'width' : '570px',
+        'height' : '18px',
+        'padding' : '7px',
+        'borderRadius' : '25px',
+    };
+
+    const optionGreenStyle = {
+        'backgroundColor' : '#27AE60',
+        'color' : 'white',
+        'fontFamily' : 'Poppins',
+        'fontStyle' : 'normal',
+        'fontWeight': 'normal',
+        'fontSize' : '16px',
+        'width' : '570px',
+        'height' : '18px',
+        'padding' : '7px',
+        'borderRadius' : '25px',
+    };
+
+    const optionRedStyle = {
+        'backgroundColor' : '#EB5757',
+        'color' : 'white',
+        'fontFamily' : 'Poppins',
+        'fontStyle' : 'normal',
+        'fontWeight': 'normal',
+        'fontSize' : '16px',
+        'width' : '570px',
+        'height' : '18px',
+        'padding' : '7px',
+        'borderRadius' : '25px',
+    }
+
+    function getOptionsStyle(option, selected, correctOption) {
+        if((option === selected) && (selected !== correctOption)) {
+            return optionRedStyle;
+        }
+        if(option === selected) {
+            return optionGreenStyle;
+        }
+        if(option === correctOption) {
+            return optionGreenStyle;
+        }
+        return optionGrayStyle;
+    }
+
     function percentageBar() {
         return(
             <div className = 'percentage-bar'>
@@ -47,33 +99,36 @@ export default function QuizReview(props) {
             </div>
         );
     }
-    
-    function qaBoxTile() {
-        var rtn = [];
-        for(const entry in props.qa) {
-            rtn.push(
-                <h5>{qNum}</h5>
+
+    function qaBoxContent(entry) {
+        const qType = entry.question.id.split('#');
+        if(qType[0] == 'FR_QUESTION') {
+            return (
+            <div>
+                <h5>YOUR ANSWER:</h5>
+                <h5>{entry.answer.answer}</h5>
+            </div>
             );
-            setQNum(qNum + 1);
         }
-        return rtn;
+        const selected = entry.answer.answer;
+        const correctOption = entry.answer.correctAnswer;
+
+        return(
+            <div className='qa-box-options'>
+                {entry.question.options.map((option) => (
+                    <h5 style={getOptionsStyle(option.description, selected, correctOption)}>{option.description}</h5>
+                ))}
+            </div>
+        );
     }
 
     function qaBox() {
         return (
-            /*<GridList cellHeight={45} className='qa-box' cols={1} style={gridListStyle}>
-                {props.qa.map((tile) => (
-                    <GridListTile key={tile.question.id} cols={1}>
-                        <div className='qa-box-tile'>
-                            <h5>{qNum}</h5>
-                        </div>
-                    </GridListTile>
-                ))}
-            </GridList>*/
             <div className='qa-box'>
                 {props.qa.map((entry) => (
                     <div className='qa-box-tile'>
                         <h5>{entry.question.description}</h5>
+                        {qaBoxContent(entry)}
                     </div>
                 ))}
             </div>
