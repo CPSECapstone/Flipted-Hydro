@@ -19,7 +19,7 @@ export default function MissionProgress() {
       
     //Query Mission Progress Data (not currently user - using hard coded data above)
     const { loading: progressLoading, error: progressError, data: progressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
-        variables: { id: "a71e775af83" }
+        variables: { id: "Integrated Science" }
     });
       
     if(loading || progressLoading) return (<h2>Loading...</h2>);
@@ -33,19 +33,15 @@ export default function MissionProgress() {
     //this is not currently used, but it will be once the backend returns real data
     function calculateMissionProgress(missionId, progressData){
 
-        //retrieve the progress object that matches the specified missionId
-        var progress = null;
-        for (var i = 0; i < progressData.getAllMissionProgress.length; i++){
-            if (progressData.getAllMissionProgress[i].mission.id == missionId) {
-                progress = progressData.getAllMissionProgress[i].progress;
-            }
-        }
+        var progress = getProgress(missionId, progressData);
 
         //progress object not found
         if (progress == null){
             console.warn("Mission progress not found.");
             return 0;
         } 
+
+        progress = progress.progress;//this is getting ridiculous :-)
 
         //calculate percentage of tasks completed
         var completedCount = 0;
@@ -58,11 +54,7 @@ export default function MissionProgress() {
 
     //Used to select which Mission Progress information should be shared
     function changeFocusedMission(mission){
-        setFocusedMission({
-            id: mission.id,
-            name: mission.name,
-            description: mission.description
-        })
+        setFocusedMission(mission);
     }
     
     //Display all missions
@@ -71,13 +63,29 @@ export default function MissionProgress() {
             return (
             <div style={{"padding-bottom":"10em"}} onClick={() => changeFocusedMission(mission)}>
                 <CircularProgress style={{transform: "scale(5, 5) translate(20%, 0%) ", color: "#E0E0E0"}} variant="determinate" value={100} /> 
-                {/* saving this for when real progress data can be used
-                <CircularProgress style={{transform: "scale(-5, 5)", color: "#4274F3" }} variant="determinate" value={calculateMissionProgress(progressData.getAllMissionProgress[1].mission.id, progressData)} />  */}
-                <CircularProgress style={{transform: "scale(5, 5) rotate(-90deg)", color: "#4274F3" }} variant="determinate" value={65} /> 
+
+                <CircularProgress 
+                    style={{transform: "scale(5, 5) rotate(-90deg)", color: "#4274F3" }} 
+                    variant="determinate" 
+                    value={calculateMissionProgress(mission.id, progressData)} 
+                /> 
                 <h1 style={{color: "black", fontFamily: "\"Poppins\", sans-serif",  transform: "translate(20%, -90%)", fontSize: "16px", width: "70px", height: "40px" }}>{mission.name}</h1>
             </div>
             )        
         });
+    }
+
+    //retrieve the progress object that matches the specified missionId
+    function getProgress(missionId, progressData) {
+        
+        var progress = null;
+        for (var i = 0; i < progressData.getAllMissionProgress.length; i++){
+            if (progressData.getAllMissionProgress[i].mission.id == missionId) {
+                progress = progressData.getAllMissionProgress[i];
+            }
+        }
+
+        return progress;
     }
 
     function allMissions() {
@@ -95,6 +103,8 @@ export default function MissionProgress() {
     return (focusedMission!=null ? 
         (<MissionProgressDetails 
             missionData={data}
+            // saving this for when there is better task score data to display
+            // missionProgress={getProgress(focusedMission.id, progressData)} 
             missionProgress={mockMissionProgressData.getAllMissionProgress[0]} 
             closeCallback={() => setFocusedMission(null) } 
             displayMissions={displayMissions}/>) 
