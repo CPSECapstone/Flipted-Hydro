@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressBar from '../ProgressBar.js';
+import PercentageBar from './PercentageBar';
 
 export default function TaskReviewStats(props) {
 
@@ -22,25 +22,23 @@ export default function TaskReviewStats(props) {
    function scoreBar(){
      return ( <div> 
       <h2>Questions Correct: {getScore()}/{scoreTotal()} </h2>
-      <ProgressBar 
-      width='700'
-      height='20'
-      doneColor='#4274F3'
-      leftColor='rgb(108, 108, 133)'
-      total={scoreTotal()}
-      done={getScore()}/></div>);
+      <PercentageBar 
+        awarded = {getScore()}
+        total = {scoreTotal()}
+        leftColor = '#EA6868'
+        rightColor = '#E0E0E0'
+      /></div>);
    }
 
    function pointBar(){
     return ( <div> 
     <h2>Points Gained: {submission.pointsAwarded} / {submission.pointsPossible}</h2>
-    <ProgressBar 
-    width='700'
-    height='20'
-    doneColor='#F2C94C'
-    leftColor='rgb(108, 108, 133)'
-    total={submission.pointsPossible}
-    done={submission.pointsAwarded}/></div>);
+    <PercentageBar 
+        awarded = {submission.pointsAwarded}
+        total = {submission.pointsPossible}
+        leftColor = '#F2C94C'
+        rightColor = '#E0E0E0'
+      /></div>);
    }
 
    return(

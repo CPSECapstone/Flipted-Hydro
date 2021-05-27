@@ -1,14 +1,12 @@
 import React from 'react';
-import TaskReviewStats from './TaskReviewStats.js';
 import { TaskReviewService } from './TaskReviewLogic';
-import QAScreen from './QAScreen.js'
-import QuestionReview from './QuestionReview'
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import './TaskReview.css';
-import { findRenderedComponentWithType } from 'react-dom/test-utils';
 import {oBarBlueStyle, oBarBlueStyleLeft, oBarBlueStyleRight, oBarGrayStyle, oBarGrayStyleLeft, oBarGrayStyleRight, reviewButtonStyle, clButtonStyle} from './TaskReviewStyles.js'
 import QuizReview from './QuizReview';
+import TaskReviewHelp from './TaskReviewHelp';
+import TaskReviewResults from './TaskReviewResults';
 
 export default function TaskReview(props) {
   console.log(props);
@@ -35,15 +33,6 @@ export default function TaskReview(props) {
     setOBarStyleArray([oBarGrayStyleLeft, oBarGrayStyle, oBarBlueStyleRight]);
   }
 
-  const mapRequirements = (req) => {
-    if (!req) return [];
-    return req.map(({ description, id }) => (
-      <div key={id}>
-        <input type="checkbox" value="A1" id="A1" checked={true}/>
-        <label for="A1">{description}</label>
-      </div>))
-  }
-
   function renderOptions() {
     return(
       <div className='options-bar-wrapper'>
@@ -53,7 +42,6 @@ export default function TaskReview(props) {
         <h2 onClick = {() => {onClickGetHelp()}} style = {oBarStyleArray[2]}>Get Help</h2>
         </div>
       </div>
-      
     );
   }
 
@@ -67,13 +55,26 @@ export default function TaskReview(props) {
         qa={taskQAs}
       />);
     }
+    else if(compDisplayed === 'get-help') {
+      return(<TaskReviewHelp/>);
+    }
+    else if(compDisplayed === 'task-results') {
+      return(<TaskReviewResults 
+        submission = {submission}
+      />);
+    }
   }
 
   function getHeader() {
     if(compDisplayed === 'quiz-review') {
       return 'QUIZ REVIEW';
     }
-
+    else if(compDisplayed === 'get-help') {
+      return 'GET HELP';
+    }
+    else if(compDisplayed === 'task-results') {
+      return 'TASK RESULTS!';
+    }
   }
 
   function continueToMission() {
