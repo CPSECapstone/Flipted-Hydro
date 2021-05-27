@@ -2,3 +2,43 @@
   display: flex;
   justify-content: center;
 }
+
+.line {
+  border-top: 1px solid black;
+  width: 90%;
+  margin: auto;
+}
+
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;  
+  letter-spacing: 0.1px;
+}
+
+h4 {
+  font-family: Poppins;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 21px;
+letter-spacing: 0.03em;
+display: flex;
+align-items: center;
+padding-left: 40px;
+}
+
+h3 {
+  font-family: Poppins;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 16px;
+display: flex;
+align-items: center;
+letter-spacing: 0.1px;
+padding-left: 40px;
+
+color: #2F80ED;
+}

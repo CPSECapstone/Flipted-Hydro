@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { GET_MISSION } from '../gqlQueries.js';
 import MTaskOverview from './MTaskOverview.js';
 import './Mission.css';
+import BACK from './Images/Vector.png';
 
 //This component is used to display the mission page.
 function Mission(props) {
@@ -57,7 +58,8 @@ function Mission(props) {
       <div>        
         <div key={task.id} className={task.__typename} onClick={() => changeFocusedTask(task)}>         
           <ul>        
-            {task.name}
+            <h5>{task.name}</h5>
+            <h2>Points: {task.points}</h2>
           </ul>
         </div>      
       </div>
@@ -68,7 +70,9 @@ function Mission(props) {
     return (
     <div key={subMission.id} className={subMission.__typename}>         
         <ul>
-          {subMission.name}
+          <h2>Sub-Mission:</h2>
+          <h5>{subMission.name}</h5>
+          
         </ul>
       </div>
     )
@@ -76,16 +80,23 @@ function Mission(props) {
 
   return (
     <div className="MissonOverview"> 
-      <h1>{title}</h1>
-      <h2>{description}</h2>
-      <div className="row">        
-        <div className="column">    
-          <ul>{displayMissions(loading, error, data)}</ul>                         
-        </div>
-        <div className="column">
-          {!focusedTask? null: <div className="card">
-            <MTaskOverview task={focusedTask}/>
-          </div>}
+      <div className="background"> 
+        <div className="missionTitle"></div>
+          <div className="missiontext">
+            <h1>{title}</h1>
+            <h2>{description}</h2>
+          </div>
+        <div className="row">        
+          <div className="column">  
+            <div className="taskSpace">
+              <ul>{displayMissions(loading, error, data)}</ul>                         
+            </div>  
+          </div>
+          
+            <div className="preview">
+              <MTaskOverview task={focusedTask}/>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -93,3 +104,18 @@ function Mission(props) {
 }
 
 export default Mission;
+
+/*
+<div className="row">        
+        <div className="column">  
+          <div className="taskSpace">
+          <ul>{displayMissions(loading, error, data)}</ul>                         
+          </div>  
+        </div>
+        <div className="column">
+          <div className="card">
+            <MTaskOverview task={focusedTask}/>
+          </div>}
+        </div>
+      </div>
+*/

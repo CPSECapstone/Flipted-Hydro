@@ -20,7 +20,7 @@ export default function MissionsScreen() {
     });
 
     const { loading: progressLoading, error: progressError, data: progressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
-      variables: { id: "Integrated Science" },
+      variables: { id: "a71e775af83" },
     });
 
     if(loading || progressLoading) return (
@@ -75,7 +75,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
               done={prog}
             />
           </div>
-          <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center", "padding-bottom": "20px"}}>{Math.round(prog)}% Complete</h1>
+          <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
           </div>
           <div className="start">
             <button data-testid="redirectToMissionButton" style={{top: "0"}}onClick={()=>redirectToMission(hist, props.mission.id)}>Continue</button>

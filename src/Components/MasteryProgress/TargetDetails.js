@@ -22,7 +22,7 @@ const useRowStyles = makeStyles({
   root: {
     '& > *': {
       borderBottom: 'unset',
-    },  
+    },
   },
   objectiveName: {
     fontFamily: "\"Poppins\", sans-serif",
@@ -32,6 +32,19 @@ const useRowStyles = makeStyles({
     fontFamily: "\"Poppins\", sans-serif",
     fontSize: "16px"
   },
+  objectiveLabelCell: {
+    display: "flex",
+    justifyContent: "right",
+    paddingLeft: "0em"
+  },
+  taskLabelCell: {
+    display: "flex",
+    justifyContent: "right",
+    paddingRight: "0em"
+  },
+  expandIcon: {
+    width: "30.8px"
+  }
 });
 
 function Row(props) {
@@ -42,7 +55,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell>
+        <TableCell className={classes.expandIcon}>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -50,8 +63,8 @@ function Row(props) {
         <TableCell component="th" scope="row" className={classes.objectiveName}>
           {"Objective " + row.objectiveName}
         </TableCell>
-        <TableCell align="left">
-        <MasteryIcon mastery={"NEARLY_MASTERED"}/>
+        <TableCell align="left" className={classes.objectiveLabelCell}>
+        <MasteryLabel mastery={"NEARLY_MASTERED"}/>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -62,11 +75,14 @@ function Row(props) {
                 <TableBody>
                   {row.tasks.map((taskMastery, index) => (
                     <TableRow key={index}>
+                      {/* <TableCell align="left">
+                        <div/>
+                      </TableCell> */}
                       <TableCell align="left" component="th" scope="row">
                         {"Task " + taskMastery.task.name}
                       </TableCell>
-                      <TableCell align="left">
-                        <MasteryLabel mastery={taskMastery.mastery}/>
+                      <TableCell align="right" className={classes.taskLabelCell}>
+                        <MasteryIcon mastery={taskMastery.mastery}/>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -84,11 +100,18 @@ const useTableStyles = makeStyles({
   root: {
     textAlign: "left"
   },
-  columnTitle: {
+  objectiveTitle: {
     fontFamily: "\"Poppins\", sans-serif",
     fontSize: "20px",
     textAlign: "left",
     color: "#828282"
+  },
+  masteryTitle: {
+    fontFamily: "\"Poppins\", sans-serif",
+    fontSize: "20px",
+    textAlign: "right",
+    color: "#828282",
+    paddingRight: "3em"
   },
 });
 
@@ -98,34 +121,23 @@ function TargetDetails(props){
   const classes = useTableStyles();
 
   return (
-    <div className="detailsContainer">
-      <div className="targetDetailsHeaderGrid">
-        <div onClick={() => props.closeCallback()}>
-          <img src={PREV} alt="Previous Button"/>    
-        </div>
-        <h1>{"Learning Target: " + targetProgress.target.targetName}</h1>
-        <div/>
-      </div>
-      <div className="detailsTableGrid">
-        <div/>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell align="left"><h2 className={classes.columnTitle}>Target Item</h2></TableCell>
-                <TableCell align="left"><h2 className={classes.columnTitle}>Mastery</h2></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {targetProgress.objectives.map((row) => (
-                <Row key={row.name} row={row} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div/>
-      </div>
+    <div style={{height: "max-content", width: "100%"}}>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell align="left"><h2 className={classes.objectiveTitle}>Target Item</h2></TableCell>
+              <TableCell align="center"><h2 className={classes.masteryTitle}>Mastery</h2></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {targetProgress.objectives.map((row) => (
+              <Row key={row.name} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
