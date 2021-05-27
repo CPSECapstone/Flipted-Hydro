@@ -20,7 +20,7 @@ export default function MissionsScreen() {
     });
 
     const { loading: progressLoading, error: progressError, data: progressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
-      variables: { id: "a71e775af83" },
+      variables: { id: "Integrated Science" },
     });
 
     if(loading || progressLoading) return (
