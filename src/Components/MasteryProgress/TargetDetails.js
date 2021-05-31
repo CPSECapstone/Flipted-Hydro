@@ -132,8 +132,8 @@ function TargetDetails(props){
             </TableRow>
           </TableHead>
           <TableBody>
-            {targetProgress.objectives.map((row) => (
-              <Row key={row.name} row={row} />
+            {targetProgress.objectives.map((row, index) => (
+              <Row key={index} row={row} />
             ))}
           </TableBody>
         </Table>

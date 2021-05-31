@@ -87,6 +87,7 @@ function MasteryProgress() {
     return allTargetProgress.map((progress) => {
       return (
         <Card key={progress.target.targetId} className={classes.root}
+          data-testid={progress.target.targetId}
           onClick={() => changeFocusedTarget(progress)}>
         <CardContent className={classes.cardContent}>
           <Typography

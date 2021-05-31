@@ -48,7 +48,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
   function displayMissionList(){
       return (<div className="missionList"> 
         {data.missions.map((mission) => (
-          <div data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
+          <div key={mission.id} data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
             {/* <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/> */}
             <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1>
           </div>))} 
@@ -75,7 +75,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
               done={prog}
             />
           </div>
-          <h1 style={{"font-size": "18px", margin: "0", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
+          <h1 style={{"fontSize": "18px", margin: "0", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
           </div>
           <div className="start">
             <button data-testid="redirectToMissionButton" style={{top: "0"}}onClick={()=>redirectToMission(hist, props.mission.id)}>Continue</button>
@@ -88,7 +88,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
 
   return (
     <div className="missions">
-      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em"}}>Integrated Science</h1>
+      <h1 data-testid="courseTitle" style={{"fontSize": "40px", "marginTop": "1em", "marginBottom": "1em"}}>Integrated Science</h1>
       <h2>Missions</h2>
         {displayMissionList()}
         {!focusedMission ? null : 

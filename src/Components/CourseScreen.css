@@ -1,4 +1,4 @@
-.courseItem {
+/* .courseItem {
   position: relative;
     display: flex;
     width: 200px;
@@ -17,16 +17,16 @@
     margin-right: auto;
     text-align: center;
     vertical-align: middle;
-  }
+  } */
 
-.courseItem:hover {
+/* .courseItem:hover {
   transform: scale(1.05, 1.05);
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   background-color: navy;
   cursor: pointer;
-}
+} */
 
-.deleteButton {
+/* .deleteButton {
   position: relative;
   top: 35px;
   width: 65px;
@@ -41,7 +41,7 @@
   align-items: center; 
   justify-content: center;
   margin: auto;
-}
+} */
 
 
 /* form {
@@ -52,7 +52,7 @@
   padding-left: 100 px;
 } */
 
-.submitbutton {
+/* .submitbutton {
   vertical-align: middle;
   position: relative;
   margin:auto;
@@ -71,7 +71,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 15px;
   padding-right:5px;
-}
+} */
 
 /* h3 {
   color: #4274F3;
@@ -87,11 +87,11 @@ p {
   font-size: 15px;
 } */
 
-.btn {
+/* .btn {
   text-align: center;
 }
 
 ul {
   color: #fff;
   padding-left:0;
-}
+} */
