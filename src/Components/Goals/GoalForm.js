@@ -53,7 +53,8 @@ function GoalForm(props) {
           favorited: favorited
         }
       }
-    }).then(() => props.closeFormCallBack());
+    });
+    props.closeFormCallBack();
   }
 
   function handleAddSubgoal() {
