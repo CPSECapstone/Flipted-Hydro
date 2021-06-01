@@ -55,6 +55,12 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
       </div>);
   }
 
+  function getMissionProgress(missionId){
+    return progressData.getAllMissionProgress.filter(progress => 
+      progress.mission.id == missionId  
+    )[0]
+  }
+
   function MissionOverview(props) {
 
     if (props.mission != null){
@@ -78,7 +84,8 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
           <h1 style={{"fontSize": "18px", margin: "0", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
           </div>
           <div className="start">
-            <button data-testid="redirectToMissionButton" style={{top: "0"}}onClick={()=>redirectToMission(hist, props.mission.id)}>Continue</button>
+            <button data-testid="redirectToMissionButton" style={{top: "0"}}
+              onClick={()=>redirectToMission(hist, props.mission.id, getMissionProgress(props.mission.id))}>Continue</button>
           </div>
         </div>
       );
@@ -126,11 +133,12 @@ export function calculateMissionProgress(missionId, progressData){
   return 100 * completedCount/nTasks;
 }
 
-export function redirectToMission(hist, missionId){
+export function redirectToMission(hist, missionId, missionProgress){
   hist.push({
     pathname: MISSION_COMPONENT_PATH,
     state: {
-      id: missionId
+      id: missionId,
+      progress: missionProgress.progress
     }
   });
 }

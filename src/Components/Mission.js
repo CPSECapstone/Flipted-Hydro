@@ -9,6 +9,7 @@ import BACK from './Images/Vector.png';
 function Mission(props) {
 
   const missionId = props?.location?.state?.id;
+  const progress = props?.location?.state?.progress;
 
   const { loading, error, data} = useQuery(GET_MISSION, {
     variables: { id: missionId },
@@ -53,10 +54,27 @@ function Mission(props) {
     })
   }
 
+  function taskCompleted(task){
+    const taskProgress = progress.filter(item => 
+      item.taskId == task.id  
+    )[0]
+    return taskProgress && taskProgress.submission;
+  }
+
+  function getTaskStyle(task){
+    if(taskCompleted(task)){
+      return {}
+    }
+    return {
+      background: "white"
+    };
+  }
+
   function renderTask(task){
     return (
       <div>        
-        <div key={task.id} className={task.__typename} onClick={() => changeFocusedTask(task)}>         
+        <div key={task.id} className={task.__typename} style={getTaskStyle(task)}
+          onClick={() => changeFocusedTask(task)}>         
           <ul>        
             <h5>{task.name}</h5>
             <h2>Points: {task.points}</h2>
