@@ -61,6 +61,9 @@ function GoalForm(props) {
     if(subTitle == '' || subDate == ''){
       alert('All fields are required to create a sub goal')
     }
+    else if(!subDate || !(subDate._isValid)){
+      alert('Sub Goal Due Date is Invalid')
+    }
     else {
       setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate.format('yyyy-MM-DD')}]);
       setSubTitle('');
@@ -68,8 +71,11 @@ function GoalForm(props) {
   }
 
   function handleAddGoal() {
-    if(title == '' || category == '' || dueDate == ''){
+    if(title == '' || category == ''){
       alert('All fields are required to create a goal')
+    }
+    else if(!dueDate || !(dueDate._isValid)){
+      alert('Due Date is Invalid')
     }
     else{
       submitNewGoal(title, dueDate, category, subGoals);
