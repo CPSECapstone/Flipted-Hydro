@@ -1,15 +1,12 @@
 import { useQuery} from '@apollo/client';
 import React, { useState } from 'react';
-import ProgressBar from '../ProgressBar.js'
 import './MasteryProgress.css'
-import { GET_ALL_TARGET_PROGRESS, GET_TARGETS } from '../../gqlQueries.js';
+import { GET_ALL_TARGET_PROGRESS } from '../../gqlQueries.js';
 import { mockTargetProgress } from './MockData';
 import TargetDetails from './TargetDetails';
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import MasteryLabel from './MasteryLabel';
 import PREV from '../Images/previous.svg';
