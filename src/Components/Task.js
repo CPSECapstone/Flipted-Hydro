@@ -9,9 +9,9 @@ import './Task.css';
 import MCQuestion from './MCQuestion.js';
 import FRQuestion from './FRQuestion.js';
 import TaskRubricDrawer from './TaskRubricDrawer.js'
-
 import PREV from './Images/previous.svg';
 import NEXT from './Images/next.svg';
+import { getUpdatedMissionProgress } from './TaskLogic';
 
 function createTextBlock(blockKey, contents){
   return <div className="taskBlock" key={blockKey}>
@@ -74,7 +74,23 @@ function Task(props) {
     variables: { id: taskId },
   });
 
-  const [submitTaskMutation] = useMutation(SUBMIT_TASK);
+  const [submitTaskMutation] = useMutation(SUBMIT_TASK, {
+    update(cache, { data: { submitTask } }) {
+
+      const missionRef = cache.identify({
+        __typename: 'Mission',
+        id: data?.task?.missionId
+      });
+
+      cache.modify({
+        fields: {
+          getAllMissionProgress(existingProgress = []) {
+            return getUpdatedMissionProgress(existingProgress, missionRef, taskId, submitTask);
+          }
+        }
+      });
+    }
+  });
 
   const [rubricOpen, setRubricOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
@@ -142,7 +158,7 @@ function Task(props) {
     }).catch((error) => {
       console.log(error)
       if(error.message.includes("ineligible for submission")){
-        alert('Task ineliglbe for submission, please answer all questions')
+        alert('Task ineligible for submission, please answer all questions')
       }
     })
   }

@@ -85,7 +85,7 @@
     justify-content: center;
     z-index: 4;    
     transition: all 0.3s ease-in-out;
-    background: url(./Images/checkmark_notDone.png);   
+    /* background: url(./Images/checkmark_notDone.png);    */
 }
 
 .SubMission ul {

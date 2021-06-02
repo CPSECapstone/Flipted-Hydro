@@ -1,28 +1,36 @@
 import { useQuery} from '@apollo/client';
 import React, { useState } from 'react';
-import { GET_MISSION } from '../gqlQueries.js';
+import { GET_MISSION, GET_ALL_MISSION_PROGRESS } from '../gqlQueries.js';
 import MTaskOverview from './MTaskOverview.js';
 import './Mission.css';
 import BACK from './Images/Vector.png';
+
+function getMissionProgress(missionId, allProgressData){
+  return allProgressData.getAllMissionProgress.filter(progress => 
+    progress.mission.id == missionId  
+  )[0]
+}
 
 //This component is used to display the mission page.
 function Mission(props) {
 
   const missionId = props?.location?.state?.id;
-  const progress = props?.location?.state?.progress;
 
   const { loading, error, data} = useQuery(GET_MISSION, {
     variables: { id: missionId },
   });
 
+  const { loading: progressLoading, error: progressError, data: allProgressData, refetch : progressRefetch} = useQuery(GET_ALL_MISSION_PROGRESS, {
+    variables: { id: "Integrated Science" },
+  });
+
   const [focusedTask, setFocusedTask] = useState(null);
 
-  if(loading) return (
+  if(loading || progressLoading) return (
     <h2>Loading...</h2>
   )
 
-  if(error){
-    console.log(error);
+  if(error || progressError){
     return (
       <h2>Error!</h2>
     );
@@ -30,6 +38,9 @@ function Mission(props) {
 
   const title = data.mission.name;
   const description = data.mission.description;
+  const progress = getMissionProgress(missionId, allProgressData)?.progress;
+
+  console.log(progress);
 
   function displayMissions(loading, error, data) {
     return data.mission.missionContent.map((missionContentItem) => {
@@ -55,7 +66,7 @@ function Mission(props) {
   }
 
   function taskCompleted(task){
-    const taskProgress = progress.filter(item => 
+    const taskProgress = progress?.filter(item => 
       item.taskId == task.id  
     )[0]
     return taskProgress && taskProgress.submission;

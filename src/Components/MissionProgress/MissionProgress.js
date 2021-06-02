@@ -100,12 +100,16 @@ export default function MissionProgress() {
         );
     }
 
+    function getFocusedMissionProgress(){
+        return progressData.getAllMissionProgress.filter(progressItem => 
+            progressItem.mission.id == focusedMission?.id    
+        )[0]
+    }
+
     return (focusedMission!=null ? 
         (<MissionProgressDetails 
-            missionData={data}
-            // saving this for when there is better task score data to display
-            // missionProgress={getProgress(focusedMission.id, progressData)} 
-            missionProgress={mockMissionProgressData.getAllMissionProgress[0]} 
+            missionData={data} 
+            missionProgress={getFocusedMissionProgress()} 
             closeCallback={() => setFocusedMission(null) } 
             displayMissions={displayMissions}/>) 
         : allMissions()
