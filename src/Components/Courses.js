@@ -111,8 +111,8 @@ function Course() {
 
   return (
     <div> 
-      <h1>My Courses</h1>
-      <div style={courseGridStyle}>{displayCourses(courses)}</div>   
+      <h6>My Courses</h6>
+      <div style={courseGridStyle}>{displayCourses(courses)}</div>
     </div>
   );
 }
