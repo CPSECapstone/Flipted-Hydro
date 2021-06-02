@@ -32,6 +32,7 @@ function GoalForm(props) {
   const [category, setCategory] = useState(props.goal?.category ? props.goal.category : '');
   const [subGoals, setSubGoals] = useState(props.goal?.subGoals ? props.goal?.subGoals : []);
   const [dueDate, setDueDate] = useState(props.goal?.dueDate ? moment(props.goal.dueDate) : moment());
+  const [submitButtonEnabled, setSubmitButtonEnable] = useState(true);
 
   //used by the form as a new subgoal is built
   const [subTitle, setSubTitle] = useState('');
@@ -53,8 +54,8 @@ function GoalForm(props) {
           favorited: favorited
         }
       }
-    });
-    props.closeFormCallBack();
+    }).then(() => props.closeFormCallBack());
+    setSubmitButtonEnable(false);
   }
 
   function handleAddSubgoal() {
@@ -132,7 +133,6 @@ function GoalForm(props) {
             <div key={index} className="subGoalItem">
               <p>{subgoal.title}</p>
               <p>{subgoal.dueDate}</p>
-              {/* <button className="subGoalDeleteButton" onClick={(event) => deleteSubGoal(event, index)}>Delete</button> */}
               <IconButton aria-label="delete subgoal" component="span" onClick={(event) => deleteSubGoal(event, index)}
                 style={{color: "red"}}>
                   <DeleteIcon/>
@@ -170,7 +170,8 @@ function GoalForm(props) {
       <br/>
       <div className="submitButtonContainer">
         <button type="button" className="closebutton" onClick={props.closeFormCallBack}>close</button>
-        <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
+        <button type="button" className="submitbutton" onClick={handleAddGoal}
+          disabled={!submitButtonEnabled}>Submit</button>
       </div>
       <br/>
     </div>      

@@ -66,7 +66,7 @@ function Course() {
     return data.courseInfos.map((courseItem) => {
         return ( 
           <div key={courseItem.courseId} className='courseItem' onClick={() => changeToMissionsScreen(courseItem.courseId)}>
-            <ul>
+            <ul className="courseList">
               {courseItem.course}
             </ul>
           </div>

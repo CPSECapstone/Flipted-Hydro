@@ -43,15 +43,6 @@
   margin: auto;
 }
 
-
-form {
-  position: relative;
-  top:50px;
-  margin:auto;
-  text-align: center;
-  padding-left: 100 px;
-}
-
 .submitbutton {
   vertical-align: middle;
   position: relative;
@@ -73,25 +64,7 @@ form {
   padding-right:5px;
 }
 
-h3 {
-  color: #4274F3;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  font-size: 27px;
-}
-
-p {
-  color: white;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-.btn {
-  text-align: center;
-}
-
-ul {
+.courseList {
   color: #fff;
   padding-left:0;
 }
