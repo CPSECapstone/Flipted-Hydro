@@ -123,7 +123,10 @@ export function calculateMissionProgress(missionId, progressData){
   for(var i = 0; i < nTasks; i++){
     if (progress[i].submission != null) completedCount++;
   }
-  return 100 * completedCount/nTasks;
+  if (nTasks > 0)
+    return 100 * completedCount/nTasks;
+  else 
+    return 0;
 }
 
 export function redirectToMission(hist, missionId){

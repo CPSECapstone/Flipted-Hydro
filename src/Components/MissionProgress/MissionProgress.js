@@ -49,7 +49,10 @@ export default function MissionProgress() {
         for(var i = 0; i < nTasks; i++){
             if (progress[i].submission != null) completedCount++;
         }
-        return 100 * completedCount/nTasks;
+        if (nTasks > 0)
+            return 100 * completedCount/nTasks;
+        else 
+            return 0;
     }
 
     //Used to select which Mission Progress information should be shared
