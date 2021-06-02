@@ -48,7 +48,7 @@ function NavDrawer(props) {
     >
       
       <List>
-          <ListItem  key="Logo" >
+          <ListItem button key="Logo" onClick={() => (props.history.push(props.homePath))}>
             <ListItemText className="logoText" primary="flipt.ED" />
           </ListItem>
 

@@ -168,11 +168,11 @@ function App() {
   return (
     <div>      
       <div className="navbar">
-        <p className="title">flipt.ED</p>
+        <p className="title" onClick={() => (hist.push(HOME_SCREEN_PATH))}>flipt.ED</p>
         {accessToken == null ?
           <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
           <div>
-            <NavDrawer className="drawer"/>
+            <NavDrawer className="drawer" homePath={HOME_SCREEN_PATH}/>
             <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
           </div>}
 
