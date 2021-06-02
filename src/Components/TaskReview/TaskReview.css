@@ -85,3 +85,30 @@
   cursor: pointer;
 }
 
+.tabButtonContainer{
+  background-color: #E0E0E0;
+  border-radius: 30px;
+  width: 450px;
+  height: 50px;
+  margin: auto;
+}
+
+.tabButton{
+  top: 0;
+  margin-bottom: 0;
+  border-radius: 30px;
+  align-self: center;
+  border: none;
+  width: 150px;
+}
+
+.tabButtonNotActive{
+  top: 0;
+  margin-bottom: 0;
+  border-radius: 30px;
+  align-self: center;
+  border: none;
+  background-color: #E0E0E0;
+  color: #18191F;
+  width: 150px;
+}

@@ -16,8 +16,7 @@ function MTaskOverview(props) {
     if(!req) return [];
     return req.map(({description,id}) => (
       <div key={id}>
-        <input type="checkbox" value="A1" id="A1"/> 
-        <label for="A1">{description}</label>
+        <h4>{description}</h4>
       </div>))
   }
 
@@ -40,6 +39,7 @@ function MTaskOverview(props) {
          <h4>Points: {props.task.points}</h4>
          <h4>Due: {props.task.dueDate}</h4>
          <div className="line"></div>
+         <h3>Mastery Requirements:</h3>
          <h2>{mapRequirementsToCheck(props.task.requirements)}</h2>
          <div  className="start">
          <button onClick={() => changeToTaskScreen(props.task.id)}>Start</button>

@@ -66,14 +66,14 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
     if (props.mission != null){
       var prog = calculateMissionProgress(props.mission.id, progressData);
       return (
+        <div className="preview">
         <div data-testid="missionOverview">
-          <h1>{props.mission.name}</h1>
-          <h2>{props.mission.description}</h2>
-          <div className="progress">
+          <h1 style={{"margin-top": "3em"}}>{props.mission.name}</h1>
+          <h2 style={{margin: "auto", width: "80%", "margin-bottom": "1em"}}>{props.mission.description}</h2>
           <div></div>
           <div data-testid="missionOverviewProgressBar">  
             <ProgressBar 
-              width='700'
+              width='400'
               height='10'
               doneColor='#4274F3'
               leftColor='rgb(108, 108, 133)'
@@ -94,15 +94,13 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
   }
 
   return (
-    <div className="missions">
-      <h1 data-testid="courseTitle" style={{"fontSize": "40px", "marginTop": "1em", "marginBottom": "1em"}}>Integrated Science</h1>
+    <div style={{display: "flex"}}>
+      <div className="column">
+      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em", width: "auto"}}>Integrated Science</h1>
       <h2>Missions</h2>
-        {displayMissionList()}
-        {!focusedMission ? null : 
-          (<div className="card">
-            <MissionOverview mission={focusedMission}/>
-          </div>)
-        }
+      {displayMissionList()}
+      </div>
+      {!focusedMission ? null : (<MissionOverview mission={focusedMission} style={{"transform": "translate(100%)"}}/>)}
     </div>
   )
 }
@@ -130,7 +128,10 @@ export function calculateMissionProgress(missionId, progressData){
   for(var i = 0; i < nTasks; i++){
     if (progress[i].submission != null) completedCount++;
   }
-  return 100 * completedCount/nTasks;
+  if (nTasks > 0)
+    return 100 * completedCount/nTasks;
+  else 
+    return 0;
 }
 
 export function redirectToMission(hist, missionId, missionProgress){
