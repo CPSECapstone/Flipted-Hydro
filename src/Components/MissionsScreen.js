@@ -60,7 +60,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
     if (props.mission != null){
       var prog = calculateMissionProgress(props.mission.id, progressData);
       return (
-        <div className="preview">
+        <div className="previewCard">
         <div data-testid="missionOverview">
           <h1 style={{"margin-top": "3em"}}>{props.mission.name}</h1>
           <h2 style={{margin: "auto", width: "80%", "margin-bottom": "1em"}}>{props.mission.description}</h2>
@@ -89,7 +89,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
   return (
     <div style={{display: "flex"}}>
       <div className="column">
-      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "2em", width: "auto"}}>Integrated Science</h1>
+      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "2em", "margin-bottom": "2em", width: "auto"}}>Integrated Science</h1>
       <h2>Missions</h2>
       {displayMissionList()}
       </div>
