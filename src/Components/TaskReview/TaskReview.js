@@ -14,40 +14,21 @@ export default function TaskReview(props) {
   const task = props?.location?.state?.task;
   const hist = useHistory();
   const taskQAs = TaskReviewService.combineQuestionDataWithQAs(task, submission.questionAndAnswers);
-  const [focusedQA, setFocusedQA] = useState(taskQAs[0]);
-  const [compDisplayed, setCompDisplayed] = useState('quiz-review');
-  const [oBarStyleArray, setOBarStyleArray] = useState([oBarBlueStyleLeft, oBarGrayStyle, oBarGrayStyleRight]);
+  const [activeTab, setActiveTab] = React.useState(1);
 
-  function onClickQuizReview() {
-    setCompDisplayed('quiz-review');
-    setOBarStyleArray([oBarBlueStyleLeft, oBarGrayStyle, oBarGrayStyleRight]);
-  }
-
-  function onClickTaskResults() {
-    setCompDisplayed('task-results');
-    setOBarStyleArray([oBarGrayStyleLeft, oBarBlueStyle, oBarGrayStyleRight]);
-  }
-
-  function onClickGetHelp() {
-    setCompDisplayed('get-help');
-    setOBarStyleArray([oBarGrayStyleLeft, oBarGrayStyle, oBarBlueStyleRight]);
-  }
-
-  function renderOptions() {
-    return(
-      <div className='options-bar-wrapper'>
-        <div className='options-bar'>
-        <h2 onClick = {() => {onClickQuizReview()}} style = {oBarStyleArray[0]}>Quiz Review</h2>
-        <h2 onClick = {() => {onClickTaskResults()}} style = {oBarStyleArray[1]}>Task Results</h2>
-        <h2 onClick = {() => {onClickGetHelp()}} style = {oBarStyleArray[2]}>Get Help</h2>
+  function ReviewTabs() {
+    return (
+        <div className="tabButtonContainer" style={{width: "450px"}}>
+          <button className={activeTab==1 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(1)}>Quiz Review</button>
+          <button className={activeTab==2 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(2)}>Task Results</button>
+          <button className={activeTab==3 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(3)}>Get Help</button>
         </div>
-      </div>
     );
   }
 
   function renderComp() {
     console.log(props.location.state.submitTask.questionAndAnswers);
-    if(compDisplayed === 'quiz-review') {
+    if(activeTab == 1) {
       return(<QuizReview 
         pointsAwarded={props.location.state.submitTask.pointsAwarded}
         pointsTotal={props.location.state.submitTask.pointsPossible}
@@ -55,10 +36,10 @@ export default function TaskReview(props) {
         qa={taskQAs}
       />);
     }
-    else if(compDisplayed === 'get-help') {
+    else if(activeTab == 3) {
       return(<TaskReviewHelp/>);
     }
-    else if(compDisplayed === 'task-results') {
+    else if(activeTab == 2) {
       return(<TaskReviewResults 
         submission = {submission}
       />);
@@ -66,13 +47,13 @@ export default function TaskReview(props) {
   }
 
   function getHeader() {
-    if(compDisplayed === 'quiz-review') {
+    if(activeTab == 1) {
       return 'QUIZ REVIEW';
     }
-    else if(compDisplayed === 'get-help') {
+    else if(activeTab == 3) {
       return 'GET HELP';
     }
-    else if(compDisplayed === 'task-results') {
+    else if(activeTab == 2) {
       return 'TASK RESULTS!';
     }
   }
@@ -99,7 +80,7 @@ export default function TaskReview(props) {
     <div className='task-review'>
       <h1>{getHeader()}</h1>
       <h2>{`TASK: ${task.name}`}</h2>
-      { renderOptions() }
+      <ReviewTabs/>
       { renderComp() }
       { getButtons() }
     </div>
