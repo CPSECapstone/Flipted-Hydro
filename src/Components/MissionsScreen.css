@@ -61,3 +61,7 @@
     background-color: navy;
     cursor: pointer;
 }
+
+h1 {
+    padding-top: 75px;
+}

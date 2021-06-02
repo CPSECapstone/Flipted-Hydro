@@ -88,7 +88,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
 
   return (
     <div className="missions">
-      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "1em", "margin-bottom": "1em"}}>Integrated Science</h1>
+      <h1 data-testid="courseTitle" style={{"font-size": "40px", "margin-top": "2em", "margin-bottom": "1em",}}>Integrated Science</h1>
       <h2>Missions</h2>
         {displayMissionList()}
         {!focusedMission ? null : 

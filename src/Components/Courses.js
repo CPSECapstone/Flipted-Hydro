@@ -78,7 +78,7 @@ function Course() {
 
   return (
     <div> 
-      <h1>My Courses</h1>
+      <h6>My Courses</h6>
       <ul>{displayCourses(courses)}</ul>
       
     </div>

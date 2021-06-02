@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { GET_MISSION } from '../gqlQueries.js';
 import MTaskOverview from './MTaskOverview.js';
 import './Mission.css';
-import BACK from './Images/Vector.png';
 
 //This component is used to display the mission page.
 function Mission(props) {
@@ -51,6 +50,7 @@ function Mission(props) {
       dueDate: task.dueDate,
       requirements: task.requirements
     })
+    
   }
 
   function renderTask(task){
@@ -78,14 +78,15 @@ function Mission(props) {
     )
   }
 
+
   return (
     <div className="MissonOverview"> 
-      <div className="background"> 
+      <div className="background">
         <div className="missionTitle"></div>
-          <div className="missiontext">
-            <h1>{title}</h1>
-            <h2>{description}</h2>
-          </div>
+        <div className="missiontext">
+          <h1>{title}</h1>
+          <h2>{description}</h2>
+        </div>
         <div className="row">        
           <div className="column">  
             <div className="taskSpace">
@@ -104,18 +105,3 @@ function Mission(props) {
 }
 
 export default Mission;
-
-/*
-<div className="row">        
-        <div className="column">  
-          <div className="taskSpace">
-          <ul>{displayMissions(loading, error, data)}</ul>                         
-          </div>  
-        </div>
-        <div className="column">
-          <div className="card">
-            <MTaskOverview task={focusedTask}/>
-          </div>}
-        </div>
-      </div>
-*/
