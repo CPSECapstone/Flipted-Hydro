@@ -47,9 +47,9 @@ function Mission(props) {
       if (missionContentItem.__typename === 'Task') {
         return renderTask(missionContentItem);
       }
-      else if (missionContentItem.__typename === 'SubMission') {
-        return renderSubMission(missionContentItem);
-      }
+      // else if (missionContentItem.__typename === 'SubMission') {
+      //   return renderSubMission(missionContentItem);
+      // }
     });
   }
 
