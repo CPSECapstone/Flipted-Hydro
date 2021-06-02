@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import MasteryLabel from './MasteryLabel';
 import PREV from '../Images/previous.svg';
+import { calculateTargetMastery } from './MasteryLogic';
 
 const useStyles = makeStyles({
   root: {
@@ -82,6 +83,11 @@ function MasteryProgress() {
     setFocusedTarget(target)
   }
 
+  const masteryLabelContainerStyle = {
+    display: "flex",
+    justifyContent: "center"
+  }
+
   function mapTargetsToCards() {
 
     return allTargetProgress.map((progress) => {
@@ -100,7 +106,7 @@ function MasteryProgress() {
           <Typography variant="h5" component="h2" className={classes.targetName}>
           {progress.target.targetName}
           </Typography>
-          <MasteryLabel mastery="NEARLY_MASTERED"/>
+          <div style={masteryLabelContainerStyle}><MasteryLabel mastery={calculateTargetMastery(progress)}/></div>
         </CardContent>
       </Card>
       )        
