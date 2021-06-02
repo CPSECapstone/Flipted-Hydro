@@ -138,7 +138,7 @@ export function redirectToMission(hist, missionId, missionProgress){
     pathname: MISSION_COMPONENT_PATH,
     state: {
       id: missionId,
-      progress: missionProgress.progress
+      progress: missionProgress?.progress
     }
   });
 }
