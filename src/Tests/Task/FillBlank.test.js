@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import FillBlank from '../Components/FillBlank.js';
+import FillBlank from '../../Components/FillBlank.js';
 
 afterEach(() => {
     cleanup();

@@ -13,12 +13,14 @@ import TaskReview from './Components/TaskReview/TaskReview';
 import QAScreen from './Components/TaskReview/QAScreen';
 import Task from './Components/Task';
 import MTaskOverview from './Components/MTaskOverview';
+import ProgressOverview from './Components/ProgressOverview';
+import MasteryProgress from './Components/MasteryProgress/MasteryProgress'
 import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
-const HOME_SCREEN_PATH = 'missions';
-const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_PROD_URI;
+const HOME_SCREEN_PATH = 'courses';
+const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_DEV_URI;
 
 //configures amplify to connect to our authentication server in AWS
 Amplify.configure({
@@ -166,11 +168,11 @@ function App() {
   return (
     <div>      
       <div className="navbar">
-        <p className="title">flipt.ED</p>
+        <p className="title" onClick={() => (hist.push(HOME_SCREEN_PATH))}>flipt.ED</p>
         {accessToken == null ?
           <li><a onClick={() => Auth.federatedSignIn()}>Sign In</a></li> :
           <div>
-            <NavDrawer className="drawer"/>
+            <NavDrawer className="drawer" homePath={HOME_SCREEN_PATH}/>
             <li><a onClick={() => Auth.signOut()}>Sign Out</a></li>          
           </div>}
 
@@ -180,7 +182,7 @@ function App() {
         <div>
         <Switch>
           <Route component = {LoginComponent} exact path = '/'/>
-          <Route component = {GoalList} exact path = '/goalsscreen'/>
+          <Route component = {GoalList} exact path = '/goals'/>
           <Route component = {GradeScreen} exact path = '/gradescreen'/>
           <Route component = {Mission} exact path = '/mission'/>
           <Route component = {Task} exact path = '/task'/>
@@ -189,6 +191,8 @@ function App() {
           <Route component = {QAScreen} exact path = '/qascreen'/>
           <Route component = {Courses} exact path = '/courses'/>
           <Route component = {MissionsScreen} exact path = '/missions'/>
+          <Route component = {ProgressOverview} exact path = '/progoverview'/>
+          <Route component = {MasteryProgress} exact path = '/mastery'/>
         </Switch>
         </div>
       </ApolloProvider>     

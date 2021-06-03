@@ -1,6 +1,6 @@
 .mainContainer {
   display:grid;
-  grid-template-columns:1fr 2fr 1fr;
+  grid-template-columns:1fr 3fr 1fr;
   grid-auto-rows:minmax(50px, auto);
   justify-items:stretch;
   align-items:stretch;
@@ -9,9 +9,10 @@
 .popupContainer {
   display:grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 1fr 2fr 1fr;
+  /* grid-template-rows: 1fr 2fr 1fr; */
   justify-items:stretch;
   align-items:stretch;
+  margin: 10em;
 }
 
 .pageTitle {
@@ -50,7 +51,7 @@
 
 .goalGrid {
   display:grid;
-  grid-template-columns:1fr 10fr 1fr 10fr 3fr 1fr;
+  grid-template-columns:1fr 14fr 1fr 10fr 3fr 1fr;
   align-items: flex-start;
   padding-left: 1em;
   padding-right: 1em;

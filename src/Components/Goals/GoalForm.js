@@ -11,7 +11,6 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -27,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
 function GoalForm(props) {
   //used by the form as a new goal is built
   const id = props.goal?.id;
+  const favorited = props.goal?.favorited? props.goal.favorited : false;
+  const completed = props.goal?.completed? props.goal.completed : false;
   const [title, setTitle] = useState(props.goal?.title ? props.goal.title : '');
   const [category, setCategory] = useState(props.goal?.category ? props.goal.category : '');
   const [subGoals, setSubGoals] = useState(props.goal?.subGoals ? props.goal?.subGoals : []);
   const [dueDate, setDueDate] = useState(props.goal?.dueDate ? moment(props.goal.dueDate) : moment());
+  const [submitButtonEnabled, setSubmitButtonEnable] = useState(true);
 
   //used by the form as a new subgoal is built
   const [subTitle, setSubTitle] = useState('');
@@ -46,18 +48,22 @@ function GoalForm(props) {
           id: id ? id : undefined,
           title: title,
           dueDate: dueDate.format('yyyy-MM-DD'),
-          completed: false,
+          completed: completed,
           subGoals: subGoals,
           category: category,
-          favorited: false
+          favorited: favorited
         }
       }
     }).then(() => props.closeFormCallBack());
+    setSubmitButtonEnable(false);
   }
 
   function handleAddSubgoal() {
     if(subTitle == '' || subDate == ''){
       alert('All fields are required to create a sub goal')
+    }
+    else if(!subDate || !(subDate._isValid)){
+      alert('Sub Goal Due Date is Invalid')
     }
     else {
       setSubGoals([...subGoals, {title: subTitle, completed: false, dueDate: subDate.format('yyyy-MM-DD')}]);
@@ -66,10 +72,11 @@ function GoalForm(props) {
   }
 
   function handleAddGoal() {
-    console.log('here');
-    console.log(title);
-    if(title == '' || category == '' || dueDate == ''){
+    if(title == '' || category == ''){
       alert('All fields are required to create a goal')
+    }
+    else if(!dueDate || !(dueDate._isValid)){
+      alert('Due Date is Invalid')
     }
     else{
       submitNewGoal(title, dueDate, category, subGoals);
@@ -126,7 +133,6 @@ function GoalForm(props) {
             <div key={index} className="subGoalItem">
               <p>{subgoal.title}</p>
               <p>{subgoal.dueDate}</p>
-              {/* <button className="subGoalDeleteButton" onClick={(event) => deleteSubGoal(event, index)}>Delete</button> */}
               <IconButton aria-label="delete subgoal" component="span" onClick={(event) => deleteSubGoal(event, index)}
                 style={{color: "red"}}>
                   <DeleteIcon/>
@@ -164,7 +170,8 @@ function GoalForm(props) {
       <br/>
       <div className="submitButtonContainer">
         <button type="button" className="closebutton" onClick={props.closeFormCallBack}>close</button>
-        <button type="button" className="submitbutton" onClick={handleAddGoal}>Submit</button>
+        <button type="button" className="submitbutton" onClick={handleAddGoal}
+          disabled={!submitButtonEnabled}>Submit</button>
       </div>
       <br/>
     </div>      

@@ -32,7 +32,7 @@
     display:grid;
     grid-template-columns:4fr 1fr;
     background-color: #869ec5;
-    border: 1px;
+    border: 1px; 
     align-items: center;
     justify-items: flex-start ;
     padding-bottom: 10px;
@@ -83,11 +83,13 @@
   }
 
 .header {
+  position:fixed;
     background-color: #fff;
     box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.2);
     justify-content: center;
     position: relative;
-    padding-top: 10px;
+    padding-top: 60px;
+    padding-bottom: 10px;
     align-items: center;
     margin-right: auto;
     margin-left: auto;
@@ -202,16 +204,17 @@
   text-align: center;
   width: 150px;
   height: 50px;
-  margin-right: 100px;  
+  margin-right: 0;  
   margin-top: 75px;
-  margin-left: 1800px;
+  transform: rotate(270deg) translate(0%, 70%);
+  right: 0;
   padding-top: 20px;
   background-color: #F2F2F2;
   color: #4274F3;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 15px;
-  transform: rotate(270deg);
+  
   cursor: pointer;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

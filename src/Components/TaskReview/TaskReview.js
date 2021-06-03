@@ -1,66 +1,60 @@
 import React from 'react';
-import TaskReviewStats from './TaskReviewStats.js';
-import QAScreen from './QAScreen.js'
-import QuestionReview from './QuestionReview'
+import { TaskReviewService } from './TaskReviewLogic';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import './TaskReview.css';
-
-function getTaskQuestions(task){
-  let questions = [];
-  task.pages.forEach(page => [
-    page.blocks.forEach(block => {
-      if(block.__typename == 'QuizBlock'){
-        questions = questions.concat(block.questions);
-      }
-    })
-  ])
-  return questions;
-}
-
-function getAnswerForQA(qa, questions){
-  const question = questions.filter(question => question.id == qa.question.id)[0]
-
-  if(!question || question.__typename == 'FrQuestion'){
-    return qa.answer.answer;
-  }
-
-  const index = parseInt(qa.answer.answer);
-
-  return {
-    answer: question.options[index].description,
-    correctAnswer:  question.options[qa.question.answers[0]].description
-  };
-}
-
-function getTaskQAs(task, qas){
-  const questions = getTaskQuestions(task);
-  return qas.map(qa => {
-    return {
-      ...qa,
-      answer: {
-        ...(qa.answer),
-        ...(getAnswerForQA(qa, questions))
-      }
-    }
-  })
-}
+import {oBarBlueStyle, oBarBlueStyleLeft, oBarBlueStyleRight, oBarGrayStyle, oBarGrayStyleLeft, oBarGrayStyleRight, reviewButtonStyle, clButtonStyle} from './TaskReviewStyles.js'
+import QuizReview from './QuizReview';
+import TaskReviewHelp from './TaskReviewHelp';
+import TaskReviewResults from './TaskReviewResults';
 
 export default function TaskReview(props) {
-
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
-  const taskQAs = getTaskQAs(task, submission.questionAndAnswers);
-  const [focusedQA, setFocusedQA] = useState(taskQAs[0]);
+  const taskQAs = TaskReviewService.combineQuestionDataWithQAs(task, submission.questionAndAnswers);
+  const [activeTab, setActiveTab] = React.useState(1);
 
-  const mapRequirements = (req) => {
-    if (!req) return [];
-    return req.map(({ description, id }) => (
-      <div key={id}>
-        <input type="checkbox" value="A1" id="A1" checked={true}/>
-        <label for="A1">{description}</label>
-      </div>))
+  function ReviewTabs() {
+    return (
+        <div className="tabButtonContainer" style={{width: "450px"}}>
+          <button className={activeTab==1 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(1)}>Quiz Review</button>
+          <button className={activeTab==2 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(2)}>Task Results</button>
+          <button className={activeTab==3 ? "tabButton" : "tabButtonNotActive" } onClick={()=>setActiveTab(3)}>Get Help</button>
+        </div>
+    );
+  }
+
+  function renderComp() {
+    if(activeTab == 1) {
+      return(<QuizReview 
+        pointsAwarded={props.location.state.submitTask.pointsAwarded}
+        pointsTotal={props.location.state.submitTask.pointsPossible}
+        // qa={props.location.state.submitTask.questionAndAnswers}
+        qa={taskQAs}
+      />);
+    }
+    else if(activeTab == 3) {
+      return(<TaskReviewHelp/>);
+    }
+    else if(activeTab == 2) {
+      return(<TaskReviewResults 
+        submission = {submission}
+        task={task}
+      />);
+    }
+  }
+
+  function getHeader() {
+    if(activeTab == 1) {
+      return 'QUIZ REVIEW';
+    }
+    else if(activeTab == 3) {
+      return 'GET HELP';
+    }
+    else if(activeTab == 2) {
+      return 'TASK RESULTS!';
+    }
   }
 
   function continueToMission() {
@@ -71,29 +65,23 @@ export default function TaskReview(props) {
       }
     });
   }
-  return (
-    <div>
-      <h1>Task Review</h1>
-      <div className="row">
-        <div className="column">
-          <div>
-            <h1>Questions</h1>
-            <QAScreen questionAndAnswers={taskQAs} height="300px"
-              setFocusedQACallback={(qa) => setFocusedQA(qa)}/>
-          </div>
-        </div>
-        <div className="column">
-          <h2>Selected Question</h2>
-          <QuestionReview questionAndAnswer={focusedQA}/>
-        </div>
-        <div className="column">
-          <h1>Requirements</h1>
-          <h2>{mapRequirements(task.requirements)}</h2>
-        </div>
+
+  function getButtons() {
+    return(
+      <div className='task-review-buttons'>
+        <button style={reviewButtonStyle()} onClick={() => {hist.goBack()}}>{"<   Review Tasks"}</button>
+        <button style={clButtonStyle()} onClick={continueToMission}>{"Continue Learning   >"}</button>
       </div>
-      <h1>Results</h1>
-      <div><TaskReviewStats submission={submission} /></div>
-      <div className="continueButtonContainer"><button style={{"position": "inherit"}} onClick={continueToMission}>Continue</button></div>
+    );
+  }
+
+  return (
+    <div className='task-review'>
+      <h1>{getHeader()}</h1>
+      <h2>{`TASK: ${task.name}`}</h2>
+      <ReviewTabs/>
+      { renderComp() }
+      { getButtons() }
     </div>
   );
 }

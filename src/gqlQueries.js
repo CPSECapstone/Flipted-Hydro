@@ -265,6 +265,12 @@ export const EDIT_OR_CREATE_GOAL = gql`
   }
 `;
 
+export const DELETE_GOAL = gql`
+  mutation deleteGoal($id: String!){
+    deleteGoal(id: $id)
+  }
+`;
+
 export const GET_TASK_PROGRESS = gql`
   query getTask($id: String!){
     retrieveTaskProgress(taskId: $id){
@@ -287,6 +293,8 @@ export const GET_ALL_MISSION_PROGRESS = gql`
         name
         submission{
           graded
+          pointsAwarded
+          pointsPossible
         }
       }
       student
@@ -323,6 +331,54 @@ export const SUBMIT_TASK = gql`
         }
       }
       teacherComment
+    }
+  }
+`;
+
+
+export const GET_ALL_TARGET_PROGRESS = gql `
+  query getTargetProgress($id: String!) {
+    getAllTargetProgress(courseId: $id) {
+      target {
+        targetId
+        targetName
+      }
+      objectives {
+        objectiveId
+      	objectiveName
+        tasks {
+          mastery
+          task {
+            id
+            name
+          }
+        }
+      }
+      student
+    }
+  }
+`;
+
+export const GET_TARGETS = gql `
+  query getTargets($id: String!) {
+    targets(course: $id) {
+      targetId
+      targetName
+    }
+  }
+`;
+
+export const GET_TASK_OBJECTIVES = gql`
+  query getTaskObjectiveProgress($id: String!){
+    getTaskObjectiveProgress(taskId: $id){
+      task{
+        name
+      }
+      objective{
+        objectiveId
+        objectiveName
+      }
+      mastery
     }
   }
 `;

@@ -43,15 +43,6 @@
   margin: auto;
 }
 
-
-/* form {
-  position: relative;
-  top:50px;
-  margin:auto;
-  text-align: center;
-  padding-left: 100 px;
-} */
-
 .submitbutton {
   vertical-align: middle;
   position: relative;
@@ -73,19 +64,6 @@
   padding-right:5px;
 }
 
-/* h3 {
-  color: #4274F3;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  font-size: 27px;
-}
-
-p {
-  color: white;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  font-size: 15px;
-} */
 
 .btn {
   text-align: center;
@@ -94,4 +72,17 @@ p {
 ul {
   color: #fff;
   padding-left:0;
+}
+
+h6 {
+  color: #4274F3;
+    font-family: "Poppins", sans-serif;
+    font-size: 50px;
+    font-weight:normal;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center; 
+    vertical-align: middle;
+  padding-top: 75px;
 }
