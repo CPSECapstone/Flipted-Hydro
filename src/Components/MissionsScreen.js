@@ -81,12 +81,12 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
               done={prog}
             />
           </div>
-          <h1 style={{"fontSize": "18px", margin: "0", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
-          </div>
+          <h1 style={{"font-size": "18px", margin: "auto", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
           <div className="start">
-            <button data-testid="redirectToMissionButton" style={{top: "0"}}
+            <button data-testid="redirectToMissionButton" style={{top: "0", marginTop: "5em"}}
               onClick={()=>redirectToMission(hist, props.mission.id, getMissionProgress(props.mission.id))}>Continue</button>
           </div>
+        </div>
         </div>
       );
     }
@@ -100,7 +100,7 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
       <h2>Missions</h2>
       {displayMissionList()}
       </div>
-      {!focusedMission ? null : (<MissionOverview mission={focusedMission} style={{"transform": "translate(100%)"}}/>)}
+      {!focusedMission ? null : (<MissionOverview mission={focusedMission} />)}
     </div>
   )
 }

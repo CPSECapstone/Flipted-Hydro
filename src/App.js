@@ -19,7 +19,7 @@ import NavDrawer from './Components/NavDrawer';
 import { onError } from '@apollo/client/link/error';
 import "./App.css";
 
-const HOME_SCREEN_PATH = 'missions';
+const HOME_SCREEN_PATH = 'courses';
 const CURRENT_GRAPHQL_API_URI = process.env.REACT_APP_DEV_URI;
 
 //configures amplify to connect to our authentication server in AWS

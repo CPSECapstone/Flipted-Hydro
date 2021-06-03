@@ -47,7 +47,7 @@ h2 {
     background-color: #4274F3;
     position:fixed;
     width: 100%;
-    z-index: 4;
+    z-index: 10;
     top: 0px;
     margin-bottom: 10px;
 }

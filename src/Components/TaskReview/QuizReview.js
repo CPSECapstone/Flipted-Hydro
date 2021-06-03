@@ -38,7 +38,7 @@ export default function QuizReview(props) {
         'fontWeight': 'normal',
         'fontSize' : '16px',
         'width' : '570px',
-        'height' : '18px',
+        'height' : 'auto',
         'padding' : '7px',
         'borderRadius' : '25px',
     };
@@ -51,7 +51,7 @@ export default function QuizReview(props) {
         'fontWeight': 'normal',
         'fontSize' : '16px',
         'width' : '570px',
-        'height' : '18px',
+        'height' : 'auto',
         'padding' : '7px',
         'borderRadius' : '25px',
     };
@@ -64,7 +64,7 @@ export default function QuizReview(props) {
         'fontWeight': 'normal',
         'fontSize' : '16px',
         'width' : '570px',
-        'height' : '18px',
+        'height' : 'auto',
         'padding' : '7px',
         'borderRadius' : '25px',
     }
