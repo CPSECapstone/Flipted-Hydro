@@ -140,7 +140,7 @@ function Task(props) {
   }
 
   const submitTask = () => {
-
+    
     submitTaskMutation({
       variables: {
         taskId: taskId

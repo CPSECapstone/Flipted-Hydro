@@ -107,7 +107,7 @@ function TaskRubricDrawer(props) {
              </ListItem>
         ))}
 
-            <ListItem button onClick={requirementsCompleted() ? props.submitFunction : null}>
+            <ListItem button onClick={requirementsCompleted() ? props.submitFunction : () => {alert('Please Complete all Requirements')}}>
                 <ListItemText className={requirementsCompleted() ? "blueButtonText" : "buttonText"} primary="SUBMIT TASK" />
              </ListItem>
 
