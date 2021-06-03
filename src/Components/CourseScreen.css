@@ -43,15 +43,6 @@
   margin: auto;
 }
 
-
-/* form {
-  position: relative;
-  top:50px;
-  margin:auto;
-  text-align: center;
-  padding-left: 100 px;
-} */
-
 .submitbutton {
   vertical-align: middle;
   position: relative;
@@ -72,6 +63,8 @@
   font-size: 15px;
   padding-right:5px;
 }
+
+
 .btn {
   text-align: center;
 }

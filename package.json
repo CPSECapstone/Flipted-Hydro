@@ -62,7 +62,9 @@
       "src/index.js",
       "src/aws-exports.js",
       "src/reportWebVitals.js",
-      "src/gqlQueries"
+      "src/gqlQueries",
+      "src/Components/MasteryProgress/MockData.js",
+      "src/Components/MissionProgress/MockMissionProgressData.js"
     ]
   },
   "devDependencies": {

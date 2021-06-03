@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import PREV from '../Images/previous.svg';
 import MasteryLabel from './MasteryLabel';
 import MasteryIcon from './MasteryIcon';
+import { calculateObjectiveMastery } from './MasteryLogic';
 
 const useRowStyles = makeStyles({
   root: {
@@ -64,7 +65,7 @@ function Row(props) {
           {"Objective " + row.objectiveName}
         </TableCell>
         <TableCell align="left" className={classes.objectiveLabelCell}>
-        <MasteryLabel mastery={"NEARLY_MASTERED"}/>
+        <MasteryLabel mastery={calculateObjectiveMastery(row)}/>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -132,8 +133,8 @@ function TargetDetails(props){
             </TableRow>
           </TableHead>
           <TableBody>
-            {targetProgress.objectives.map((row) => (
-              <Row key={row.name} row={row} />
+            {targetProgress.objectives.map((row, index) => (
+              <Row key={index} row={row} />
             ))}
           </TableBody>
         </Table>

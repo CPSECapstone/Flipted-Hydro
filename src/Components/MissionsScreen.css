@@ -62,10 +62,6 @@
     cursor: pointer;
 }
 
-h1 {
-    padding-top: 75px;
-}
-
 .previewCard {    
     position: sticky;
     background-color: #fff;

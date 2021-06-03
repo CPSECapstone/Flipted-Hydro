@@ -1,18 +1,16 @@
 import { useQuery} from '@apollo/client';
 import React, { useState } from 'react';
-import ProgressBar from '../ProgressBar.js'
 import './MasteryProgress.css'
-import { GET_ALL_TARGET_PROGRESS, GET_TARGETS } from '../../gqlQueries.js';
+import { GET_ALL_TARGET_PROGRESS } from '../../gqlQueries.js';
 import { mockTargetProgress } from './MockData';
 import TargetDetails from './TargetDetails';
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import MasteryLabel from './MasteryLabel';
 import PREV from '../Images/previous.svg';
+import { calculateTargetMastery } from './MasteryLogic';
 
 const useStyles = makeStyles({
   root: {
@@ -82,11 +80,17 @@ function MasteryProgress() {
     setFocusedTarget(target)
   }
 
+  const masteryLabelContainerStyle = {
+    display: "flex",
+    justifyContent: "center"
+  }
+
   function mapTargetsToCards() {
 
     return allTargetProgress.map((progress) => {
       return (
         <Card key={progress.target.targetId} className={classes.root}
+          data-testid={progress.target.targetId}
           onClick={() => changeFocusedTarget(progress)}>
         <CardContent className={classes.cardContent}>
           <Typography
@@ -99,7 +103,7 @@ function MasteryProgress() {
           <Typography variant="h5" component="h2" className={classes.targetName}>
           {progress.target.targetName}
           </Typography>
-          <MasteryLabel mastery="NEARLY_MASTERED"/>
+          <div style={masteryLabelContainerStyle}><MasteryLabel mastery={calculateTargetMastery(progress)}/></div>
         </CardContent>
       </Card>
       )        

@@ -48,11 +48,17 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
   function displayMissionList(){
       return (<div className="missionList"> 
         {data.missions.map((mission) => (
-          <div data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
+          <div key={mission.id} data-testid={mission.id} className="Mission" onClick={()=>setFocusedMission(mission)}>
             {/* <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/> */}
             <h1 style={{size: "10px", color: "white"}}>{mission.name}</h1>
           </div>))} 
       </div>);
+  }
+
+  function getMissionProgress(missionId){
+    return progressData.getAllMissionProgress.filter(progress => 
+      progress.mission.id == missionId  
+    )[0]
   }
 
   function MissionOverview(props) {
@@ -77,7 +83,8 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
           </div>
           <h1 style={{"font-size": "18px", margin: "auto", padding: "0", align: "center"}}>{Math.round(prog)}% Complete</h1>
           <div className="start">
-            <button data-testid="redirectToMissionButton" style={{top: "0", "margin-top": "5em"}}onClick={()=>redirectToMission(hist, props.mission.id)}>Continue</button>
+            <button data-testid="redirectToMissionButton" style={{top: "0", marginTop: "5em"}}
+              onClick={()=>redirectToMission(hist, props.mission.id, getMissionProgress(props.mission.id))}>Continue</button>
           </div>
         </div>
         </div>
@@ -127,11 +134,12 @@ export function calculateMissionProgress(missionId, progressData){
     return 0;
 }
 
-export function redirectToMission(hist, missionId){
+export function redirectToMission(hist, missionId, missionProgress){
   hist.push({
     pathname: MISSION_COMPONENT_PATH,
     state: {
-      id: missionId
+      id: missionId,
+      progress: missionProgress?.progress
     }
   });
 }

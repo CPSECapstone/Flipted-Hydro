@@ -54,16 +54,6 @@ function NavDrawer(props) {
 
           <Divider />
 
-          <ListItem button key="Goals" onClick={() => (props.history.push('/goals'))}>
-            <ListItemIcon><DoneAllIcon /></ListItemIcon>
-            <ListItemText className="buttonText" primary="Goals" />
-          </ListItem>
-
-          <ListItem button key="Missions" onClick={() => (props.history.push('/missions'))}> 
-            <ListItemIcon><AssignmentTurnedInIcon /></ListItemIcon>
-            <ListItemText className="buttonText" primary="Missions" />
-          </ListItem>
-
           <ListItem button key="Courses" onClick={() => (props.history.push('/courses'))}>
             <ListItemIcon><ViewModuleIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Courses" />
@@ -72,6 +62,11 @@ function NavDrawer(props) {
           <ListItem button key="Progress Overview" onClick={() => (props.history.push('/progoverview'))}>
             <ListItemIcon><SpellcheckIcon /></ListItemIcon>
             <ListItemText className="buttonText" primary="Progress" />
+          </ListItem>
+
+          <ListItem button key="Goals" onClick={() => (props.history.push('/goals'))}>
+            <ListItemIcon><DoneAllIcon /></ListItemIcon>
+            <ListItemText className="buttonText" primary="Goals" />
           </ListItem>
 
       </List>

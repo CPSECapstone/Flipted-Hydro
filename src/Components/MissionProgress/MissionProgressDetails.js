@@ -19,7 +19,7 @@ const useRowStyles = makeStyles({
 
 //Used to calculate the percent grade for a task submission
 function calculateTaskScore(taskSubmission){
-    if (taskSubmission == null || taskSubmission.graded == false)
+    if (taskSubmission == null)
         return null;
     else
         return Math.round(100*(taskSubmission.pointsAwarded/taskSubmission.pointsPossible));
