@@ -24,7 +24,7 @@ export default function MissionsScreen() {
     });
 
     if(loading || progressLoading) return (
-      <div className = 'tasks'> 
+      <div style={{paddingTop: '10em'}}> 
         <h1>Loading...</h1>
       </div>
     )
@@ -33,7 +33,7 @@ export default function MissionsScreen() {
       console.warn(error);
       //throw error;
       return (
-        <div className = 'tasks'> 
+        <div style={{paddingTop: '10em'}}> 
           <h1>Error!</h1>
         </div>
       );
