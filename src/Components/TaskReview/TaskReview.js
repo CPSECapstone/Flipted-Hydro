@@ -9,7 +9,6 @@ import TaskReviewHelp from './TaskReviewHelp';
 import TaskReviewResults from './TaskReviewResults';
 
 export default function TaskReview(props) {
-  console.log(props);
   const submission = props?.location?.state?.submitTask;
   const task = props?.location?.state?.task;
   const hist = useHistory();
@@ -27,7 +26,6 @@ export default function TaskReview(props) {
   }
 
   function renderComp() {
-    console.log(props.location.state.submitTask.questionAndAnswers);
     if(activeTab == 1) {
       return(<QuizReview 
         pointsAwarded={props.location.state.submitTask.pointsAwarded}
@@ -42,6 +40,7 @@ export default function TaskReview(props) {
     else if(activeTab == 2) {
       return(<TaskReviewResults 
         submission = {submission}
+        task={task}
       />);
     }
   }

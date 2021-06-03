@@ -39,8 +39,6 @@ function Mission(props) {
   const description = data.mission.description;
   const progress = getMissionProgress(missionId, allProgressData)?.progress;
 
-  console.log(progress);
-
   function displayMissions(loading, error, data) {
     return data.mission.missionContent.map((missionContentItem) => {
       if (missionContentItem.__typename === 'Task') {
@@ -53,7 +51,6 @@ function Mission(props) {
   }
 
   function changeFocusedTask(task){
-    console.log(focusedTask);
     setFocusedTask({
       id: task.id,
       name: task.name,

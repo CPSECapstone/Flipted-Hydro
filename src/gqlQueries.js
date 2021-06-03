@@ -367,3 +367,18 @@ export const GET_TARGETS = gql `
     }
   }
 `;
+
+export const GET_TASK_OBJECTIVES = gql`
+  query getTaskObjectiveProgress($id: String!){
+    getTaskObjectiveProgress(taskId: $id){
+      task{
+        name
+      }
+      objective{
+        objectiveId
+        objectiveName
+      }
+      mastery
+    }
+  }
+`;

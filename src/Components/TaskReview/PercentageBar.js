@@ -3,8 +3,7 @@ import './PercentageBar.css';
 
 export default function percentageBar(props) {
 
-   console.log(props.qa);
-   const perc = Math.floor((props.awarded/props.total) * 100 );
+   const perc = props.total > 0 ? Math.floor((props.awarded/props.total) * 100 ) : 100;
    const percentageBarWidth = 320;
    const leftColor = props.leftColor;
    const rightColor = props.rightColor;

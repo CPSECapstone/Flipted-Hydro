@@ -4,7 +4,6 @@ import './QuizReview.css';
 import { GridList, GridListTile } from '@material-ui/core';
 
 export default function QuizReview(props) {
-    console.log(props.qa);
     const perc = Math.floor((props.pointsAwarded/props.pointsTotal) * 100 );
     const percentageBarWidth = 320;
     const [qNum, setQNum] = useState(1); 
