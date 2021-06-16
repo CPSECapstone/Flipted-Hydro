@@ -11,3 +11,9 @@ Please view our gitbook for more information: https://connorboulais.gitbook.io/f
  Our frontend was built with React, and uses the Apollo Client library to communicate with our GrahpQL backend API.
  
  The backend is GraphQL API hosted in Amazon Web Services. The code for the backend lives on a separate repo: https://github.com/CPSECapstone/flipted-backend
+
+## CI/CD
+
+This repository is setup with continuous integration using GitHub Actions. Our scripts will build the project and run our tests on every push/pull to main.
+
+This repository also setup with automated deployment using Heroku. Every push/pull to our 'prod' branch will deploy the prod branch to Heroku
